@@ -1,0 +1,135 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_music_app/models/data_model.dart';
+import 'package:flutter_music_app/models/song_model.dart';
+import 'package:flutter_music_app/provider/provider_widget.dart';
+import 'package:flutter_music_app/ui/page/player_screen.dart';
+
+class ForYouCarousel extends StatefulWidget {
+  final String input;
+  ForYouCarousel({this.input});
+  @override
+  _ForYouCarouselState createState() => _ForYouCarouselState();
+}
+
+class _ForYouCarouselState extends State<ForYouCarousel> {
+  Widget _buildSongItem(Data data) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+      child: Row(
+        children: <Widget>[
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12.0),
+            child: Container(
+                width: 50, height: 50, child: Image.network(data.pic)),
+          ),
+          SizedBox(
+            width: 20.0,
+          ),
+          Expanded(
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    data.title,
+                    style: TextStyle(
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    data.author,
+                    style: TextStyle(
+                      fontSize: 10.0,
+                      color: Colors.grey,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ]),
+          ),
+          Icon(
+            Icons.favorite_border,
+            size: 20.0,
+          )
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: <Widget>[
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text('For you',
+                style: TextStyle(
+                    fontSize: 22.0,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.2)),
+            GestureDetector(
+              onTap: () => {
+                print('View All'),
+              },
+              child: Text('View All',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 12.0,
+                    fontWeight: FontWeight.w600,
+                  )),
+            ),
+          ],
+        ),
+      ),
+      ProviderWidget<SongListModel>(
+          onModelReady: (model) async {
+            await model.initData();
+          },
+          model: SongListModel(input: widget.input),
+          builder: (context, model, child) {
+            return Container(
+              child: ListView.builder(
+                shrinkWrap: true, //解决无限高度问题
+                physics: new NeverScrollableScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                itemCount: model.list.length,
+                itemBuilder: (BuildContext context, int index) {
+                  Data data = model.list[index];
+                  return GestureDetector(
+                    onTap: () => {
+                      if (data?.url?.isEmpty ?? true)
+                        {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => PlayScreen(
+                                data: data,
+                              ),
+                            ),
+                          )
+                        }
+                      else
+                        {
+                          Scaffold.of(context).showSnackBar(
+                            new SnackBar(
+                              content: new Text('歌曲不见了'),
+                            ),
+                          )
+                        }
+                    },
+                    child: _buildSongItem(data),
+                  );
+                },
+              ),
+            );
+          })
+    ]);
+  }
+}
