@@ -22,6 +22,7 @@ class SongListModel extends ViewStateRefreshListModel<Data> {
   List<Data> get songs => _songs;
   setSongs(List<Data> songs) {
     _songs = songs;
+    notifyListeners();
   }
 
   int get length => _songs.length;
@@ -34,6 +35,7 @@ class SongListModel extends ViewStateRefreshListModel<Data> {
   int get currentIndex => _currentSongIndex;
 
   Data get nextSong {
+    print('$_currentSongIndex'+'---$length');
     if (_currentSongIndex < length) {
       _currentSongIndex++;
     }

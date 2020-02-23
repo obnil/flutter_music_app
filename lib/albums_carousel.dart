@@ -11,7 +11,7 @@ class AlbumsCarousel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
       Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+        padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[

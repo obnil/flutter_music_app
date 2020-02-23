@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_music_app/albums_carousel.dart';
 import 'package:flutter_music_app/anims/record_anim.dart';
 import 'package:flutter_music_app/for_you_carousel.dart';
@@ -45,63 +46,70 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: ListView(children: <Widget>[
-      Row(
-        children: <Widget>[
-          Expanded(
-            child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10.0),
-                decoration: BoxDecoration(
-                  color: Color(0xFFF5F5F5),
-                  borderRadius: BorderRadius.circular(30.0),
-                  // boxShadow: [
-                  //   BoxShadow(
-                  //       color: Colors.black12,
-                  //       offset: Offset(0, 1),
-                  //       blurRadius: 10)
-                  // ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: TextField(
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.grey,
-                    ),
-                    controller: _inputController,
-                    onChanged: (value) {},
-                    onSubmitted: (value) {
-                      if (value.isNotEmpty) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => SearchScreen(
-                              input: value,
-                            ),
-                          ),
-                        );
-                      }
-                    },
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        prefixIcon: Icon(
-                          Icons.search,
-                          color: Colors.grey,
-                        ),
-                        hintText: 'Track,album,artist,podcast'),
+    return Scaffold(
+        body: Column(children: <Widget>[
+      Padding(
+        padding: const EdgeInsets.only(top: 50.0,bottom: 5),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20.0),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColorDark.withAlpha(10),
+                    borderRadius: BorderRadius.circular(30.0),
+                    // boxShadow: [
+                    //   BoxShadow(
+                    //       color: Colors.black12,
+                    //       offset: Offset(0, 1),
+                    //       blurRadius: 10)
+                    // ],
                   ),
-                )),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 20.0),
-            child: RotateRecord(
-                animation: _commonTween.animate(controllerRecord)),
-          ),
-        ],
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal:5.0),
+                    child: TextField(
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        color: Colors.grey,
+                      ),
+                      controller: _inputController,
+                      onChanged: (value) {},
+                      onSubmitted: (value) {
+                        if (value.isNotEmpty) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => SearchScreen(
+                                input: value,
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          prefixIcon: Icon(
+                            Icons.search,
+                            color: Colors.grey,
+                          ),
+                          hintText: 'Track,album,artist,podcast'),
+                    ),
+                  )),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child:
+                  RotateRecord(animation: _commonTween.animate(controllerRecord)),
+            ),
+          ],
+        ),
       ),
-      AlbumsCarousel(input: '热门'),
-      ForYouCarousel(input: '精选'),
+      Expanded(
+        child: ListView(children: <Widget>[
+          AlbumsCarousel(input: '热门'),
+          ForYouCarousel(input: '精选'),
+        ]),
+      ),
     ]));
   }
 }

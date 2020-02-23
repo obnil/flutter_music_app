@@ -21,13 +21,13 @@ class Player extends StatefulWidget {
   final Function(String) onError;
 
   ///播放完成
-  final Function() onCompleted;
+  final Function(Data data) onCompleted;
 
   /// 上一首
-  final Function() onPrevious;
+  final Function(Data data) onPrevious;
 
   ///下一首
-  final Function() onNext;
+  final Function(Data data) onNext;
 
   final Function(bool) onPlaying;
 
@@ -100,14 +100,16 @@ class PlayerState extends State<Player> {
         }
       }
       play(data);
-      //  else {
-      //   widget._song;
-      //   playerState = PlayerState.playing;
-      // }
     });
-    
+
     audioPlayer
-      ..completionHandler = widget.onCompleted
+      ..completionHandler = () {
+        Data data = widget.songData.nextSong;
+        if (data.url != null) {
+          next(data);
+          widget.onCompleted(data);
+        }
+      }
       ..errorHandler = widget.onError
       ..durationHandler = ((duration) {
         setState(() {
@@ -140,6 +142,7 @@ class PlayerState extends State<Player> {
         setState(() {
           isPlaying = true;
           data = s;
+          widget.onPlaying(isPlaying);
         });
     }
   }
@@ -158,16 +161,14 @@ class PlayerState extends State<Player> {
       });
   }
 
-  Future next(SongListModel s) async {
+  Future next(Data data) async {
     stop();
-    setState(() {
-      play(s.nextSong);
-    });
+    play(data);
   }
 
-  Future prev(SongListModel s) async {
+  Future prev(Data data) async {
     stop();
-    play(s.prevSong);
+    play(data);
   }
 
   String _formatDuration(Duration d) {
@@ -238,8 +239,15 @@ class PlayerState extends State<Player> {
           children: <Widget>[
             IconButton(
               onPressed: () {
-                prev(widget.songData);
-                widget.onPrevious();
+                Data data = widget.songData.prevSong;
+                if (data.url != null) {
+                  prev(data);
+                  Future.delayed(Duration(milliseconds: 200)).then((e) {
+                    widget.onPrevious(data);
+                  });
+                } else {
+                  debugPrint('songlist is over');
+                }
               },
               icon: Icon(
                 Icons.skip_previous,
@@ -249,7 +257,7 @@ class PlayerState extends State<Player> {
             ),
             ClipOval(
                 child: Container(
-              color: Color(0xFFFFF5EE),
+              color: Theme.of(context).accentColor.withAlpha(30),
               width: 80.0,
               height: 80.0,
               child: IconButton(
@@ -274,8 +282,15 @@ class PlayerState extends State<Player> {
             )),
             IconButton(
               onPressed: () {
-                next(widget.songData);
-                widget.onNext();
+                Data data = widget.songData.nextSong;
+                if (data.url != null) {
+                  next(data);
+                  Future.delayed(Duration(milliseconds: 200)).then((e) {
+                    widget.onNext(data);
+                  });
+                } else {
+                  debugPrint('songlist is over');
+                }
               },
               icon: Icon(
                 Icons.skip_next,
