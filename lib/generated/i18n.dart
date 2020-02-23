@@ -25,7 +25,7 @@ class S implements WidgetsLocalizations {
   String get about => "About";
   String get actionCancel => "Cancel";
   String get actionConfirm => "Confirm";
-  String get appName => "Fun Android";
+  String get appName => "Love Music";
   String get appUpdateActionDownloadAgain => "Download";
   String get appUpdateActionInstallApk => "Install";
   String get appUpdateActionUpdate => "Update";
@@ -73,10 +73,9 @@ class S implements WidgetsLocalizations {
   String get welcome => "Welcome";
   String get signUp => "Sign Up";
   String get splashSkip => "Skip";
-  String get tabHome => "Workbench";
-  String get tabBusiness => "Business";
-  String get tabProject => "Project";
-  String get tabStructure => "Structure";
+  String get tabSearch => "Search";
+  String get tabMusic => "Music";
+  String get tabFavorite => "Favorite";
   String get tabUser => "Me";
   String get theme => "Theme";
   String get toSignIn => "Sign In";
@@ -212,7 +211,7 @@ class $zh_CN extends S {
   @override
   String get appUpdateDownloading => "下载中,请稍后...";
   @override
-  String get appName => "玩Android";
+  String get appName => "爱Music";
   @override
   String get tabUser => "我的";
   @override
@@ -228,11 +227,11 @@ class $zh_CN extends S {
   @override
   String get appUpdateDownloadCanceled => "下载已取消";
   @override
-  String get tabHome => "工作台";
+  String get tabSearch => "搜索";
   @override
-  String get tabBusiness => "业务";
+  String get tabMusic => "音乐";
   @override
-  String get tabProject => "项目";
+  String get tabFavorite => "收藏";
   @override
   String get rePassword => "确认密码";
   @override

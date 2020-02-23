@@ -17,18 +17,23 @@ parseJson(String text) {
 
 abstract class BaseHttp extends DioForNative {
   BaseHttp() {
-    String proxy = "192.168.2.234:8888";
     /// 初始化 加入app通用处理
     (transformer as DefaultTransformer).jsonDecodeCallback = parseJson;
-    (httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-        (HttpClient client) {
-      client.findProxy = (uri) {
-        //proxy all request to localhost:8888
-        return "PROXY $proxy";
+
+    /////Release环境时，inProduction为true
+    bool inProduction = bool.fromEnvironment("dart.vm.product");
+    if (!inProduction) {
+      String proxy = "192.168.2.234:8888";
+      (httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+          (HttpClient client) {
+        client.findProxy = (uri) {
+          //proxy all request to localhost:8888
+          return "PROXY $proxy";
+        };
+        client.badCertificateCallback =
+            (X509Certificate cert, String host, int port) => true;
       };
-      client.badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
-    };
+    }
     interceptors..add(HeaderInterceptor());
     init();
   }
@@ -72,7 +77,6 @@ abstract class BaseResponseData {
   }
 }
 
-
 /// 接口的code没有返回为true的异常
 class NotSuccessException implements Exception {
   String error;
@@ -94,4 +98,3 @@ class UnAuthorizedException implements Exception {
   @override
   String toString() => 'UnAuthorizedException';
 }
-

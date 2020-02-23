@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_music_app/ui/page/player_screen.dart';
+import 'package:flutter_music_app/ui/page/splash_page.dart';
+import 'package:flutter_music_app/ui/page/tab/tab_navigator.dart';
+import 'package:flutter_music_app/ui/widget/page_route_anim.dart';
 
 class RouteName {
   static const String splash = 'splash';
   static const String tab = '/';
   static const String login = 'login';
   static const String register = 'register';
-  static const String album = 'album';
-  static const String songList = 'songList';
-  static const String favouriteList = 'favouriteList';
-  static const String setting = 'setting';
+  static const String play = 'play';
 }
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      // case RouteName.splash:
-      //   return NoAnimRouteBuilder(SplashPage());
-      // case RouteName.tab:
-      //   return NoAnimRouteBuilder(TabNavigator());
+      case RouteName.splash:
+        return NoAnimRouteBuilder(SplashPage());
+      case RouteName.tab:
+        return NoAnimRouteBuilder(TabNavigator());
       // case RouteName.login:
       //   return CupertinoPageRoute(
       //       fullscreenDialog: true, builder: (_) => LoginPage());
@@ -45,8 +46,6 @@ class Router {
       //       builder: (_) => ArticleCategoryTabPage(tree, index));
       // case RouteName.favouriteList:
       //   return CupertinoPageRoute(builder: (_) => FavouriteListPage());
-      // case RouteName.setting:
-      //   return CupertinoPageRoute(builder: (_) => SettingPage());
       // case RouteName.coinRecordList:
       //   return CupertinoPageRoute(builder: (_) => CoinRecordListPage());
       // case RouteName.coinRankingList:

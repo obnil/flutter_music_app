@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:flutter_music_app/models/lyric_model.dart';
 
 class Utils {

@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/config/router_manager.dart';
-// import 'package:flutter_music_app/generated/i18n.dart';
 import 'package:flutter_music_app/models/data_model.dart';
 import 'package:flutter_music_app/models/song_model.dart';
 import 'package:flutter_music_app/provider/provider_widget.dart';
 import 'package:flutter_music_app/provider/view_state_widget.dart';
 import 'package:flutter_music_app/ui/helper/refresh_helper.dart';
 import 'package:flutter_music_app/ui/page/player_screen.dart';
-import 'package:flutter_music_app/ui/widget/article_skeleton.dart';
-import 'package:flutter_music_app/ui/widget/skeleton.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -20,7 +17,7 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  Widget _buildSongItem(Data data,int index) {
+  Widget _buildSongItem(Data data) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
       child: Row(
@@ -28,9 +25,7 @@ class _SearchScreenState extends State<SearchScreen> {
           ClipRRect(
             borderRadius: BorderRadius.circular(12.0),
             child: Container(
-              width: 50,
-              height: 50,
-              child: Image.network(data.pic)),
+                width: 50, height: 50, child: Image.network(data.pic)),
           ),
           SizedBox(
             width: 20.0,
@@ -41,10 +36,16 @@ class _SearchScreenState extends State<SearchScreen> {
                 children: <Widget>[
                   Text(
                     data.title,
-                    style: TextStyle(
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: data.url == null
+                        ? TextStyle(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFFE0E0E0),
+                          )
+                        : TextStyle(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w600,
+                          ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -53,16 +54,30 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                   Text(
                     data.author,
-                    style: TextStyle(
-                      fontSize: 10.0,
-                      color: Colors.grey,
-                    ),
+                    style: data.url == null
+                        ? TextStyle(
+                            fontSize: 10.0,
+                            color: Color(0xFFE0E0E0),
+                          )
+                        : TextStyle(
+                            fontSize: 10.0,
+                            color: Colors.grey,
+                          ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ]),
           ),
-          Icon(Icons.favorite_border,size: 20.0,)
+          data.url == null
+              ? Icon(
+                  Icons.favorite_border,
+                  color: Color(0xFFE0E0E0),
+                  size: 20.0,
+                )
+              : Icon(
+                  Icons.favorite_border,
+                  size: 20.0,
+                )
         ],
       ),
     );
@@ -118,16 +133,26 @@ class _SearchScreenState extends State<SearchScreen> {
                     Data data = model.list[index];
                     return GestureDetector(
                         onTap: () => {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => PlayScreen(
-                                    data: data,
-                                  ),
-                                ),
-                              ),
+                              if (null == data.url)
+                                {
+                                  Scaffold.of(context).showSnackBar(
+                                    new SnackBar(
+                                      content: new Text('歌曲不见了'),
+                                    ),
+                                  )
+                                }
+                              else
+                                {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => PlayScreen(model, data,
+                                          nowPlay: true),
+                                    ),
+                                  )
+                                }
                             },
-                        child: _buildSongItem(data,index+1));
+                        child: _buildSongItem(data));
                   }),
             );
           }),

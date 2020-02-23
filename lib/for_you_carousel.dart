@@ -31,10 +31,16 @@ class _ForYouCarouselState extends State<ForYouCarousel> {
                 children: <Widget>[
                   Text(
                     data.title,
-                    style: TextStyle(
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: data.url == null
+                        ? TextStyle(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFFE0E0E0),
+                          )
+                        : TextStyle(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w600,
+                          ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -43,19 +49,30 @@ class _ForYouCarouselState extends State<ForYouCarousel> {
                   ),
                   Text(
                     data.author,
-                    style: TextStyle(
-                      fontSize: 10.0,
-                      color: Colors.grey,
-                    ),
+                    style: data.url == null
+                        ? TextStyle(
+                            fontSize: 10.0,
+                            color: Color(0xFFE0E0E0),
+                          )
+                        : TextStyle(
+                            fontSize: 10.0,
+                            color: Colors.grey,
+                          ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ]),
           ),
-          Icon(
-            Icons.favorite_border,
-            size: 20.0,
-          )
+          data.url == null
+              ? Icon(
+                  Icons.favorite_border,
+                  color: Color(0xFFE0E0E0),
+                  size: 20.0,
+                )
+              : Icon(
+                  Icons.favorite_border,
+                  size: 20.0,
+                )
         ],
       ),
     );
@@ -104,22 +121,16 @@ class _ForYouCarouselState extends State<ForYouCarousel> {
                   Data data = model.list[index];
                   return GestureDetector(
                     onTap: () => {
-                      if (data?.url?.isEmpty ?? true)
+                      if (null != data.url)
                         {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (_) => PlayScreen(
-                                data: data,
+                                model,
+                                data,
+                                nowPlay: true,
                               ),
-                            ),
-                          )
-                        }
-                      else
-                        {
-                          Scaffold.of(context).showSnackBar(
-                            new SnackBar(
-                              content: new Text('歌曲不见了'),
                             ),
                           )
                         }

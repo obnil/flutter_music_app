@@ -2,11 +2,14 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/models/data_model.dart';
+import 'package:flutter_music_app/models/song_model.dart';
 import 'package:flutter_music_app/ui/page/player_carousel.dart';
 
 class PlayScreen extends StatefulWidget {
+  final SongListModel songData;
+  final bool nowPlay;
   final Data data;
-  PlayScreen({this.data});
+  PlayScreen(this.songData, this.data, {this.nowPlay});
 
   @override
   _PlayScreenState createState() => _PlayScreenState();
@@ -38,50 +41,50 @@ class _PlayScreenState extends State<PlayScreen> {
                   ),
                   SizedBox(height: 20.0),
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                    IconButton(
-                      onPressed: () {
-                        //widget.onPrevious();
-                      },
-                      icon: Icon(
-                        Icons.menu,
-                        size: 25.0,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        //widget.onPrevious();
-                      },
-                      icon: Icon(
-                        Icons.refresh,
-                        size: 25.0,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        //widget.onPrevious();
-                      },
-                      icon: Icon(
-                        Icons.favorite_border,
-                        size: 25.0,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        //widget.onPrevious();
-                      },
-                      icon: Icon(
-                        Icons.volume_up,
-                        size: 25.0,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ]),
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        IconButton(
+                          onPressed: () {
+                            //widget.onPrevious();
+                          },
+                          icon: Icon(
+                            Icons.menu,
+                            size: 25.0,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            //widget.onPrevious();
+                          },
+                          icon: Icon(
+                            Icons.refresh,
+                            size: 25.0,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            //widget.onPrevious();
+                          },
+                          icon: Icon(
+                            Icons.favorite_border,
+                            size: 25.0,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            //widget.onPrevious();
+                          },
+                          icon: Icon(
+                            Icons.volume_up,
+                            size: 25.0,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ]),
                   SizedBox(height: 20.0),
                   Text(
                     widget.data.title,
@@ -112,7 +115,7 @@ class _PlayScreenState extends State<PlayScreen> {
                     print('play');
                   }
                 },
-                data: widget.data,
+                data: widget.data, songData: widget.songData,
               ),
             ],
           ),

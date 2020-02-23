@@ -2,12 +2,17 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/models/data_model.dart';
 import 'package:flutter_music_app/models/lyric_model.dart';
+import 'package:flutter_music_app/models/song_model.dart';
 import 'package:flutter_music_app/utils.dart';
 import 'package:flutter_music_app/widgets/lyric_panel.dart';
 
 class Player extends StatefulWidget {
   /// [AudioPlayer] 播放地址
   final Data data;
+
+  final SongListModel songData;
+
+  final bool nowPlay;
 
   /// 音量
   final double volume;
@@ -35,10 +40,12 @@ class Player extends StatefulWidget {
 
   Player(
       {@required this.data,
+      @required this.songData,
       @required this.onCompleted,
       @required this.onError,
       @required this.onNext,
       @required this.onPrevious,
+      this.nowPlay,
       this.key,
       this.volume: 1.0,
       this.onPlaying,
@@ -51,17 +58,24 @@ class Player extends StatefulWidget {
 
 class PlayerState extends State<Player> {
   AudioPlayer audioPlayer;
-  bool isPlaying = true;
+  bool isPlaying = false;
   Duration duration;
   Duration position;
   double sliderValue;
   Lyric lyric;
   LyricPanel panel;
   PositionChangeHandler handler;
+  SongListModel songData;
+  Data data;
 
   @override
   void initState() {
     super.initState();
+    initPlayer();
+    initLrc();
+  }
+
+  initLrc() {
     print("audioUrl:" + widget.data.url);
     if (widget.data.lrc.isNotEmpty) {
       Utils.getLyricFromTxt(widget.data.lrc).then((Lyric lyric) {
@@ -72,8 +86,26 @@ class PlayerState extends State<Player> {
         });
       });
     }
+  }
 
-    audioPlayer = new AudioPlayer();
+  initPlayer() async {
+    if (audioPlayer == null) {
+      audioPlayer = widget.songData.audioPlayer;
+    }
+    setState(() {
+      data = widget.data;
+      if (widget.nowPlay == null || widget.nowPlay == false) {
+        if (isPlaying) {
+          stop();
+        }
+      }
+      play(data);
+      //  else {
+      //   widget._song;
+      //   playerState = PlayerState.playing;
+      // }
+    });
+    
     audioPlayer
       ..completionHandler = widget.onCompleted
       ..errorHandler = widget.onError
@@ -99,23 +131,43 @@ class PlayerState extends State<Player> {
           }
         });
       });
-    audioPlayer.play(
-      widget.data.url,
-      isLocal: widget.isLocal,
-      volume: widget.volume,
-    );
   }
 
-  @override
-  void deactivate() {
-    audioPlayer.stop();
-    super.deactivate();
+  Future play(Data s) async {
+    if (s != null) {
+      final result = await audioPlayer.play(s.url);
+      if (result == 1)
+        setState(() {
+          isPlaying = true;
+          data = s;
+        });
+    }
   }
 
-  @override
-  void dispose() {
-    audioPlayer.release();
-    super.dispose();
+  Future pause() async {
+    final result = await audioPlayer.pause();
+    if (result == 1) setState(() => isPlaying = false);
+  }
+
+  Future stop() async {
+    final result = await audioPlayer.stop();
+    if (result == 1)
+      setState(() {
+        isPlaying = false;
+        position = new Duration();
+      });
+  }
+
+  Future next(SongListModel s) async {
+    stop();
+    setState(() {
+      play(s.nextSong);
+    });
+  }
+
+  Future prev(SongListModel s) async {
+    stop();
+    play(s.prevSong);
   }
 
   String _formatDuration(Duration d) {
@@ -186,6 +238,7 @@ class PlayerState extends State<Player> {
           children: <Widget>[
             IconButton(
               onPressed: () {
+                prev(widget.songData);
                 widget.onPrevious();
               },
               icon: Icon(
@@ -220,7 +273,10 @@ class PlayerState extends State<Player> {
               ),
             )),
             IconButton(
-              onPressed: widget.onNext,
+              onPressed: () {
+                next(widget.songData);
+                widget.onNext();
+              },
               icon: Icon(
                 Icons.skip_next,
                 size: 25.0,
