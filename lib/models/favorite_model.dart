@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/models/data_model.dart';
 import 'package:flutter_music_app/provider/view_state_model.dart';
-import 'package:flutter_music_app/provider/view_state_refresh_list_model.dart';
 
 /// 我的收藏列表
 // class FavouriteListModel extends ViewStateRefreshListModel<Data> {

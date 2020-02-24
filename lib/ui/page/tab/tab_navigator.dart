@@ -1,11 +1,7 @@
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_music_app/config/router_manager.dart';
 import 'package:flutter_music_app/generated/i18n.dart';
-import 'package:flutter_music_app/models/song_model.dart';
-import 'package:flutter_music_app/provider/provider_widget.dart';
-import 'package:flutter_music_app/provider/view_state_widget.dart';
 import 'package:flutter_music_app/ui/page/tab/home_page.dart';
 
 class TabNavigator extends StatefulWidget {

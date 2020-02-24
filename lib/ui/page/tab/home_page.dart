@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_music_app/albums_carousel.dart';
+import 'package:flutter_music_app/widgets/albums_carousel.dart';
 import 'package:flutter_music_app/anims/record_anim.dart';
-import 'package:flutter_music_app/for_you_carousel.dart';
-import 'package:flutter_music_app/models/song_model.dart';
-import 'package:flutter_music_app/provider/provider_widget.dart';
+import 'package:flutter_music_app/widgets/for_you_carousel.dart';
 import 'package:flutter_music_app/ui/page/search_screen.dart';
 
 class HomePage extends StatefulWidget {
@@ -49,14 +46,14 @@ class _HomePageState extends State<HomePage>
     return Scaffold(
         body: Column(children: <Widget>[
       Padding(
-        padding: const EdgeInsets.only(top: 50.0,bottom: 5),
+        padding: const EdgeInsets.only(top: 40.0,bottom: 5),
         child: Row(
           children: <Widget>[
             Expanded(
               child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 20.0),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColorDark.withAlpha(10),
+                    color: Theme.of(context).accentColor.withAlpha(10),
                     borderRadius: BorderRadius.circular(30.0),
                     // boxShadow: [
                     //   BoxShadow(
@@ -88,6 +85,8 @@ class _HomePageState extends State<HomePage>
                       },
                       decoration: InputDecoration(
                           border: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
                           prefixIcon: Icon(
                             Icons.search,
                             color: Colors.grey,

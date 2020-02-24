@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_music_app/models/data_model.dart';
 import 'package:flutter_music_app/models/lyric_model.dart';
 import 'package:flutter_music_app/models/song_model.dart';
-import 'package:flutter_music_app/utils.dart';
+import 'package:flutter_music_app/utils/lyric_utils.dart';
 import 'package:flutter_music_app/widgets/lyric_panel.dart';
 
 class Player extends StatefulWidget {

@@ -117,8 +117,6 @@ class $zh_CN extends S {
   @override
   String get unLike => "取消收藏";
   @override
-  String get tabStructure => "体系";
-  @override
   String get signUp => "注册";
   @override
   String get viewStateMessageEmpty => "空空如也";

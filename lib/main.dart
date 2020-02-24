@@ -15,14 +15,14 @@ void main() async {
   Provider.debugCheckInvalidValueType = null;
   WidgetsFlutterBinding.ensureInitialized();
   await StorageManager.init();
-  runApp(App());
+  runApp(MyApp());
   // Android状态栏透明 splash为白色,所以调整状态栏文字为黑色
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarBrightness: Brightness.light));
 }
 
-class App extends StatelessWidget {
+class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

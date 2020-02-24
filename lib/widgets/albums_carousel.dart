@@ -60,6 +60,7 @@ class AlbumsCarousel extends StatelessWidget {
                     },
                     child: Container(
                       width: 140,
+                      margin: index==model.list.length-1? EdgeInsets.only(right: 20.0):EdgeInsets.only(right: 0.0),
                       child: Padding(
                         padding: const EdgeInsets.only(left: 20.0),
                         child: Column(

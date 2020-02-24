@@ -1,16 +1,10 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/config/resource_manager.dart';
 import 'package:flutter_music_app/config/router_manager.dart';
 import 'package:flutter_music_app/generated/i18n.dart';
 
 class SplashPage extends StatefulWidget {
-  static const List<String> images = <String>[
-    'ic_splash_1.png',
-    'ic_splash_2.png',
-    'ic_splash_3.png',
-    'ic_splash_4.png'
-  ];
+  static const String image = 'ic_splash.png';
 
   @override
   _SplashPageState createState() => _SplashPageState();
@@ -39,13 +33,27 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
       body: WillPopScope(
         onWillPop: () => Future.value(false),
         child: Stack(fit: StackFit.expand, children: <Widget>[
-          Image.asset(
-              ImageHelper.wrapAssets(SplashPage
-                  .images[new Random().nextInt(SplashPage.images.length)]),
-//              colorBlendMode: BlendMode.srcOver,//colorBlendMode方式在android等机器上有些延迟,导致有些闪屏,故采用两套图片的方式
-//              color: Colors.black.withOpacity(
-//                  Theme.of(context).brightness == Brightness.light ? 0 : 0.65),
-              fit: BoxFit.fill),
+          Container(
+            padding: EdgeInsets.all(50),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'Start Search',
+                  style: TextStyle(fontSize: 20),
+                ),
+                SizedBox(height: 50),
+                Image.asset(
+                  ImageHelper.wrapAssets(SplashPage.image),
+                ),
+                SizedBox(height: 20),
+                Text(
+                  'Find the music you are looking for. Use search queries to look up music you need on the app.',
+                  style: TextStyle(fontSize: 12),
+                ),
+              ],
+            ),
+          ),
           Align(
             alignment: Alignment.bottomRight,
             child: SafeArea(
@@ -62,7 +70,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                   ),
                   child: AnimatedCountdown(
                     context: context,
-                    animation: StepTween(begin: 2, end: 0)
+                    animation: StepTween(begin: 1, end: 0)
                         .animate(_countdownController),
                   ),
                 ),
@@ -98,5 +106,5 @@ class AnimatedCountdown extends AnimatedWidget {
 }
 
 void nextPage(context) {
-    Navigator.of(context).pushReplacementNamed(RouteName.tab);
+  Navigator.of(context).pushReplacementNamed(RouteName.tab);
 }
