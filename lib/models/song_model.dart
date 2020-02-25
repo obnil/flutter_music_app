@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_music_app/models/data_model.dart';
 import 'package:flutter_music_app/provider/view_state_refresh_list_model.dart';
 import 'package:flutter_music_app/service/base_repository.dart';
@@ -14,14 +15,45 @@ class SongListModel extends ViewStateRefreshListModel<Data> {
   Future<List<Data>> loadData({int pageNum}) async {
     return await BaseRepository.fetchSongList(input, pageNum);
   }
+}
 
+class SongModel with ChangeNotifier {
+  SongModel() {
+    _audioPlayer = new AudioPlayer();
+  }
   List<Data> _songs;
-  int _currentSongIndex = -1;
-  AudioPlayer _audioPlayer = new AudioPlayer();
+  Duration _duration;
+  Duration _position;
+  Duration get duration => _duration;
+  Duration get position => _position;
+  bool _isPlaying = false;
+  bool get isPlaying => _isPlaying;
+  setPlaying(bool isPlaying) {
+    _isPlaying = isPlaying;
+    notifyListeners();
+  }
+
+  setDuration(Duration duration) {
+    _duration = duration;
+    notifyListeners();
+  }
+
+  setPosition(Duration position) {
+    _position = position;
+    notifyListeners();
+  }
+
+  int _currentSongIndex = 0;
+  AudioPlayer _audioPlayer;
 
   List<Data> get songs => _songs;
   setSongs(List<Data> songs) {
     _songs = songs;
+    notifyListeners();
+  }
+
+  addSongs(List<Data> songs) {
+    _songs.addAll(songs);
     notifyListeners();
   }
 
@@ -30,29 +62,39 @@ class SongListModel extends ViewStateRefreshListModel<Data> {
 
   setCurrentIndex(int index) {
     _currentSongIndex = index;
+    notifyListeners();
   }
 
-  int get currentIndex => _currentSongIndex;
+  Data get currentSong => _songs[_currentSongIndex];
 
   Data get nextSong {
-    print('$_currentSongIndex'+'---$length');
     if (_currentSongIndex < length) {
       _currentSongIndex++;
     }
-    if (_currentSongIndex >= length) return null;
+    //if (_currentSongIndex >= length) return null;
+    if (_currentSongIndex >= length) {
+      _currentSongIndex = 0;
+    }
+    notifyListeners();
     return _songs[_currentSongIndex];
   }
 
   Data get randomSong {
     Random r = new Random();
-    return _songs[r.nextInt(_songs.length)];
+    _currentSongIndex = r.nextInt(_songs.length);
+    notifyListeners();
+    return _songs[_currentSongIndex];
   }
 
   Data get prevSong {
     if (_currentSongIndex > 0) {
       _currentSongIndex--;
     }
-    if (_currentSongIndex < 0) return null;
+    //if (_currentSongIndex < 0) return null;
+    if (_currentSongIndex < 0) {
+      _currentSongIndex = length - 1;
+    }
+    notifyListeners();
     return _songs[_currentSongIndex];
   }
 

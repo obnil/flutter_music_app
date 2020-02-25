@@ -5,13 +5,13 @@ import 'package:flutter_music_app/models/lyric_model.dart';
 import 'package:flutter_music_app/models/song_model.dart';
 import 'package:flutter_music_app/utils/lyric_utils.dart';
 import 'package:flutter_music_app/widgets/lyric_panel.dart';
+import 'package:provider/provider.dart';
 
 class Player extends StatefulWidget {
-  /// [AudioPlayer] 播放地址
-  final Data data;
+  /// 播放列表
+  final SongModel songData;
 
-  final SongListModel songData;
-
+  //是否立即播放
   final bool nowPlay;
 
   /// 音量
@@ -39,8 +39,7 @@ class Player extends StatefulWidget {
   final bool isLocal;
 
   Player(
-      {@required this.data,
-      @required this.songData,
+      {@required this.songData,
       @required this.onCompleted,
       @required this.onError,
       @required this.onNext,
@@ -58,107 +57,87 @@ class Player extends StatefulWidget {
 
 class PlayerState extends State<Player> {
   AudioPlayer audioPlayer;
-  bool isPlaying = false;
   Duration duration;
   Duration position;
   double sliderValue;
-  Lyric lyric;
-  LyricPanel panel;
+  //Lyric lyric;
+  //LyricPanel panel;
   PositionChangeHandler handler;
-  SongListModel songData;
-  Data data;
+  SongModel songData;
 
   @override
   void initState() {
     super.initState();
     initPlayer();
-    initLrc();
+    //initLrc();
   }
 
-  initLrc() {
-    print("audioUrl:" + widget.data.url);
-    if (widget.data.lrc.isNotEmpty) {
-      Utils.getLyricFromTxt(widget.data.lrc).then((Lyric lyric) {
-        print("getLyricFromTxt:" + lyric.slices.length.toString());
-        setState(() {
-          this.lyric = lyric;
-          panel = new LyricPanel(this.lyric);
-        });
-      });
-    }
-  }
+  // initLrc() {
+  //   if (model.currentSong.lrc.isNotEmpty) {
+  //     Utils.getLyricFromTxt(model.currentSong.lrc).then((Lyric lyric) {
+  //       print("getLyricFromTxt:" + lyric.slices.length.toString());
+  //       setState(() {
+  //         this.lyric = lyric;
+  //         panel = new LyricPanel(this.lyric);
+  //       });
+  //     });
+  //   }
+  // }
 
   initPlayer() async {
     if (audioPlayer == null) {
       audioPlayer = widget.songData.audioPlayer;
     }
+    if (!mounted) return;
     setState(() {
-      data = widget.data;
+      songData = widget.songData;
       if (widget.nowPlay == null || widget.nowPlay == false) {
-        if (isPlaying) {
+        if (songData.isPlaying) {
           stop();
         }
       }
-      play(data);
+      play(songData.currentSong);
     });
 
     audioPlayer
       ..completionHandler = () {
-        Data data = widget.songData.nextSong;
-        if (data.url != null) {
-          next(data);
-          widget.onCompleted(data);
-        }
+        Data data = songData.nextSong;
+        next(data);
+        widget.onCompleted(data);
       }
       ..errorHandler = widget.onError
       ..durationHandler = ((duration) {
-        setState(() {
-          this.duration = duration;
-
-          if (position != null) {
-            this.sliderValue = (position.inSeconds / duration.inSeconds);
-          }
-        });
+        songData.setDuration(duration);
       })
       ..positionHandler = ((position) {
-        setState(() {
-          this.position = position;
-
-          if (panel != null) {
-            panel.handler(position.inSeconds);
-          }
-
-          if (duration != null) {
-            this.sliderValue = (position.inSeconds / duration.inSeconds);
-          }
-        });
+        songData.setPosition(position);
+        // if (panel != null) {
+        //   panel.handler(position.inSeconds);
+        // }
       });
   }
 
   Future play(Data s) async {
     if (s != null) {
       final result = await audioPlayer.play(s.url);
-      if (result == 1)
-        setState(() {
-          isPlaying = true;
-          data = s;
-          widget.onPlaying(isPlaying);
-        });
+      if (result == 1) songData.setPlaying(true);
     }
   }
 
   Future pause() async {
     final result = await audioPlayer.pause();
-    if (result == 1) setState(() => isPlaying = false);
+    if (result == 1) {
+      songData.setPosition(new Duration());
+      songData.setPlaying(false);
+    }
   }
 
   Future stop() async {
     final result = await audioPlayer.stop();
-    if (result == 1)
-      setState(() {
-        isPlaying = false;
-        position = new Duration();
-      });
+    if (result == 1) {
+      songData.setPosition(new Duration());
+      songData.setPlaying(false);
+    }
   }
 
   Future next(Data data) async {
@@ -195,11 +174,15 @@ class PlayerState extends State<Player> {
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         new Text(
-          position == null ? "--:--" : _formatDuration(position),
+          songData.position == null
+              ? "--:--"
+              : _formatDuration(songData.position),
           style: style,
         ),
         new Text(
-          duration == null ? "--:--" : _formatDuration(duration),
+          songData.duration == null
+              ? "--:--"
+              : _formatDuration(songData.duration),
           style: style,
         ),
       ],
@@ -216,12 +199,12 @@ class PlayerState extends State<Player> {
       // ),
       new Slider(
         onChanged: (newValue) {
-          if (duration != null) {
-            int seconds = (duration.inSeconds * newValue).round();
-            audioPlayer.seek(new Duration(seconds: seconds));
-          }
+          int seconds = (songData.duration.inSeconds * newValue).round();
+          audioPlayer.seek(new Duration(seconds: seconds));
         },
-        value: sliderValue ?? 0.0,
+        value: (songData.position != null && songData.duration != null)
+            ? (songData.position.inSeconds / songData.duration.inSeconds)
+            : 0.0,
         activeColor: Theme.of(context).accentColor,
       ),
       new Padding(
@@ -239,15 +222,12 @@ class PlayerState extends State<Player> {
           children: <Widget>[
             IconButton(
               onPressed: () {
-                Data data = widget.songData.prevSong;
-                if (data.url != null) {
-                  prev(data);
-                  Future.delayed(Duration(milliseconds: 200)).then((e) {
-                    widget.onPrevious(data);
-                  });
-                } else {
-                  debugPrint('songlist is over');
+                Data data = songData.prevSong;
+                while (data.url == null) {
+                  data = songData.prevSong;
                 }
+                prev(data);
+                widget.onPrevious(data);
               },
               icon: Icon(
                 Icons.skip_previous,
@@ -262,19 +242,19 @@ class PlayerState extends State<Player> {
               height: 80.0,
               child: IconButton(
                 onPressed: () {
-                  if (isPlaying)
+                  if (songData.isPlaying)
                     audioPlayer.pause();
                   else {
                     audioPlayer.resume();
                   }
                   setState(() {
-                    isPlaying = !isPlaying;
-                    widget.onPlaying(isPlaying);
+                    songData.setPlaying(!songData.isPlaying);
+                    widget.onPlaying(songData.isPlaying);
                   });
                 },
                 padding: const EdgeInsets.all(0.0),
                 icon: Icon(
-                  isPlaying ? Icons.pause : Icons.play_arrow,
+                  songData.isPlaying ? Icons.pause : Icons.play_arrow,
                   size: 30.0,
                   color: Theme.of(context).accentColor,
                 ),
@@ -282,15 +262,12 @@ class PlayerState extends State<Player> {
             )),
             IconButton(
               onPressed: () {
-                Data data = widget.songData.nextSong;
-                if (data.url != null) {
-                  next(data);
-                  Future.delayed(Duration(milliseconds: 200)).then((e) {
-                    widget.onNext(data);
-                  });
-                } else {
-                  debugPrint('songlist is over');
+                Data data = songData.nextSong;
+                while (data.url == null) {
+                  data = songData.nextSong;
                 }
+                next(data);
+                widget.onNext(data);
               },
               icon: Icon(
                 Icons.skip_next,

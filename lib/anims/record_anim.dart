@@ -13,9 +13,7 @@ class RotateRecord extends AnimatedWidget {
     final Animation<double> animation = listenable;
     return ProviderWidget<SongListModel>(
         model: SongListModel(),
-        onModelReady: (model) {
-          
-        },
+        onModelReady: (model) {},
         builder: (context, model, child) {
           return GestureDetector(
             onTap: () => {
@@ -23,11 +21,6 @@ class RotateRecord extends AnimatedWidget {
                 context,
                 MaterialPageRoute(
                   builder: (_) => PlayScreen(
-                    model,
-                    model.songs[
-                        (model.currentIndex == null || model.currentIndex < 0)
-                            ? 0
-                            : model.currentIndex],
                     nowPlay: true,
                   ),
                 ),

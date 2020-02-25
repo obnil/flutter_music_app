@@ -1,5 +1,6 @@
 import 'package:flutter_music_app/models/favorite_model.dart';
 import 'package:flutter_music_app/models/local_view_model.dart';
+import 'package:flutter_music_app/models/song_model.dart';
 import 'package:flutter_music_app/models/theme_model.dart';
 import 'package:provider/provider.dart';
 
@@ -18,6 +19,9 @@ List<SingleChildCloneableWidget> independentServices = [
   ),
   ChangeNotifierProvider<GlobalFavouriteStateModel>(
     create: (context) => GlobalFavouriteStateModel(),
+  ),
+  ChangeNotifierProvider<SongModel>(
+    create: (context) => SongModel(),
   )
 ];
 

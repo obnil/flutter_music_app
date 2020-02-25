@@ -7,6 +7,7 @@ import 'package:flutter_music_app/provider/provider_widget.dart';
 import 'package:flutter_music_app/provider/view_state_widget.dart';
 import 'package:flutter_music_app/ui/helper/refresh_helper.dart';
 import 'package:flutter_music_app/ui/page/player_screen.dart';
+import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -94,9 +95,9 @@ class _SearchScreenState extends State<SearchScreen> {
             child: AppBarCarousel(),
           ),
           Container(
-            margin: EdgeInsets.all(40),
-            alignment: Alignment.center,
-            child: Text('${widget.input}的搜索结果')),
+              margin: EdgeInsets.all(40),
+              alignment: Alignment.center,
+              child: Text('${widget.input}的搜索结果')),
           Expanded(
             child: ProviderWidget<SongListModel>(
                 onModelReady: (model) async {
@@ -139,16 +140,16 @@ class _SearchScreenState extends State<SearchScreen> {
                         itemCount: model.list.length,
                         itemBuilder: (context, index) {
                           Data data = model.list[index];
-                          model.setSongs(model.list);
                           return GestureDetector(
                               onTap: () {
                                 if (null != data.url) {
-                                  model.setCurrentIndex(index);
+                                  SongModel songModel = Provider.of(context);
+                                  songModel.setSongs(model.list);
+                                  songModel.setCurrentIndex(index);
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (_) => PlayScreen(model, data,
-                                          nowPlay: true),
+                                      builder: (_) => PlayScreen(nowPlay: true),
                                     ),
                                   );
                                 }

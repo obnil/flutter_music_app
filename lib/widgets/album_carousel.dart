@@ -3,6 +3,7 @@ import 'package:flutter_music_app/models/data_model.dart';
 import 'package:flutter_music_app/models/song_model.dart';
 import 'package:flutter_music_app/provider/provider_widget.dart';
 import 'package:flutter_music_app/ui/page/player_screen.dart';
+import 'package:provider/provider.dart';
 
 class AlbumCarousel extends StatefulWidget {
   final String input;
@@ -94,17 +95,16 @@ class _AlbumCarouselState extends State<AlbumCarousel> {
               itemCount: model.list.length,
               itemBuilder: (BuildContext context, int index) {
                 Data data = model.list[index];
-                model.setSongs(model.list);
                 return GestureDetector(
                   onTap: () {
                     if (null != data.url) {
-                      model.setCurrentIndex(index);
+                      SongModel songModel = Provider.of(context);
+                      songModel.setSongs(model.list);
+                      songModel.setCurrentIndex(index);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (_) => PlayScreen(
-                            model,
-                            data,
                             nowPlay: true,
                           ),
                         ),

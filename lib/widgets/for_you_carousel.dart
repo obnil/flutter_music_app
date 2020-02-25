@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/models/data_model.dart';
+import 'package:flutter_music_app/models/for_you_model.dart';
 import 'package:flutter_music_app/models/song_model.dart';
-import 'package:flutter_music_app/provider/provider_widget.dart';
 import 'package:flutter_music_app/ui/page/player_screen.dart';
+import 'package:provider/provider.dart';
 
 class ForYouCarousel extends StatefulWidget {
-  final String input;
-  ForYouCarousel({this.input});
+
+  final ForYouModel forYouModel;
+
+  ForYouCarousel(this.forYouModel);
   @override
   _ForYouCarouselState createState() => _ForYouCarouselState();
 }
@@ -105,43 +108,33 @@ class _ForYouCarouselState extends State<ForYouCarousel> {
           ],
         ),
       ),
-      ProviderWidget<SongListModel>(
-          onModelReady: (model) async {
-            await model.initData();
-          },
-          model: SongListModel(input: widget.input),
-          builder: (context, model, child) {
-            return Container(
-              child: ListView.builder(
-                shrinkWrap: true, //解决无限高度问题
-                physics: new NeverScrollableScrollPhysics(),
-                scrollDirection: Axis.vertical,
-                itemCount: model.list.length,
-                itemBuilder: (BuildContext context, int index) {
-                  Data data = model.list[index];
-                  model.setSongs(model.list);
-                  return GestureDetector(
-                    onTap: () {
-                      if (null != data.url) {
-                        model.setCurrentIndex(index);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => PlayScreen(
-                              model,
-                              data,
-                              nowPlay: true,
-                            ),
-                          ),
-                        );
-                      }
-                    },
-                    child: _buildSongItem(data),
-                  );
-                },
-              ),
-            );
-          })
+      ListView.builder(
+        shrinkWrap: true, //解决无限高度问题
+        physics: new NeverScrollableScrollPhysics(),
+        scrollDirection: Axis.vertical,
+        itemCount: widget.forYouModel.list.length,
+        itemBuilder: (BuildContext context, int index) {
+          Data data = widget.forYouModel.list[index];
+          return GestureDetector(
+            onTap: () {
+              if (null != data.url) {
+                SongModel songModel = Provider.of(context);
+                songModel.setSongs(new List<Data>.from(widget.forYouModel.list));
+                songModel.setCurrentIndex(index);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => PlayScreen(
+                      nowPlay: true,
+                    ),
+                  ),
+                );
+              }
+            },
+            child: _buildSongItem(data),
+          );
+        },
+      ),
     ]);
   }
 }
