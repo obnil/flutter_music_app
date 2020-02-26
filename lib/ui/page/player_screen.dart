@@ -37,9 +37,20 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
     });
   }
 
+    @override
+  void dispose() {
+    controllerRecord.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     SongModel songModel = Provider.of(context);
+    if (songModel.isPlaying) {
+      controllerRecord.forward();
+    } else {
+      controllerRecord.stop(canceled: false);
+    }
     final Animation<double> animation = _commonTween.animate(controllerRecord);
     return Scaffold(
       body: SafeArea(
@@ -49,12 +60,12 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
             Column(
               children: <Widget>[
                 AppBarCarousel(),
-                SizedBox(height: 50.0),
+                SizedBox(height: MediaQuery.of(context).size.height*0.05),
                 RotationTransition(
                     turns: animation,
                     child: new Container(
-                      width: 200.0,
-                      height: 200.0,
+                      width: MediaQuery.of(context).size.width*0.5,
+                      height: MediaQuery.of(context).size.width*0.5,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
@@ -62,7 +73,7 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                         ),
                       ),
                     )),
-                SizedBox(height: 20.0),
+                SizedBox(height: MediaQuery.of(context).size.height*0.02),
                 Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -108,12 +119,12 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                         ),
                       ),
                     ]),
-                SizedBox(height: 20.0),
+                SizedBox(height: MediaQuery.of(context).size.height*0.02),
                 Text(
                   songModel.currentSong.title,
                   style: TextStyle(color: Colors.black, fontSize: 15.0),
                 ),
-                SizedBox(height: 20.0),
+                SizedBox(height: MediaQuery.of(context).size.height*0.02),
                 Text(
                   songModel.currentSong.author,
                   style: TextStyle(color: Colors.grey, fontSize: 12.0),

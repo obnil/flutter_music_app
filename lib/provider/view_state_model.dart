@@ -19,7 +19,7 @@ class ViewStateModel with ChangeNotifier {
   /// FooModel():super(viewState:ViewState.busy);
   ViewStateModel({ViewState viewState})
       : _viewState = viewState ?? ViewState.idle {
-    debugPrint('ViewStateModel---constructor--->$runtimeType');
+    //debugPrint('ViewStateModel---constructor--->$runtimeType');
   }
 
   ViewState get viewState => _viewState;

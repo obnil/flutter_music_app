@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_music_app/models/albums_model.dart';
 import 'package:flutter_music_app/models/data_model.dart';
 import 'package:flutter_music_app/ui/page/albums_screen.dart';
-import 'package:provider/provider.dart';
 
 class AlbumsCarousel extends StatefulWidget {
 

@@ -1,11 +1,8 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/models/data_model.dart';
-import 'package:flutter_music_app/models/lyric_model.dart';
 import 'package:flutter_music_app/models/song_model.dart';
-import 'package:flutter_music_app/utils/lyric_utils.dart';
 import 'package:flutter_music_app/widgets/lyric_panel.dart';
-import 'package:provider/provider.dart';
 
 class Player extends StatefulWidget {
   /// 播放列表
@@ -56,6 +53,7 @@ class Player extends StatefulWidget {
 }
 
 class PlayerState extends State<Player> {
+  ///audioPlayer https://pub.dev/packages/audioplayers
   AudioPlayer audioPlayer;
   Duration duration;
   Duration position;
@@ -88,7 +86,6 @@ class PlayerState extends State<Player> {
     if (audioPlayer == null) {
       audioPlayer = widget.songData.audioPlayer;
     }
-    if (!mounted) return;
     setState(() {
       songData = widget.songData;
       if (widget.nowPlay == null || widget.nowPlay == false) {
@@ -115,6 +112,12 @@ class PlayerState extends State<Player> {
         //   panel.handler(position.inSeconds);
         // }
       });
+    // audioPlayer.onDurationChanged.listen((Duration d) {
+    //   songData.setDuration(d);
+    // });
+    // audioPlayer.onPlayerStateChanged.listen((AudioPlayerState s) {
+    //   songData.setPlayState(s);
+    // });
   }
 
   Future play(Data s) async {

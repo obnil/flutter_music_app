@@ -21,19 +21,19 @@ abstract class BaseHttp extends DioForNative {
     (transformer as DefaultTransformer).jsonDecodeCallback = parseJson;
 
     /////Release环境时，inProduction为true
-    bool inProduction = bool.fromEnvironment("dart.vm.product");
-    if (!inProduction) {
-      String proxy = "192.168.2.234:8888";
-      (httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-          (HttpClient client) {
-        client.findProxy = (uri) {
-          //proxy all request to localhost:8888
-          return "PROXY $proxy";
-        };
-        client.badCertificateCallback =
-            (X509Certificate cert, String host, int port) => true;
-      };
-    }
+    // bool inProduction = bool.fromEnvironment("dart.vm.product");
+    // if (!inProduction) {
+    //   String proxy = "192.168.2.234:8888";
+    //   (httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+    //       (HttpClient client) {
+    //     client.findProxy = (uri) {
+    //       //proxy all request to localhost:8888
+    //       return "PROXY $proxy";
+    //     };
+    //     client.badCertificateCallback =
+    //         (X509Certificate cert, String host, int port) => true;
+    //   };
+    // }
     interceptors..add(HeaderInterceptor());
     init();
   }

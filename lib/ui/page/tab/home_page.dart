@@ -1,15 +1,14 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_music_app/config/router_manager.dart';
 import 'package:flutter_music_app/models/albums_model.dart';
-import 'package:flutter_music_app/models/data_model.dart';
 import 'package:flutter_music_app/models/for_you_model.dart';
 import 'package:flutter_music_app/models/song_model.dart';
 import 'package:flutter_music_app/provider/provider_widget.dart';
-import 'package:flutter_music_app/provider/view_state_widget.dart';
 import 'package:flutter_music_app/widgets/albums_carousel.dart';
 import 'package:flutter_music_app/anims/record_anim.dart';
 import 'package:flutter_music_app/widgets/for_you_carousel.dart';
 import 'package:flutter_music_app/ui/page/search_screen.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -20,6 +19,7 @@ class _HomePageState extends State<HomePage>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   AnimationController controllerRecord;
   Animation<double> animationRecord;
+  AudioPlayer audioPlayer;
   final _inputController = TextEditingController();
   final _commonTween = new Tween<double>(begin: 0.0, end: 1.0);
 
@@ -45,24 +45,31 @@ class _HomePageState extends State<HomePage>
   void dispose() {
     _inputController.dispose();
     controllerRecord.dispose();
+    audioPlayer.release();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    SongModel songModel = Provider.of(context);
+    audioPlayer = songModel.audioPlayer;
+    if (songModel.isPlaying) {
+      controllerRecord.forward();
+    } else {
+      controllerRecord.stop(canceled: false);
+    }
     return Scaffold(
-      body: ProviderWidget2<AlbumsModel, ForYouModel>(
-          onModelReady: (alubumsModel, forYouModel) async {
-            await alubumsModel.initData();
-            await forYouModel.initData();
-          },
-          model1: AlbumsModel(input: '老歌'),
-          model2: ForYouModel(input: '精选'),
-          builder: (context, alubumsModel, forYouModel, child) {
-            return Column(children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 40.0, bottom: 5),
-                child: Row(
+      body: SafeArea(
+        child: ProviderWidget2<AlbumsModel, ForYouModel>(
+            onModelReady: (alubumsModel, forYouModel) async {
+              await alubumsModel.initData();
+              await forYouModel.initData();
+            },
+            model1: AlbumsModel(input: '老歌'),
+            model2: ForYouModel(input: '精选'),
+            builder: (context, alubumsModel, forYouModel, child) {
+              return Column(children: <Widget>[
+                Row(
                   children: <Widget>[
                     Expanded(
                       child: Container(
@@ -101,7 +108,9 @@ class _HomePageState extends State<HomePage>
                                     Icons.search,
                                     color: Colors.grey,
                                   ),
-                                  hintText: 'Track,album,artist,podcast'),
+                                  hintText: songModel.isPlaying
+                                      ? songModel.currentSong.title
+                                      : 'Track,album,artist,podcast'),
                             ),
                           )),
                     ),
@@ -112,15 +121,15 @@ class _HomePageState extends State<HomePage>
                     ),
                   ],
                 ),
-              ),
-              Expanded(
-                child: ListView(children: <Widget>[
-                  AlbumsCarousel(alubumsModel),
-                  ForYouCarousel(forYouModel),
-                ]),
-              )
-            ]);
-          }),
+                Expanded(
+                  child: ListView(children: <Widget>[
+                    AlbumsCarousel(alubumsModel),
+                    ForYouCarousel(forYouModel),
+                  ]),
+                )
+              ]);
+            }),
+      ),
     );
   }
 }

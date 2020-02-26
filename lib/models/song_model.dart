@@ -27,6 +27,15 @@ class SongModel with ChangeNotifier {
   Duration get duration => _duration;
   Duration get position => _position;
   bool _isPlaying = false;
+  AudioPlayerState _playerState;
+  setPlayState(AudioPlayerState playerState) {
+    _playerState = playerState;
+  }
+
+  AudioPlayerState get playerState {
+    return _playerState;
+  }
+
   bool get isPlaying => _isPlaying;
   setPlaying(bool isPlaying) {
     _isPlaying = isPlaying;

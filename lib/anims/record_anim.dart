@@ -4,6 +4,7 @@ import 'package:flutter_music_app/config/resource_manager.dart';
 import 'package:flutter_music_app/models/song_model.dart';
 import 'package:flutter_music_app/provider/provider_widget.dart';
 import 'package:flutter_music_app/ui/page/player_screen.dart';
+import 'package:provider/provider.dart';
 
 class RotateRecord extends AnimatedWidget {
   RotateRecord({Key key, Animation<double> animation})
@@ -11,6 +12,7 @@ class RotateRecord extends AnimatedWidget {
 
   Widget build(BuildContext context) {
     final Animation<double> animation = listenable;
+    SongModel songModel = Provider.of(context);
     return ProviderWidget<SongListModel>(
         model: SongListModel(),
         onModelReady: (model) {},
@@ -21,7 +23,7 @@ class RotateRecord extends AnimatedWidget {
                 context,
                 MaterialPageRoute(
                   builder: (_) => PlayScreen(
-                    nowPlay: true,
+                    nowPlay: false,
                   ),
                 ),
               ),
@@ -35,7 +37,7 @@ class RotateRecord extends AnimatedWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                        image: NetworkImage(ImageHelper.randomUrl()),
+                        image: NetworkImage(songModel.songs!=null?songModel.currentSong.pic:ImageHelper.randomUrl()),
                       ),
                     ),
                   )),
