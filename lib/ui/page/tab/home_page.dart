@@ -59,7 +59,8 @@ class _HomePageState extends State<HomePage>
       controllerRecord.stop(canceled: false);
     }
     return Scaffold(
-      body: SafeArea(
+      body: Padding(
+        padding: const EdgeInsets.only(top: 40.0),
         child: ProviderWidget2<AlbumsModel, ForYouModel>(
             onModelReady: (alubumsModel, forYouModel) async {
               await alubumsModel.initData();

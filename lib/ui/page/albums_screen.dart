@@ -15,86 +15,92 @@ class _AlbumsScreenState extends State<AlbumsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-          children: <Widget>[
-            SafeArea(child: AppBarCarousel()),
-            Expanded(
-              child: ListView(
-                children: <Widget>[
-                  ClipRRect(
+        body: Padding(
+      padding: const EdgeInsets.only(top: 40.0),
+      child: Column(
+        children: <Widget>[
+          AppBarCarousel(),
+          Expanded(
+            child: ListView(
+              children: <Widget>[
+                Hero(
+                  tag: 'albums' + widget.data.pic,
+                  child: ClipRRect(
                       borderRadius: BorderRadius.circular(30.0),
                       child: Container(
-                          width: 200,
-                          height: 200,
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          height: MediaQuery.of(context).size.width * 0.5,
                           child: Image.network(widget.data.pic))),
-                  SizedBox(height: 20.0),
-                  Center(
-                    child: Text(
-                      widget.data.title,
-                      style: TextStyle(color: Colors.black, fontSize: 15.0),
-                    ),
+                ),
+                SizedBox(height: 20.0),
+                Center(
+                  child: Text(
+                    widget.data.title,
+                    style: TextStyle(color: Colors.black, fontSize: 15.0),
                   ),
-                  SizedBox(height: 20.0),
-                  Center(
-                    child: Text(
-                      widget.data.author,
-                      style: TextStyle(color: Colors.grey, fontSize: 12.0),
-                    ),
+                ),
+                SizedBox(height: 20.0),
+                Center(
+                  child: Text(
+                    widget.data.author,
+                    style: TextStyle(color: Colors.grey, fontSize: 12.0),
                   ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          height: 70,
-                          margin: EdgeInsets.only(
-                              top: 20, bottom: 20, left: 20, right: 10),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black12, width: 1),
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(
-                                Icons.play_arrow,
-                                color: Theme.of(context).accentColor,
-                              ),
-                              Text(
-                                'Play',
-                                style: TextStyle(
-                                    color: Theme.of(context).accentColor),
-                              ),
-                            ],
-                          ),
+                ),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        height: 70,
+                        margin: EdgeInsets.only(
+                            top: 20, bottom: 20, left: 20, right: 10),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black12, width: 1),
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(
+                              Icons.play_arrow,
+                              color: Theme.of(context).accentColor,
+                            ),
+                            Text(
+                              'Play',
+                              style: TextStyle(
+                                  color: Theme.of(context).accentColor),
+                            ),
+                          ],
                         ),
                       ),
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          height: 70,
-                          margin: EdgeInsets.only(
-                              top: 20, bottom: 20, left: 10, right: 20),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black12, width: 1),
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(Icons.add),
-                              Text('Add'),
-                            ],
-                          ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        height: 70,
+                        margin: EdgeInsets.only(
+                            top: 20, bottom: 20, left: 10, right: 20),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black12, width: 1),
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(Icons.add),
+                            Text('Add'),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                  AlbumCarousel(input: widget.data.author),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+                AlbumCarousel(input: widget.data.author),
+              ],
             ),
-          ],
-        ));
+          ),
+        ],
+      ),
+    ));
   }
 }

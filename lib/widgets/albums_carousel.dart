@@ -68,7 +68,8 @@ class _AlbumsCarouselState extends State<AlbumsCarousel> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Container(
+                      Hero(
+                        tag: 'albums' + data.pic,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20.0),
                           child: Image(

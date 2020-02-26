@@ -91,75 +91,78 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          SafeArea(child: AppBarCarousel()),
-          Container(
-              margin: EdgeInsets.all(40),
-              alignment: Alignment.center,
-              child: Text('${widget.input}的搜索结果')),
-          Expanded(
-            child: ProviderWidget<SongListModel>(
-                onModelReady: (model) async {
-                  await model.initData();
-                },
-                model: SongListModel(input: widget.input),
-                builder: (context, model, child) {
-                  if (model.busy) {
-                    // return SkeletonList(
-                    //   builder: (context, index) => ArticleSkeletonItem(),
-                    // );
-                    return Center(child: Text('加载中...'));
-                  } else if (model.error && model.list.isEmpty) {
-                    return ViewStateErrorWidget(
-                        error: model.viewStateError, onPressed: model.initData);
-                  } else if (model.empty) {
-                    return ViewStateEmptyWidget(onPressed: model.initData);
-                  } else if (model.unAuthorized) {
-                    return ViewStateUnAuthWidget(onPressed: () async {
-                      var success = await Navigator.of(context)
-                          .pushNamed(RouteName.login);
-                      // 登录成功,获取数据,刷新页面
-                      if (success ?? false) {
-                        model.initData();
-                      }
-                    });
-                  }
-                  return SmartRefresher(
-                    controller: model.refreshController,
-                    header: WaterDropHeader(),
-                    footer: RefresherFooter(),
-                    onRefresh: () async {
-                      await model.refresh();
-                    },
-                    onLoading: () async {
-                      await model.loadMore();
-                    },
-                    enablePullUp: true,
-                    child: ListView.builder(
-                        itemCount: model.list.length,
-                        itemBuilder: (context, index) {
-                          Data data = model.list[index];
-                          return GestureDetector(
-                              onTap: () {
-                                if (null != data.url) {
-                                  SongModel songModel = Provider.of(context);
-                                  songModel.setSongs(model.list);
-                                  songModel.setCurrentIndex(index);
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) => PlayScreen(nowPlay: true),
-                                    ),
-                                  );
-                                }
-                              },
-                              child: _buildSongItem(data));
-                        }),
-                  );
-                }),
-          ),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.only(top: 40.0),
+        child: Column(
+          children: <Widget>[
+            AppBarCarousel(),
+            Container(
+                margin: EdgeInsets.only(bottom:40),
+                alignment: Alignment.center,
+                child: Text('${widget.input}的搜索结果')),
+            Expanded(
+              child: ProviderWidget<SongListModel>(
+                  onModelReady: (model) async {
+                    await model.initData();
+                  },
+                  model: SongListModel(input: widget.input),
+                  builder: (context, model, child) {
+                    if (model.busy) {
+                      // return SkeletonList(
+                      //   builder: (context, index) => ArticleSkeletonItem(),
+                      // );
+                      return Center(child: Text('加载中...'));
+                    } else if (model.error && model.list.isEmpty) {
+                      return ViewStateErrorWidget(
+                          error: model.viewStateError, onPressed: model.initData);
+                    } else if (model.empty) {
+                      return ViewStateEmptyWidget(onPressed: model.initData);
+                    } else if (model.unAuthorized) {
+                      return ViewStateUnAuthWidget(onPressed: () async {
+                        var success = await Navigator.of(context)
+                            .pushNamed(RouteName.login);
+                        // 登录成功,获取数据,刷新页面
+                        if (success ?? false) {
+                          model.initData();
+                        }
+                      });
+                    }
+                    return SmartRefresher(
+                      controller: model.refreshController,
+                      header: WaterDropHeader(),
+                      footer: RefresherFooter(),
+                      onRefresh: () async {
+                        await model.refresh();
+                      },
+                      onLoading: () async {
+                        await model.loadMore();
+                      },
+                      enablePullUp: true,
+                      child: ListView.builder(
+                          itemCount: model.list.length,
+                          itemBuilder: (context, index) {
+                            Data data = model.list[index];
+                            return GestureDetector(
+                                onTap: () {
+                                  if (null != data.url) {
+                                    SongModel songModel = Provider.of(context);
+                                    songModel.setSongs(model.list);
+                                    songModel.setCurrentIndex(index);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => PlayScreen(nowPlay: true),
+                                      ),
+                                    );
+                                  }
+                                },
+                                child: _buildSongItem(data));
+                          }),
+                    );
+                  }),
+            ),
+          ],
+        ),
       ),
     );
   }

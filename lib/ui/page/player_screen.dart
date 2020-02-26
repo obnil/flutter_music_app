@@ -53,7 +53,8 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
     }
     final Animation<double> animation = _commonTween.animate(controllerRecord);
     return Scaffold(
-      body: SafeArea(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 40.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[

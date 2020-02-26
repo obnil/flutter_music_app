@@ -1,3 +1,4 @@
+///歌词绘制 https://segmentfault.com/a/1190000016747304
 class Lyric {
   List<LyricSlice> slices;
 
