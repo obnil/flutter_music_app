@@ -37,7 +37,7 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
     });
   }
 
-    @override
+  @override
   void dispose() {
     controllerRecord.dispose();
     super.dispose();
@@ -60,20 +60,23 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
             Column(
               children: <Widget>[
                 AppBarCarousel(),
-                SizedBox(height: MediaQuery.of(context).size.height*0.05),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                 RotationTransition(
                     turns: animation,
-                    child: new Container(
-                      width: MediaQuery.of(context).size.width*0.5,
-                      height: MediaQuery.of(context).size.width*0.5,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: NetworkImage(songModel.currentSong.pic),
+                    child: Hero(
+                      tag: songModel.currentSong.title + songModel.currentSong.author,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        height: MediaQuery.of(context).size.width * 0.5,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: NetworkImage(songModel.currentSong.pic),
+                          ),
                         ),
                       ),
                     )),
-                SizedBox(height: MediaQuery.of(context).size.height*0.02),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                 Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -119,12 +122,12 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                         ),
                       ),
                     ]),
-                SizedBox(height: MediaQuery.of(context).size.height*0.02),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                 Text(
                   songModel.currentSong.title,
                   style: TextStyle(color: Colors.black, fontSize: 15.0),
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height*0.02),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                 Text(
                   songModel.currentSong.author,
                   style: TextStyle(color: Colors.grey, fontSize: 12.0),

@@ -18,26 +18,30 @@ class RotateRecord extends AnimatedWidget {
         onModelReady: (model) {},
         builder: (context, model, child) {
           return GestureDetector(
-            onTap: () => {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => PlayScreen(
-                    nowPlay: false,
+            onTap: () {
+              if (songModel.isPlaying) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => PlayScreen(
+                      nowPlay: false,
+                    ),
                   ),
-                ),
-              ),
+                );
+              }
             },
-            child: new Container(
+            child: Container(
               height: 45.0,
               width: 45.0,
-              child: new RotationTransition(
+              child: RotationTransition(
                   turns: animation,
-                  child: new Container(
+                  child: Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                        image: NetworkImage(songModel.songs!=null?songModel.currentSong.pic:ImageHelper.randomUrl()),
+                        image: NetworkImage(songModel.isPlaying
+                            ? songModel.currentSong.pic
+                            : ImageHelper.randomUrl()),
                       ),
                     ),
                   )),

@@ -18,10 +18,13 @@ class _AlbumCarouselState extends State<AlbumCarousel> {
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
       child: Row(
         children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12.0),
-            child: Container(
-                width: 50, height: 50, child: Image.network(data.pic)),
+          Hero(
+            tag: data.title + data.author,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12.0),
+              child: Container(
+                  width: 50, height: 50, child: Image.network(data.pic)),
+            ),
           ),
           SizedBox(
             width: 20.0,

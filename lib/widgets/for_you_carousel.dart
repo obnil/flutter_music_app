@@ -6,7 +6,6 @@ import 'package:flutter_music_app/ui/page/player_screen.dart';
 import 'package:provider/provider.dart';
 
 class ForYouCarousel extends StatefulWidget {
-
   final ForYouModel forYouModel;
 
   ForYouCarousel(this.forYouModel);
@@ -20,10 +19,13 @@ class _ForYouCarouselState extends State<ForYouCarousel> {
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
       child: Row(
         children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12.0),
-            child: Container(
-                width: 50, height: 50, child: Image.network(data.pic)),
+          Hero(
+            tag: data.title + data.author,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12.0),
+              child: Container(
+                  width: 50, height: 50, child: Image.network(data.pic)),
+            ),
           ),
           SizedBox(
             width: 20.0,
@@ -119,7 +121,8 @@ class _ForYouCarouselState extends State<ForYouCarousel> {
             onTap: () {
               if (null != data.url) {
                 SongModel songModel = Provider.of(context);
-                songModel.setSongs(new List<Data>.from(widget.forYouModel.list));
+                songModel
+                    .setSongs(new List<Data>.from(widget.forYouModel.list));
                 songModel.setCurrentIndex(index);
                 Navigator.push(
                   context,
