@@ -1,5 +1,5 @@
 PODS:
-  - audioplayers (0.0.1):
+  - audio_manager (0.0.1):
     - Flutter
   - device_info (0.0.1):
     - Flutter
@@ -16,7 +16,7 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
-  - audioplayers (from `.symlinks/plugins/audioplayers/ios`)
+  - audio_manager (from `.symlinks/plugins/audio_manager/ios`)
   - device_info (from `.symlinks/plugins/device_info/ios`)
   - Flutter (from `Flutter`)
   - package_info (from `.symlinks/plugins/package_info/ios`)
@@ -26,8 +26,8 @@ DEPENDENCIES:
   - shared_preferences_web (from `.symlinks/plugins/shared_preferences_web/ios`)
 
 EXTERNAL SOURCES:
-  audioplayers:
-    :path: ".symlinks/plugins/audioplayers/ios"
+  audio_manager:
+    :path: ".symlinks/plugins/audio_manager/ios"
   device_info:
     :path: ".symlinks/plugins/device_info/ios"
   Flutter:
@@ -44,7 +44,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences_web/ios"
 
 SPEC CHECKSUMS:
-  audioplayers: 84f968cea3f2deab00ec4f8ff53358b3c0b3992c
+  audio_manager: 59466b2ea5552ebdcba8106796f09b9357ef12e0
   device_info: cbf09d2ec12aa7110e0b09fabe54b5bd6c8efe74
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   package_info: 48b108e75b8802c2d5e126f208ef540561c98aef

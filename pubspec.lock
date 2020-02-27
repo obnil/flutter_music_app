@@ -22,13 +22,15 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.4.0"
-  audioplayers:
+  audio_manager:
     dependency: "direct main"
     description:
-      name: audioplayers
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.14.0"
+      path: "."
+      ref: HEAD
+      resolved-ref: "61c031de02545e5d5ee96e231ec5732b74f1298a"
+      url: "https://gitee.com/obnil/audio_manager.git"
+    source: git
+    version: "0.3.1+1"
   boolean_selector:
     dependency: transitive
     description:
@@ -313,13 +315,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.1.6"
-  uuid:
-    dependency: transitive
-    description:
-      name: uuid
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "2.0.4"
   vector_math:
     dependency: transitive
     description:

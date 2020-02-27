@@ -1,6 +1,4 @@
 import 'dart:math';
-
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/models/data_model.dart';
 import 'package:flutter_music_app/provider/view_state_refresh_list_model.dart';
@@ -18,42 +16,35 @@ class SongListModel extends ViewStateRefreshListModel<Data> {
 }
 
 class SongModel with ChangeNotifier {
-  SongModel() {
-    _audioPlayer = new AudioPlayer();
-  }
   List<Data> _songs;
-  Duration _duration;
-  Duration _position;
-  Duration get duration => _duration;
-  Duration get position => _position;
   bool _isPlaying = false;
-  AudioPlayerState _playerState;
-  setPlayState(AudioPlayerState playerState) {
-    _playerState = playerState;
-  }
-
-  AudioPlayerState get playerState {
-    return _playerState;
-  }
-
   bool get isPlaying => _isPlaying;
   setPlaying(bool isPlaying) {
     _isPlaying = isPlaying;
     notifyListeners();
   }
 
+  Duration _duration;
+  Duration get duration => _duration;
   setDuration(Duration duration) {
     _duration = duration;
     notifyListeners();
   }
 
+  Duration _position;
+  num _slideValue;
+  num get slideValue => _slideValue;
+  setSlideValue(num slideValue) {
+    _slideValue = slideValue;
+  }
+
+  Duration get position => _position;
   setPosition(Duration position) {
     _position = position;
     notifyListeners();
   }
 
   int _currentSongIndex = 0;
-  AudioPlayer _audioPlayer;
 
   List<Data> get songs => _songs;
   setSongs(List<Data> songs) {
@@ -106,6 +97,4 @@ class SongModel with ChangeNotifier {
     notifyListeners();
     return _songs[_currentSongIndex];
   }
-
-  AudioPlayer get audioPlayer => _audioPlayer;
 }

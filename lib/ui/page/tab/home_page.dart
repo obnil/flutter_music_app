@@ -1,4 +1,3 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/models/albums_model.dart';
 import 'package:flutter_music_app/models/for_you_model.dart';
@@ -19,7 +18,6 @@ class _HomePageState extends State<HomePage>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   AnimationController controllerRecord;
   Animation<double> animationRecord;
-  AudioPlayer audioPlayer;
   final _inputController = TextEditingController();
   final _commonTween = new Tween<double>(begin: 0.0, end: 1.0);
 
@@ -45,14 +43,12 @@ class _HomePageState extends State<HomePage>
   void dispose() {
     _inputController.dispose();
     controllerRecord.dispose();
-    audioPlayer.release();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     SongModel songModel = Provider.of(context);
-    audioPlayer = songModel.audioPlayer;
     if (songModel.isPlaying) {
       controllerRecord.forward();
     } else {
@@ -109,7 +105,7 @@ class _HomePageState extends State<HomePage>
                                     Icons.search,
                                     color: Colors.grey,
                                   ),
-                                  hintText: songModel.isPlaying
+                                  hintText: songModel.songs != null
                                       ? songModel.currentSong.title
                                       : 'Track,album,artist,podcast'),
                             ),

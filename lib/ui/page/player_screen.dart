@@ -1,8 +1,6 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/widgets/app_bar.dart';
-import 'package:flutter_music_app/models/data_model.dart';
 import 'package:flutter_music_app/models/song_model.dart';
 import 'package:flutter_music_app/ui/page/player_carousel.dart';
 import 'package:provider/provider.dart';
@@ -65,7 +63,8 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                 RotationTransition(
                     turns: animation,
                     child: Hero(
-                      tag: songModel.currentSong.title + songModel.currentSong.author,
+                      tag: songModel.currentSong.title +
+                          songModel.currentSong.author,
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.5,
                         height: MediaQuery.of(context).size.width * 0.5,
@@ -83,9 +82,7 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       IconButton(
-                        onPressed: () {
-                          //widget.onPrevious();
-                        },
+                        onPressed: () {},
                         icon: Icon(
                           Icons.list,
                           size: 25.0,
@@ -93,9 +90,7 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                         ),
                       ),
                       IconButton(
-                        onPressed: () {
-                          //widget.onPrevious();
-                        },
+                        onPressed: () {},
                         icon: Icon(
                           Icons.repeat,
                           size: 25.0,
@@ -103,9 +98,7 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                         ),
                       ),
                       IconButton(
-                        onPressed: () {
-                          //widget.onPrevious();
-                        },
+                        onPressed: () {},
                         icon: Icon(
                           Icons.favorite_border,
                           size: 25.0,
@@ -113,9 +106,7 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                         ),
                       ),
                       IconButton(
-                        onPressed: () {
-                          //widget.onPrevious();
-                        },
+                        onPressed: () {},
                         icon: Icon(
                           Icons.volume_down,
                           size: 25.0,
@@ -136,23 +127,6 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
               ],
             ),
             Player(
-              onError: (e) {
-                debugPrint(e);
-              },
-              onPrevious: (Data data) {},
-              onNext: (Data data) {},
-              onCompleted: (Data data) {
-                debugPrint('complete');
-              },
-              onPlaying: (isPlaying) {
-                if (isPlaying) {
-                  controllerRecord.forward();
-                  debugPrint('pause');
-                } else {
-                  controllerRecord.stop(canceled: false);
-                  debugPrint('play');
-                }
-              },
               songData: songModel,
               nowPlay: widget.nowPlay,
             ),

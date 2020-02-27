@@ -19,7 +19,7 @@ class RotateRecord extends AnimatedWidget {
         builder: (context, model, child) {
           return GestureDetector(
             onTap: () {
-              if (songModel.isPlaying) {
+              if (songModel.songs != null) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -39,7 +39,7 @@ class RotateRecord extends AnimatedWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                        image: NetworkImage(songModel.isPlaying
+                        image: NetworkImage(songModel.songs != null
                             ? songModel.currentSong.pic
                             : ImageHelper.randomUrl()),
                       ),

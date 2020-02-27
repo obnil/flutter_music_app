@@ -17,7 +17,6 @@ environment:
   sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
-  audioplayers: ^0.14.0
   shared_preferences: ^0.5.3+5
   # 本地json对象存储
   localstorage: ^3.0.0
@@ -31,6 +30,8 @@ dependencies:
   package_info: ^0.4.0+6
   shimmer: ^1.0.0
   bubble_bottom_bar: ^1.2.0
+  audio_manager:
+    git: https://gitee.com/obnil/audio_manager.git
   flutter:
     sdk: flutter
   flutter_localizations:

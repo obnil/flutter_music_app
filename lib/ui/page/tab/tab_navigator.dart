@@ -1,11 +1,9 @@
-import 'package:audioplayers/audioplayers.dart';
+import 'package:audio_manager/audio_manager.dart';
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/generated/i18n.dart';
-import 'package:flutter_music_app/models/song_model.dart';
 import 'package:flutter_music_app/ui/page/tab/home_page.dart';
-import 'package:provider/provider.dart';
 
 class TabNavigator extends StatefulWidget {
   @override
@@ -15,20 +13,17 @@ class TabNavigator extends StatefulWidget {
 class _TabNavigatorState extends State<TabNavigator> {
   var _pageController = PageController();
   int _selectedIndex = 0;
-  AudioPlayer audioPlayer;
 
   List<Widget> pages = <Widget>[HomePage(), HomePage(), HomePage(), HomePage()];
 
   @override
   void dispose() {
     super.dispose();
-    audioPlayer.dispose();
+    AudioManager.instance.stop();
   }
 
   @override
   Widget build(BuildContext context) {
-    SongModel songModel = Provider.of(context);
-    audioPlayer = songModel.audioPlayer;
     return Scaffold(
       body: PageView.builder(
         itemBuilder: (ctx, index) => pages[index],
