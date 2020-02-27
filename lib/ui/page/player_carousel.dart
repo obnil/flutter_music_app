@@ -122,7 +122,9 @@ class PlayerState extends State<Player> {
 
   Future play(Data s) async {
     if (s != null) {
-      final result = await audioPlayer.play(s.url);
+      ///s.url在几分钟后过期，采用s.id
+      ///http://music.163.com/song/media/outer/url?id=317151.mp3
+      final result = await audioPlayer.play('http://music.163.com/song/media/outer/url?id=${s.songid}.mp3');
       if (result == 1) songData.setPlaying(true);
     }
   }
@@ -171,6 +173,7 @@ class PlayerState extends State<Player> {
   Widget _timer(BuildContext context) {
     var style = new TextStyle(
       color: Colors.grey,
+      fontSize: 12,
     );
     return new Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -233,7 +236,8 @@ class PlayerState extends State<Player> {
                 widget.onPrevious(data);
               },
               icon: Icon(
-                Icons.skip_previous,
+                //Icons.skip_previous,
+                Icons.fast_rewind,
                 size: 25.0,
                 color: Colors.grey,
               ),
@@ -273,7 +277,8 @@ class PlayerState extends State<Player> {
                 widget.onNext(data);
               },
               icon: Icon(
-                Icons.skip_next,
+                //Icons.skip_next,
+                Icons.fast_forward,
                 size: 25.0,
                 color: Colors.grey,
               ),

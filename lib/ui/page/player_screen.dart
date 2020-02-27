@@ -87,7 +87,7 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                           //widget.onPrevious();
                         },
                         icon: Icon(
-                          Icons.menu,
+                          Icons.list,
                           size: 25.0,
                           color: Colors.grey,
                         ),
@@ -97,7 +97,7 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                           //widget.onPrevious();
                         },
                         icon: Icon(
-                          Icons.refresh,
+                          Icons.repeat,
                           size: 25.0,
                           color: Colors.grey,
                         ),
@@ -117,7 +117,7 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                           //widget.onPrevious();
                         },
                         icon: Icon(
-                          Icons.volume_up,
+                          Icons.volume_down,
                           size: 25.0,
                           color: Colors.grey,
                         ),
