@@ -1,9 +1,10 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/anims/player_anim.dart';
-import 'package:flutter_music_app/widgets/app_bar.dart';
-import 'package:flutter_music_app/models/song_model.dart';
+import 'package:flutter_music_app/ui/widget/app_bar.dart';
+import 'package:flutter_music_app/model/song_model.dart';
 import 'package:flutter_music_app/ui/widget/player_carousel.dart';
+import 'package:flutter_music_app/ui/widget/song_list_carousel.dart';
 import 'package:provider/provider.dart';
 
 class PlayPage extends StatefulWidget {
@@ -54,63 +55,82 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin {
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 40.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Column(
-              children: <Widget>[
-                AppBarCarousel(),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-                RotatePlayer(
-                          animation: _commonTween.animate(controllerPlayer)),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-                Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.list,
-                          size: 25.0,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.repeat,
-                          size: 25.0,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.favorite_border,
-                          size: 25.0,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.volume_down,
-                          size: 25.0,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ]),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                Text(
-                  songModel.currentSong.title,
-                  style: TextStyle(color: Colors.black, fontSize: 15.0),
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                Text(
-                  songModel.currentSong.author,
-                  style: TextStyle(color: Colors.grey, fontSize: 12.0),
-                ),
-              ],
+            Expanded(
+              child: Column(
+                children: <Widget>[
+                  !songModel.showList
+                      ? Column(
+                          children: <Widget>[
+                            AppBarCarousel(),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.05),
+                            RotatePlayer(
+                                animation:
+                                    _commonTween.animate(controllerPlayer)),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.03),
+                            Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: <Widget>[
+                                  IconButton(
+                                    onPressed: () => songModel
+                                        .setShowList(!songModel.showList),
+                                    icon: Icon(
+                                      Icons.list,
+                                      size: 25.0,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      Icons.repeat,
+                                      size: 25.0,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      Icons.favorite_border,
+                                      size: 25.0,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      Icons.volume_down,
+                                      size: 25.0,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ]),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.02),
+                            Text(
+                              songModel.currentSong.title,
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 15.0),
+                            ),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.02),
+                            Text(
+                              songModel.currentSong.author,
+                              style:
+                                  TextStyle(color: Colors.grey, fontSize: 12.0),
+                            ),
+                          ],
+                        )
+                      : SongListCarousel(songModel),
+                ],
+              ),
             ),
             Player(
               songData: songModel,

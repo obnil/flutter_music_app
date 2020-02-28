@@ -1,6 +1,6 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_music_app/models/song_model.dart';
+import 'package:flutter_music_app/model/song_model.dart';
 import 'package:flutter_music_app/provider/provider_widget.dart';
 import 'package:provider/provider.dart';
 

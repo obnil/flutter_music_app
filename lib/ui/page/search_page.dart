@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_music_app/widgets/app_bar.dart';
+import 'package:flutter_music_app/generated/i18n.dart';
+import 'package:flutter_music_app/ui/widget/app_bar.dart';
 import 'package:flutter_music_app/config/router_manager.dart';
-import 'package:flutter_music_app/models/data_model.dart';
-import 'package:flutter_music_app/models/song_model.dart';
+import 'package:flutter_music_app/model/song_model.dart';
 import 'package:flutter_music_app/provider/provider_widget.dart';
 import 'package:flutter_music_app/provider/view_state_widget.dart';
 import 'package:flutter_music_app/ui/helper/refresh_helper.dart';
@@ -19,19 +19,16 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  Widget _buildSongItem(Data data) {
+  Widget _buildSongItem(Song data) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
       child: Row(
         children: <Widget>[
-          Hero(
-            tag: data.title + data.author,
-            child: ClipRRect(
+          ClipRRect(
               borderRadius: BorderRadius.circular(12.0),
               child: Container(
                   width: 50, height: 50, child: Image.network(data.pic)),
             ),
-          ),
           SizedBox(
             width: 20.0,
           ),
@@ -97,9 +94,9 @@ class _SearchPageState extends State<SearchPage> {
           children: <Widget>[
             AppBarCarousel(),
             Container(
-                margin: EdgeInsets.only(bottom:40),
+                margin: EdgeInsets.only(bottom: 40),
                 alignment: Alignment.center,
-                child: Text('${widget.input}的搜索结果')),
+                child: Text(S.of(context).searchResult + widget.input)),
             Expanded(
               child: ProviderWidget<SongListModel>(
                   onModelReady: (model) async {
@@ -114,7 +111,8 @@ class _SearchPageState extends State<SearchPage> {
                       return Center(child: Text('加载中...'));
                     } else if (model.error && model.list.isEmpty) {
                       return ViewStateErrorWidget(
-                          error: model.viewStateError, onPressed: model.initData);
+                          error: model.viewStateError,
+                          onPressed: model.initData);
                     } else if (model.empty) {
                       return ViewStateEmptyWidget(onPressed: model.initData);
                     } else if (model.unAuthorized) {
@@ -141,7 +139,7 @@ class _SearchPageState extends State<SearchPage> {
                       child: ListView.builder(
                           itemCount: model.list.length,
                           itemBuilder: (context, index) {
-                            Data data = model.list[index];
+                            Song data = model.list[index];
                             return GestureDetector(
                                 onTap: () {
                                   if (null != data.url) {

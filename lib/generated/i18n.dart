@@ -74,6 +74,7 @@ class S implements WidgetsLocalizations {
   String get signUp => "Sign Up";
   String get splashSkip => "Skip";
   String get tabSearch => "Search";
+  String get searchResult => "Search Result:";
   String get tabMusic => "Music";
   String get tabFavorite => "Favorite";
   String get tabUser => "Me";
@@ -226,6 +227,8 @@ class $zh_CN extends S {
   String get appUpdateDownloadCanceled => "下载已取消";
   @override
   String get tabSearch => "搜索";
+  @override
+  String get searchResult => "搜索结果：";
   @override
   String get tabMusic => "音乐";
   @override

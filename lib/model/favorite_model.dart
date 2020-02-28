@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_music_app/models/data_model.dart';
+import 'package:flutter_music_app/model/song_model.dart';
 import 'package:flutter_music_app/provider/view_state_model.dart';
 
 /// 我的收藏列表
@@ -66,7 +66,7 @@ class GlobalFavouriteStateModel extends ChangeNotifier {
   ///
   /// 在其他终端(如PC端)收藏/取消收藏后,会导致两边状态不一致.
   /// 列表页面刷新后,应该将新的收藏状态同步更新到map
-  static refresh(List<Data> list) {
+  static refresh(List<Song> list) {
     list.forEach((data) {
       if (_map.containsKey(data.songid)) {
         _map[data.songid] = true;

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/ui/widget/album_carousel.dart';
-import 'package:flutter_music_app/widgets/app_bar.dart';
-import 'package:flutter_music_app/models/data_model.dart';
+import 'package:flutter_music_app/ui/widget/app_bar.dart';
+import 'package:flutter_music_app/model/song_model.dart';
 
 class AlbumsPage extends StatefulWidget {
-  final Data data;
+  final Song data;
 
   AlbumsPage({this.data});
   @override

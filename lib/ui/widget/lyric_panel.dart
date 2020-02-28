@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_music_app/models/lyric_model.dart';
+import 'package:flutter_music_app/model/lyric_model.dart';
 
 typedef void PositionChangeHandler(int second);
 

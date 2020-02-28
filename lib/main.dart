@@ -6,8 +6,8 @@ import 'package:flutter_music_app/config/provider_manager.dart';
 import 'package:flutter_music_app/config/router_manager.dart';
 import 'package:flutter_music_app/config/storage_manager.dart';
 import 'package:flutter_music_app/generated/i18n.dart';
-import 'package:flutter_music_app/models/local_view_model.dart';
-import 'package:flutter_music_app/models/theme_model.dart';
+import 'package:flutter_music_app/model/local_view_model.dart';
+import 'package:flutter_music_app/model/theme_model.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 

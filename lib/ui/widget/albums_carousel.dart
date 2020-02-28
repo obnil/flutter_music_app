@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_music_app/models/albums_model.dart';
-import 'package:flutter_music_app/models/data_model.dart';
-import 'package:flutter_music_app/ui/page/albums_screen.dart';
+import 'package:flutter_music_app/model/albums_model.dart';
+import 'package:flutter_music_app/model/song_model.dart';
+import 'package:flutter_music_app/ui/page/albums_page.dart';
 
 class AlbumsCarousel extends StatefulWidget {
 
@@ -46,13 +46,13 @@ class _AlbumsCarouselState extends State<AlbumsCarousel> {
           scrollDirection: Axis.horizontal,
           itemCount: widget.alubumsModel.list.length,
           itemBuilder: (BuildContext context, int index) {
-            Data data = widget.alubumsModel.list[index];
+            Song data = widget.alubumsModel.list[index];
             return GestureDetector(
               onTap: () => {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => AlbumsScreen(
+                    builder: (_) => AlbumsPage(
                       data: data,
                     ),
                   ),

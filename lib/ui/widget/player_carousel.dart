@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_music_app/models/data_model.dart';
-import 'package:flutter_music_app/models/song_model.dart';
+import 'package:flutter_music_app/model/song_model.dart';
 import 'package:audio_manager/audio_manager.dart';
 
 class Player extends StatefulWidget {
@@ -53,7 +52,7 @@ class PlayerState extends State<Player> {
     });
   }
 
-  void play(Data s) {
+  void play(Song s) {
     AudioManager.instance
         .start('http://music.163.com/song/media/outer/url?id=${s.songid}.mp3',
             s.title,
@@ -73,7 +72,7 @@ class PlayerState extends State<Player> {
           print("buffering $args");
           break;
         case AudioManagerEvents.playstatus:
-        print("isPlaying ${AudioManager.instance.isPlaying}");
+          print("isPlaying ${AudioManager.instance.isPlaying}");
           _songData.setPlaying(AudioManager.instance.isPlaying);
           break;
         case AudioManagerEvents.timeupdate:
@@ -108,7 +107,7 @@ class PlayerState extends State<Player> {
   }
 
   void next() {
-    Data data = _songData.nextSong;
+    Song data = _songData.nextSong;
     while (data.url == null) {
       data = _songData.nextSong;
     }
@@ -116,7 +115,7 @@ class PlayerState extends State<Player> {
   }
 
   void previous() {
-    Data data = _songData.prevSong;
+    Song data = _songData.prevSong;
     while (data.url == null) {
       data = _songData.prevSong;
     }
@@ -134,6 +133,10 @@ class PlayerState extends State<Player> {
 
   @override
   Widget build(BuildContext context) {
+    if (_songData.playNow) {
+      play(_songData.currentSong);
+      _songData.setPlayNow(false);
+    }
     return Column(
       children: _controllers(context),
     );
@@ -162,68 +165,95 @@ class PlayerState extends State<Player> {
 
   List<Widget> _controllers(BuildContext context) {
     return [
-      new Slider(
-        onChanged: (value) {
-          setState(() {
-            _slideValue = value;
-          });
-          Duration seconds =
-              Duration(seconds: (_duration.inSeconds * value).round());
-          AudioManager.instance.seekTo(seconds);
-        },
-        value: _slideValue ?? 0,
-        activeColor: Theme.of(context).accentColor,
-      ),
-      new Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16.0,
+      Visibility(
+        visible: !_songData.showList,
+        child: new Slider(
+          onChanged: (value) {
+            setState(() {
+              _slideValue = value;
+            });
+            Duration seconds =
+                Duration(seconds: (_duration.inSeconds * value).round());
+            AudioManager.instance.seekTo(seconds);
+          },
+          value: _slideValue ?? 0,
+          activeColor: Theme.of(context).accentColor,
         ),
-        child: _timer(context),
       ),
-      new Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 40.0),
-        child: new Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            IconButton(
-              onPressed: () => previous(),
+      Visibility(
+        visible: !_songData.showList,
+        child: new Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16.0,
+          ),
+          child: _timer(context),
+        ),
+      ),
+      new Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          Visibility(
+            visible: _songData.showList,
+            child: IconButton(
+              onPressed: () => _songData.setShowList(!_songData.showList),
               icon: Icon(
                 //Icons.skip_previous,
-                Icons.fast_rewind,
+                Icons.list,
                 size: 25.0,
                 color: Colors.grey,
               ),
             ),
-            ClipOval(
-                child: Container(
-              color: Theme.of(context).accentColor.withAlpha(30),
-              width: 80.0,
-              height: 80.0,
-              child: IconButton(
-                onPressed: () async {
-                  String status = await AudioManager.instance.playOrPause();
-                  print("await -- $status");
-                },
-                icon: Icon(
-                  _songData.isPlaying ? Icons.pause : Icons.play_arrow,
-                  size: 30.0,
-                  color: Theme.of(context).accentColor,
-                ),
-              ),
-            )),
-            IconButton(
-              onPressed: () => next(),
+          ),
+          IconButton(
+            onPressed: () => previous(),
+            icon: Icon(
+              //Icons.skip_previous,
+              Icons.fast_rewind,
+              size: 25.0,
+              color: Colors.grey,
+            ),
+          ),
+          ClipOval(
+              child: Container(
+            color: Theme.of(context).accentColor.withAlpha(30),
+            width: 80.0,
+            height: 80.0,
+            child: IconButton(
+              onPressed: () async {
+                String status = await AudioManager.instance.playOrPause();
+                print("await -- $status");
+              },
               icon: Icon(
-                //Icons.skip_next,
-                Icons.fast_forward,
+                _songData.isPlaying ? Icons.pause : Icons.play_arrow,
+                size: 30.0,
+                color: Theme.of(context).accentColor,
+              ),
+            ),
+          )),
+          IconButton(
+            onPressed: () => next(),
+            icon: Icon(
+              //Icons.skip_next,
+              Icons.fast_forward,
+              size: 25.0,
+              color: Colors.grey,
+            ),
+          ),
+          Visibility(
+            visible: _songData.showList,
+            child: IconButton(
+              onPressed: () => {},
+              icon: Icon(
+                //Icons.skip_previous,
+                Icons.volume_down,
                 size: 25.0,
                 color: Colors.grey,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     ];
   }

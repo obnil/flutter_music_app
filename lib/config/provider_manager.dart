@@ -1,7 +1,7 @@
-import 'package:flutter_music_app/models/favorite_model.dart';
-import 'package:flutter_music_app/models/local_view_model.dart';
-import 'package:flutter_music_app/models/song_model.dart';
-import 'package:flutter_music_app/models/theme_model.dart';
+import 'package:flutter_music_app/model/favorite_model.dart';
+import 'package:flutter_music_app/model/local_view_model.dart';
+import 'package:flutter_music_app/model/song_model.dart';
+import 'package:flutter_music_app/model/theme_model.dart';
 import 'package:provider/provider.dart';
 
 List<SingleChildCloneableWidget> providers = [

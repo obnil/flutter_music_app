@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_music_app/models/data_model.dart';
-import 'package:flutter_music_app/models/for_you_model.dart';
-import 'package:flutter_music_app/models/song_model.dart';
-import 'package:flutter_music_app/ui/page/player_screen.dart';
+import 'package:flutter_music_app/model/for_you_model.dart';
+import 'package:flutter_music_app/model/song_model.dart';
+import 'package:flutter_music_app/ui/page/player_page.dart';
 import 'package:provider/provider.dart';
 
 class ForYouCarousel extends StatefulWidget {
@@ -14,7 +13,7 @@ class ForYouCarousel extends StatefulWidget {
 }
 
 class _ForYouCarouselState extends State<ForYouCarousel> {
-  Widget _buildSongItem(Data data) {
+  Widget _buildSongItem(Song data) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
       child: Row(
@@ -113,18 +112,18 @@ class _ForYouCarouselState extends State<ForYouCarousel> {
         scrollDirection: Axis.vertical,
         itemCount: widget.forYouModel.list.length,
         itemBuilder: (BuildContext context, int index) {
-          Data data = widget.forYouModel.list[index];
+          Song data = widget.forYouModel.list[index];
           return GestureDetector(
             onTap: () {
               if (null != data.url) {
                 SongModel songModel = Provider.of(context);
                 songModel
-                    .setSongs(new List<Data>.from(widget.forYouModel.list));
+                    .setSongs(new List<Song>.from(widget.forYouModel.list));
                 songModel.setCurrentIndex(index);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => PlayScreen(
+                    builder: (_) => PlayPage(
                       nowPlay: true,
                     ),
                   ),

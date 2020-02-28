@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_music_app/models/albums_model.dart';
-import 'package:flutter_music_app/models/for_you_model.dart';
-import 'package:flutter_music_app/models/song_model.dart';
+import 'package:flutter_music_app/model/albums_model.dart';
+import 'package:flutter_music_app/model/for_you_model.dart';
+import 'package:flutter_music_app/model/song_model.dart';
 import 'package:flutter_music_app/provider/provider_widget.dart';
-import 'package:flutter_music_app/widgets/albums_carousel.dart';
+import 'package:flutter_music_app/ui/widget/albums_carousel.dart';
 import 'package:flutter_music_app/anims/record_anim.dart';
 import 'package:flutter_music_app/ui/widget/for_you_carousel.dart';
 import 'package:flutter_music_app/ui/page/search_page.dart';
