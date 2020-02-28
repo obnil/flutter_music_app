@@ -63,7 +63,7 @@ class PlayerState extends State<Player> {
     });
 
     AudioManager.instance.onEvents((events, args) {
-      print("$events, $args");
+      //print("events $events, args $args");
       switch (events) {
         case AudioManagerEvents.ready:
           print("ready to play");
@@ -73,6 +73,7 @@ class PlayerState extends State<Player> {
           print("buffering $args");
           break;
         case AudioManagerEvents.playstatus:
+        print("isPlaying ${AudioManager.instance.isPlaying}");
           _songData.setPlaying(AudioManager.instance.isPlaying);
           break;
         case AudioManagerEvents.timeupdate:
@@ -123,6 +124,7 @@ class PlayerState extends State<Player> {
   }
 
   String _formatDuration(Duration d) {
+    if (d == null) return "--:--";
     int minute = d.inMinutes;
     int second = (d.inSeconds > 60) ? (d.inSeconds % 60) : d.inSeconds;
     //print(d.inMinutes.toString() + "======" + d.inSeconds.toString());

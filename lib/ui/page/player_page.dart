@@ -1,43 +1,44 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_music_app/anims/player_anim.dart';
 import 'package:flutter_music_app/widgets/app_bar.dart';
 import 'package:flutter_music_app/models/song_model.dart';
-import 'package:flutter_music_app/ui/page/player_carousel.dart';
+import 'package:flutter_music_app/ui/widget/player_carousel.dart';
 import 'package:provider/provider.dart';
 
-class PlayScreen extends StatefulWidget {
+class PlayPage extends StatefulWidget {
   final bool nowPlay;
 
-  PlayScreen({this.nowPlay});
+  PlayPage({this.nowPlay});
 
   @override
-  _PlayScreenState createState() => _PlayScreenState();
+  _PlayPageState createState() => _PlayPageState();
 }
 
-class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
-  AnimationController controllerRecord;
-  Animation<double> animationRecord;
+class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin {
+  AnimationController controllerPlayer;
+  Animation<double> animationPlayer;
   final _commonTween = new Tween<double>(begin: 0.0, end: 1.0);
 
   @override
   initState() {
     super.initState();
-    controllerRecord = new AnimationController(
+    controllerPlayer = new AnimationController(
         duration: const Duration(milliseconds: 15000), vsync: this);
-    animationRecord =
-        new CurvedAnimation(parent: controllerRecord, curve: Curves.linear);
-    animationRecord.addStatusListener((status) {
+    animationPlayer =
+        new CurvedAnimation(parent: controllerPlayer, curve: Curves.linear);
+    animationPlayer.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        controllerRecord.repeat();
+        controllerPlayer.repeat();
       } else if (status == AnimationStatus.dismissed) {
-        controllerRecord.forward();
+        controllerPlayer.forward();
       }
     });
   }
 
   @override
   void dispose() {
-    controllerRecord.dispose();
+    controllerPlayer.dispose();
     super.dispose();
   }
 
@@ -45,11 +46,10 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     SongModel songModel = Provider.of(context);
     if (songModel.isPlaying) {
-      controllerRecord.forward();
+      controllerPlayer.forward();
     } else {
-      controllerRecord.stop(canceled: false);
+      controllerPlayer.stop(canceled: false);
     }
-    final Animation<double> animation = _commonTween.animate(controllerRecord);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 40.0),
@@ -60,23 +60,9 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
               children: <Widget>[
                 AppBarCarousel(),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-                RotationTransition(
-                    turns: animation,
-                    child: Hero(
-                      tag: songModel.currentSong.title +
-                          songModel.currentSong.author,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        height: MediaQuery.of(context).size.width * 0.5,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            image: NetworkImage(songModel.currentSong.pic),
-                          ),
-                        ),
-                      ),
-                    )),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                RotatePlayer(
+                          animation: _commonTween.animate(controllerPlayer)),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                 Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,

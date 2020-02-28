@@ -13,18 +13,26 @@ class AlbumCarousel extends StatefulWidget {
 }
 
 class _AlbumCarouselState extends State<AlbumCarousel> {
-  Widget _buildSongItem(Data data) {
+  Widget _buildSongItem(Data data, int index) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
       child: Row(
         children: <Widget>[
-          Hero(
-            tag: data.title + data.author,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12.0),
-              child: Container(
-                  width: 50, height: 50, child: Image.network(data.pic)),
-            ),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12.0),
+            child: Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).accentColor.withAlpha(30),
+                ),
+                width: 50,
+                height: 50,
+                child: Center(
+                    child: Text(
+                  '$index',
+                  style: TextStyle(
+                    color: Theme.of(context).accentColor,
+                  ),
+                ))),
           ),
           SizedBox(
             width: 20.0,
@@ -114,7 +122,7 @@ class _AlbumCarouselState extends State<AlbumCarousel> {
                       );
                     }
                   },
-                  child: _buildSongItem(data),
+                  child: _buildSongItem(data, index + 1),
                 );
               },
             ),

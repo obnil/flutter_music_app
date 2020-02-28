@@ -6,19 +6,19 @@ import 'package:flutter_music_app/models/song_model.dart';
 import 'package:flutter_music_app/provider/provider_widget.dart';
 import 'package:flutter_music_app/provider/view_state_widget.dart';
 import 'package:flutter_music_app/ui/helper/refresh_helper.dart';
-import 'package:flutter_music_app/ui/page/player_screen.dart';
+import 'package:flutter_music_app/ui/page/player_page.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class SearchScreen extends StatefulWidget {
+class SearchPage extends StatefulWidget {
   final String input;
 
-  SearchScreen({this.input});
+  SearchPage({this.input});
   @override
-  _SearchScreenState createState() => _SearchScreenState();
+  _SearchPageState createState() => _SearchPageState();
 }
 
-class _SearchScreenState extends State<SearchScreen> {
+class _SearchPageState extends State<SearchPage> {
   Widget _buildSongItem(Data data) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
@@ -151,7 +151,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (_) => PlayScreen(nowPlay: true),
+                                        builder: (_) => PlayPage(nowPlay: true),
                                       ),
                                     );
                                   }

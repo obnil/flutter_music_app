@@ -5,8 +5,8 @@ import 'package:flutter_music_app/models/song_model.dart';
 import 'package:flutter_music_app/provider/provider_widget.dart';
 import 'package:flutter_music_app/widgets/albums_carousel.dart';
 import 'package:flutter_music_app/anims/record_anim.dart';
-import 'package:flutter_music_app/widgets/for_you_carousel.dart';
-import 'package:flutter_music_app/ui/page/search_screen.dart';
+import 'package:flutter_music_app/ui/widget/for_you_carousel.dart';
+import 'package:flutter_music_app/ui/page/search_page.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage>
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (_) => SearchScreen(
+                                      builder: (_) => SearchPage(
                                         input: value,
                                       ),
                                     ),

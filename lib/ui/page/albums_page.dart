@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_music_app/widgets/album_carousel.dart';
+import 'package:flutter_music_app/ui/widget/album_carousel.dart';
 import 'package:flutter_music_app/widgets/app_bar.dart';
 import 'package:flutter_music_app/models/data_model.dart';
 
-class AlbumsScreen extends StatefulWidget {
+class AlbumsPage extends StatefulWidget {
   final Data data;
 
-  AlbumsScreen({this.data});
+  AlbumsPage({this.data});
   @override
-  _AlbumsScreenState createState() => _AlbumsScreenState();
+  _AlbumsPageState createState() => _AlbumsPageState();
 }
 
-class _AlbumsScreenState extends State<AlbumsScreen> {
+class _AlbumsPageState extends State<AlbumsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,15 +35,8 @@ class _AlbumsScreenState extends State<AlbumsScreen> {
                 SizedBox(height: 20.0),
                 Center(
                   child: Text(
-                    widget.data.title,
-                    style: TextStyle(color: Colors.black, fontSize: 15.0),
-                  ),
-                ),
-                SizedBox(height: 20.0),
-                Center(
-                  child: Text(
                     widget.data.author,
-                    style: TextStyle(color: Colors.grey, fontSize: 12.0),
+                    style: TextStyle(fontSize: 12.0),
                   ),
                 ),
                 Row(
@@ -65,6 +58,7 @@ class _AlbumsScreenState extends State<AlbumsScreen> {
                               Icons.play_arrow,
                               color: Theme.of(context).accentColor,
                             ),
+                            SizedBox(width: 5,),
                             Text(
                               'Play',
                               style: TextStyle(
@@ -88,6 +82,7 @@ class _AlbumsScreenState extends State<AlbumsScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Icon(Icons.add),
+                            SizedBox(width: 5,),
                             Text('Add'),
                           ],
                         ),

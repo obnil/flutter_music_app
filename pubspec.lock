@@ -27,7 +27,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "61c031de02545e5d5ee96e231ec5732b74f1298a"
+      resolved-ref: fef5099d98f6b1da98435f475c9c44e3613752d0
       url: "https://gitee.com/obnil/audio_manager.git"
     source: git
     version: "0.3.1+1"
