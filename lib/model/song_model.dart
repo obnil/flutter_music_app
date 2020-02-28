@@ -72,7 +72,7 @@ class SongModel with ChangeNotifier {
   }
 
   /// 在播放列表界面点击后立刻播放
-  bool _playNow;
+  bool _playNow = false;
   bool get playNow => _playNow;
   setPlayNow(bool playNow) {
     _playNow = playNow;
