@@ -15,7 +15,7 @@ class _ForYouCarouselState extends State<SongListCarousel> {
     return data.songid == widget.model.currentSong.songid
         ? Padding(
             padding:
-                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                const EdgeInsets.symmetric(horizontal: 20.0),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
               child: Container(

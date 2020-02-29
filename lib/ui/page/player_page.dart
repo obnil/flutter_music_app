@@ -74,7 +74,8 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin {
                                     MediaQuery.of(context).size.height * 0.03),
                             Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: <Widget>[
                                   IconButton(
                                     onPressed: () => songModel
@@ -86,12 +87,18 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin {
                                     ),
                                   ),
                                   IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(
-                                      Icons.repeat,
-                                      size: 25.0,
-                                      color: Colors.grey,
-                                    ),
+                                    onPressed: () => songModel.changeRepeat(),
+                                    icon: songModel.isRepeat == true
+                                        ? Icon(
+                                            Icons.repeat,
+                                            size: 25.0,
+                                            color: Colors.grey,
+                                          )
+                                        : Icon(
+                                            Icons.shuffle,
+                                            size: 25.0,
+                                            color: Colors.grey,
+                                          ),
                                   ),
                                   IconButton(
                                     onPressed: () {},
@@ -115,8 +122,8 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin {
                                     MediaQuery.of(context).size.height * 0.02),
                             Text(
                               songModel.currentSong.title,
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 15.0),
+                              style: TextStyle(
+                                  color: Colors.black, fontSize: 15.0),
                             ),
                             SizedBox(
                                 height:

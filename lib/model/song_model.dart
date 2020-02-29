@@ -23,6 +23,13 @@ class SongModel with ChangeNotifier {
     notifyListeners();
   }
 
+  bool _isRepeat = true;
+  bool get isRepeat => _isRepeat;
+  changeRepeat() {
+    _isRepeat = !_isRepeat;
+    notifyListeners();
+  }
+
   bool _showList = false;
   bool get showList => _showList;
   setShowList(bool showList) {
@@ -82,31 +89,32 @@ class SongModel with ChangeNotifier {
   Song get currentSong => _songs[_currentSongIndex];
 
   Song get nextSong {
-    if (_currentSongIndex < length) {
-      _currentSongIndex++;
+    if (isRepeat) {
+      if (_currentSongIndex < length) {
+        _currentSongIndex++;
+      }
+      if (_currentSongIndex >= length) {
+        _currentSongIndex = 0;
+      }
+    } else {
+      Random r = new Random();
+      _currentSongIndex = r.nextInt(_songs.length);
     }
-    //if (_currentSongIndex >= length) return null;
-    if (_currentSongIndex >= length) {
-      _currentSongIndex = 0;
-    }
-    notifyListeners();
-    return _songs[_currentSongIndex];
-  }
-
-  Song get randomSong {
-    Random r = new Random();
-    _currentSongIndex = r.nextInt(_songs.length);
     notifyListeners();
     return _songs[_currentSongIndex];
   }
 
   Song get prevSong {
-    if (_currentSongIndex > 0) {
-      _currentSongIndex--;
-    }
-    //if (_currentSongIndex < 0) return null;
-    if (_currentSongIndex < 0) {
-      _currentSongIndex = length - 1;
+    if (isRepeat) {
+      if (_currentSongIndex > 0) {
+        _currentSongIndex--;
+      }
+      if (_currentSongIndex < 0) {
+        _currentSongIndex = length - 1;
+      }
+    } else {
+      Random r = new Random();
+      _currentSongIndex = r.nextInt(_songs.length);
     }
     notifyListeners();
     return _songs[_currentSongIndex];
