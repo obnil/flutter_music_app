@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_music_app/generated/i18n.dart';
 import 'package:flutter_music_app/model/for_you_model.dart';
 import 'package:flutter_music_app/model/song_model.dart';
 import 'package:flutter_music_app/ui/page/player_page.dart';
@@ -19,10 +20,10 @@ class _ForYouCarouselState extends State<ForYouCarousel> {
       child: Row(
         children: <Widget>[
           ClipRRect(
-              borderRadius: BorderRadius.circular(12.0),
-              child: Container(
-                  width: 50, height: 50, child: Image.network(data.pic)),
-            ),
+            borderRadius: BorderRadius.circular(12.0),
+            child: Container(
+                width: 50, height: 50, child: Image.network(data.pic)),
+          ),
           SizedBox(
             width: 20.0,
           ),
@@ -87,7 +88,7 @@ class _ForYouCarouselState extends State<ForYouCarousel> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text('For you',
+            Text(S.of(context).forYou,
                 style: TextStyle(
                     fontSize: 22.0,
                     fontWeight: FontWeight.bold,
@@ -96,7 +97,7 @@ class _ForYouCarouselState extends State<ForYouCarousel> {
               onTap: () => {
                 print('View All'),
               },
-              child: Text('View All',
+              child: Text(S.of(context).viewAll,
                   style: TextStyle(
                     color: Colors.grey,
                     fontSize: 12.0,

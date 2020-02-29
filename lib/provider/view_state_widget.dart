@@ -104,12 +104,12 @@ class ViewStateErrorWidget extends StatelessWidget {
     switch (error.errorType) {
       case ErrorType.networkError:
         defaultImage = Transform.translate(
-          offset: Offset(-50,0),
+          offset: Offset(-50, 0),
           child: const Icon(IconFonts.pageNetworkError,
               size: 100, color: Colors.grey),
         );
         defaultTitle = S.of(context).viewStateMessageNetworkError;
-        errorMessage = '';// 网络异常移除message提示
+        errorMessage = ''; // 网络异常移除message提示
         break;
       case ErrorType.defaultError:
         defaultImage =
@@ -153,51 +153,6 @@ class ViewStateEmptyWidget extends StatelessWidget {
       title: message ?? S.of(context).viewStateMessageEmpty,
       buttonText: buttonText,
       buttonTextData: S.of(context).viewStateButtonRefresh,
-    );
-  }
-}
-
-/// 页面未授权
-class ViewStateUnAuthWidget extends StatelessWidget {
-  final String message;
-  final Widget image;
-  final Widget buttonText;
-  final VoidCallback onPressed;
-
-  const ViewStateUnAuthWidget(
-      {Key key,
-      this.image,
-      this.message,
-      this.buttonText,
-      @required this.onPressed})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ViewStateWidget(
-      onPressed: this.onPressed,
-      image: image ?? ViewStateUnAuthImage(),
-      title: message ?? S.of(context).viewStateMessageUnAuth,
-      buttonText: buttonText,
-      buttonTextData: S.of(context).viewStateButtonLogin,
-    );
-  }
-}
-
-/// 未授权图片
-class ViewStateUnAuthImage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Hero(
-      tag: 'loginLogo',
-      child: Image.asset(
-        ImageHelper.wrapAssets('login_logo.png'),
-        width: 130,
-        height: 100,
-        fit: BoxFit.fitWidth,
-        color: Theme.of(context).accentColor,
-        colorBlendMode: BlendMode.srcIn,
-      ),
     );
   }
 }

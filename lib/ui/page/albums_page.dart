@@ -23,15 +23,12 @@ class _AlbumsPageState extends State<AlbumsPage> {
           Expanded(
             child: ListView(
               children: <Widget>[
-                Hero(
-                  tag: 'albums' + widget.data.pic,
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(30.0),
-                      child: Container(
-                          width: MediaQuery.of(context).size.width * 0.5,
-                          height: MediaQuery.of(context).size.width * 0.5,
-                          child: Image.network(widget.data.pic))),
-                ),
+                ClipRRect(
+                    borderRadius: BorderRadius.circular(30.0),
+                    child: Container(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        height: MediaQuery.of(context).size.width * 0.5,
+                        child: Image.network(widget.data.pic))),
                 SizedBox(height: 20.0),
                 Center(
                   child: Text(
@@ -58,7 +55,9 @@ class _AlbumsPageState extends State<AlbumsPage> {
                               Icons.play_arrow,
                               color: Theme.of(context).accentColor,
                             ),
-                            SizedBox(width: 5,),
+                            SizedBox(
+                              width: 5,
+                            ),
                             Text(
                               'Play',
                               style: TextStyle(
@@ -82,7 +81,9 @@ class _AlbumsPageState extends State<AlbumsPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Icon(Icons.add),
-                            SizedBox(width: 5,),
+                            SizedBox(
+                              width: 5,
+                            ),
                             Text('Add'),
                           ],
                         ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/generated/i18n.dart';
 import 'package:flutter_music_app/ui/widget/app_bar.dart';
-import 'package:flutter_music_app/config/router_manager.dart';
 import 'package:flutter_music_app/model/song_model.dart';
 import 'package:flutter_music_app/provider/provider_widget.dart';
 import 'package:flutter_music_app/provider/view_state_widget.dart';
@@ -25,10 +24,10 @@ class _SearchPageState extends State<SearchPage> {
       child: Row(
         children: <Widget>[
           ClipRRect(
-              borderRadius: BorderRadius.circular(12.0),
-              child: Container(
-                  width: 50, height: 50, child: Image.network(data.pic)),
-            ),
+            borderRadius: BorderRadius.circular(12.0),
+            child: Container(
+                width: 50, height: 50, child: Image.network(data.pic)),
+          ),
           SizedBox(
             width: 20.0,
           ),
@@ -115,15 +114,6 @@ class _SearchPageState extends State<SearchPage> {
                           onPressed: model.initData);
                     } else if (model.empty) {
                       return ViewStateEmptyWidget(onPressed: model.initData);
-                    } else if (model.unAuthorized) {
-                      return ViewStateUnAuthWidget(onPressed: () async {
-                        var success = await Navigator.of(context)
-                            .pushNamed(RouteName.login);
-                        // 登录成功,获取数据,刷新页面
-                        if (success ?? false) {
-                          model.initData();
-                        }
-                      });
                     }
                     return SmartRefresher(
                       controller: model.refreshController,

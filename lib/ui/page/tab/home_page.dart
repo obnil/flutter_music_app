@@ -64,6 +64,7 @@ class _HomePageState extends State<HomePage>
             },
             model1: AlbumsModel(input: '老歌'),
             model2: ForYouModel(input: '精选'),
+            autoDispose: false,
             builder: (context, alubumsModel, forYouModel, child) {
               return Column(children: <Widget>[
                 Row(

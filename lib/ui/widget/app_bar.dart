@@ -11,17 +11,15 @@ class AppBarCarousel extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.arrow_back_ios),
             iconSize: 25.0,
-            color: Colors.black54,
             onPressed: () => {
               Navigator.pop(context),
             },
           ),
           IconButton(
-                icon: Icon(Icons.share),
-                iconSize: 25.0,
-                color: Colors.black54,
-                onPressed: () => {},
-              ),
+            icon: Icon(Icons.share),
+            iconSize: 25.0,
+            onPressed: () => {},
+          ),
         ],
       ),
     );

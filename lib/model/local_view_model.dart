@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/config/storage_manager.dart';
-import 'package:flutter_music_app/generated/i18n.dart';
 
 class LocaleModel extends ChangeNotifier {
-//  static const localeNameList = ['auto', '中文', 'English'];
-  static const localeValueList = ['', 'zh-CN', 'en'];
+  static const localeValueList = ['zh-CN', 'en'];
 
   //
   static const kLocaleIndex = 'kLocaleIndex';
@@ -14,31 +12,25 @@ class LocaleModel extends ChangeNotifier {
   int get localeIndex => _localeIndex;
 
   Locale get locale {
-    if (_localeIndex > 0) {
-      var value = localeValueList[_localeIndex].split("-");
-      return Locale(value[0], value.length == 2 ? value[1] : '');
-    }
-    // 跟随系统
-    return null;
+    var value = localeValueList[_localeIndex].split("-");
+    return Locale(value[0], value.length == 2 ? value[1] : '');
   }
 
   LocaleModel() {
     _localeIndex = StorageManager.sharedPreferences.getInt(kLocaleIndex) ?? 0;
   }
 
-  switchLocale(int index) {
-    _localeIndex = index;
+  switchLocale() {
+    _localeIndex = 1 - _localeIndex;
     notifyListeners();
-    StorageManager.sharedPreferences.setInt(kLocaleIndex, index);
+    StorageManager.sharedPreferences.setInt(kLocaleIndex, _localeIndex);
   }
 
   static String localeName(index, context) {
     switch (index) {
       case 0:
-        return S.of(context).autoBySystem;
-      case 1:
         return '中文';
-      case 2:
+      case 1:
         return 'English';
       default:
         return '';

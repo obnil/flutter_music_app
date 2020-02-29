@@ -14,7 +14,7 @@ class S implements WidgetsLocalizations {
   static S current;
 
   static const GeneratedLocalizationsDelegate delegate =
-    GeneratedLocalizationsDelegate();
+      GeneratedLocalizationsDelegate();
 
   static S of(BuildContext context) => Localizations.of<S>(context, S);
 
@@ -35,7 +35,8 @@ class S implements WidgetsLocalizations {
   String get appUpdateDownloadFailed => "Download failed";
   String get appUpdateDownloading => "Downloading...";
   String get appUpdateLeastVersion => "Least version now ";
-  String get appUpdateReDownloadContent => "It has been detected that it has been downloaded, whether it is installed?";
+  String get appUpdateReDownloadContent =>
+      "It has been detected that it has been downloaded, whether it is installed?";
   String get appUpdateUpdate => "Version Update";
   String get article_tag_top => "Top";
   String get autoBySystem => "Auto";
@@ -80,6 +81,9 @@ class S implements WidgetsLocalizations {
   String get tabUser => "Me";
   String get theme => "Theme";
   String get toSignIn => "Sign In";
+  String get albums => "Albums";
+  String get viewAll => "View All";
+  String get forYou => "For you";
   String get toSignUp => "Sign Up";
   String get twoPwdDifferent => "The two passwords differ";
   String get unLike => "UnLike";
@@ -222,6 +226,12 @@ class $zh_CN extends S {
   @override
   String get toSignIn => "点我登录";
   @override
+  String get albums => "歌集";
+  @override
+  String get viewAll => "查看所有";
+  @override
+  String get forYou => "推荐";
+  @override
   String get userName => "请输入账户名";
   @override
   String get appUpdateDownloadCanceled => "下载已取消";
@@ -261,7 +271,8 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {
     ];
   }
 
-  LocaleListResolutionCallback listResolution({Locale fallback, bool withCountry = true}) {
+  LocaleListResolutionCallback listResolution(
+      {Locale fallback, bool withCountry = true}) {
     return (List<Locale> locales, Iterable<Locale> supported) {
       if (locales == null || locales.isEmpty) {
         return fallback ?? supported.first;
@@ -271,7 +282,8 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {
     };
   }
 
-  LocaleResolutionCallback resolution({Locale fallback, bool withCountry = true}) {
+  LocaleResolutionCallback resolution(
+      {Locale fallback, bool withCountry = true}) {
     return (Locale locale, Iterable<Locale> supported) {
       return _resolve(locale, fallback, supported, withCountry);
     };
@@ -289,7 +301,7 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {
           S.current = const $zh_CN();
           return SynchronousFuture<S>(S.current);
         default:
-          // NO-OP.
+        // NO-OP.
       }
     }
     S.current = const S();
@@ -305,7 +317,8 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {
   ///
   /// Internal method to resolve a locale from a list of locales.
   ///
-  Locale _resolve(Locale locale, Locale fallback, Iterable<Locale> supported, bool withCountry) {
+  Locale _resolve(Locale locale, Locale fallback, Iterable<Locale> supported,
+      bool withCountry) {
     if (locale == null || !_isSupported(locale, withCountry)) {
       return fallback ?? supported.first;
     }
@@ -338,7 +351,9 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {
         }
 
         // If no country requirement is requested, check if this locale has no country.
-        if (true != withCountry && (supportedLocale.countryCode == null || supportedLocale.countryCode.isEmpty)) {
+        if (true != withCountry &&
+            (supportedLocale.countryCode == null ||
+                supportedLocale.countryCode.isEmpty)) {
           return true;
         }
       }
@@ -348,7 +363,7 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {
 }
 
 String getLang(Locale l) => l == null
-  ? null
-  : l.countryCode != null && l.countryCode.isEmpty
-    ? l.languageCode
-    : l.toString();
+    ? null
+    : l.countryCode != null && l.countryCode.isEmpty
+        ? l.languageCode
+        : l.toString();

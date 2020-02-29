@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_music_app/generated/i18n.dart';
 import 'package:flutter_music_app/model/albums_model.dart';
 import 'package:flutter_music_app/model/song_model.dart';
 import 'package:flutter_music_app/ui/page/albums_page.dart';
 
 class AlbumsCarousel extends StatefulWidget {
-
   final AlbumsModel alubumsModel;
 
   AlbumsCarousel(this.alubumsModel);
@@ -21,7 +21,7 @@ class _AlbumsCarouselState extends State<AlbumsCarousel> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text('Albums',
+            Text(S.of(context).albums,
                 style: TextStyle(
                     fontSize: 22.0,
                     fontWeight: FontWeight.bold,
@@ -30,7 +30,7 @@ class _AlbumsCarouselState extends State<AlbumsCarousel> {
               onTap: () => {
                 print('View All'),
               },
-              child: Text('View All',
+              child: Text(S.of(context).viewAll,
                   style: TextStyle(
                     color: Colors.grey,
                     fontSize: 12.0,
@@ -68,16 +68,13 @@ class _AlbumsCarouselState extends State<AlbumsCarousel> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Hero(
-                        tag: 'albums' + data.pic,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20.0),
-                          child: Image(
-                            height: 120.0,
-                            width: 120.0,
-                            image: NetworkImage(data.pic),
-                            fit: BoxFit.cover,
-                          ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(20.0),
+                        child: Image(
+                          height: 120.0,
+                          width: 120.0,
+                          image: NetworkImage(data.pic),
+                          fit: BoxFit.cover,
                         ),
                       ),
                       SizedBox(

@@ -89,7 +89,6 @@ class _FavoritePageState extends State<FavoritePage> {
         body: Padding(
             padding: const EdgeInsets.only(top: 40.0),
             child: ListView.builder(
-              scrollDirection: Axis.vertical,
               itemCount: favoriteModel.favoriteSong.length,
               itemBuilder: (BuildContext context, int index) {
                 Song data = favoriteModel.favoriteSong[index];
