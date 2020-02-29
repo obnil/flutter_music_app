@@ -64,6 +64,7 @@ class S implements WidgetsLocalizations {
   String get retry => "Retry";
   String get searchHistory => "History";
   String get searchHot => "Hot";
+  String get searchSuggest => "Track,album,artist,podcast";
   String get searchShake => "Shake";
   String get setting => "Setting";
   String get settingFont => "System Font";
@@ -253,6 +254,8 @@ class $zh_CN extends S {
   String get viewStateButtonLogin => "登录";
   @override
   String get searchHot => "热门搜索";
+  @override
+  String get searchSuggest => "歌名 歌手名 专辑名";
   @override
   String get darkMode => "黑夜模式";
   @override

@@ -9,14 +9,34 @@ class AppBarCarousel extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           IconButton(
-            icon: Icon(Icons.arrow_back_ios),
+            icon: Theme.of(context).brightness == Brightness.dark
+                ? Icon(
+                    Icons.arrow_back_ios,
+                    size: 25.0,
+                  )
+                : Icon(
+                    Icons.arrow_back_ios,
+                    size: 25.0,
+                    color: Color(0xFF787878),
+                  ),
             iconSize: 25.0,
             onPressed: () => {
               Navigator.pop(context),
             },
           ),
           IconButton(
-            icon: Icon(Icons.share),
+            icon: Theme.of(context).brightness == Brightness.dark
+                ? Icon(
+                    //Icons.skip_previous,
+                    Icons.share,
+                    size: 25.0,
+                  )
+                : Icon(
+                    //Icons.skip_previous,
+                    Icons.share,
+                    size: 25.0,
+                    color: Color(0xFF787878),
+                  ),
             iconSize: 25.0,
             onPressed: () => {},
           ),

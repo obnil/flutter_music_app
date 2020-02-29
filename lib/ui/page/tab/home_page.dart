@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_music_app/generated/i18n.dart';
 import 'package:flutter_music_app/model/albums_model.dart';
 import 'package:flutter_music_app/model/for_you_model.dart';
 import 'package:flutter_music_app/model/song_model.dart';
@@ -108,7 +109,7 @@ class _HomePageState extends State<HomePage>
                                   ),
                                   hintText: songModel.songs != null
                                       ? songModel.currentSong.title
-                                      : 'Track,album,artist,podcast'),
+                                      : S.of(context).searchSuggest),
                             ),
                           )),
                     ),

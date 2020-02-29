@@ -199,10 +199,11 @@ class PlayerState extends State<Player> {
             child: IconButton(
               onPressed: () => _songData.setShowList(!_songData.showList),
               icon: Icon(
-                //Icons.skip_previous,
                 Icons.list,
                 size: 25.0,
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Theme.of(context).accentColor
+                    : Color(0xFF787878),
               ),
             ),
           ),
@@ -212,7 +213,9 @@ class PlayerState extends State<Player> {
               //Icons.skip_previous,
               Icons.fast_rewind,
               size: 25.0,
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Theme.of(context).accentColor
+                  : Color(0xFF787878),
             ),
           ),
           ClipOval(
@@ -238,7 +241,9 @@ class PlayerState extends State<Player> {
               //Icons.skip_next,
               Icons.fast_forward,
               size: 25.0,
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Theme.of(context).accentColor
+                  : Color(0xFF787878),
             ),
           ),
           Visibility(
@@ -249,7 +254,9 @@ class PlayerState extends State<Player> {
                 //Icons.skip_previous,
                 Icons.volume_down,
                 size: 25.0,
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Theme.of(context).accentColor
+                    : Color(0xFF787878),
               ),
             ),
           ),
