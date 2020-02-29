@@ -10,7 +10,8 @@ class FavoritePage extends StatefulWidget {
 }
 
 class _FavoritePageState extends State<FavoritePage> {
-  Widget _buildSongItem(Song data, bool isCollect) {
+  Widget _buildSongItem(Song data) {
+    FavoriteModel favoriteModel = Provider.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
       child: Row(
@@ -61,22 +62,24 @@ class _FavoritePageState extends State<FavoritePage> {
                   ),
                 ]),
           ),
-          data.url == null
-              ? Icon(
-                  Icons.favorite_border,
-                  color: Color(0xFFE0E0E0),
-                  size: 20.0,
-                )
-              : isCollect == true
+          IconButton(
+              onPressed: () => favoriteModel.collect(data),
+              icon: data.url == null
                   ? Icon(
-                      Icons.favorite,
-                      color: Colors.red,
-                      size: 20.0,
-                    )
-                  : Icon(
                       Icons.favorite_border,
+                      color: Color(0xFFE0E0E0),
                       size: 20.0,
                     )
+                  : favoriteModel.isCollect(data)
+                      ? Icon(
+                          Icons.favorite,
+                          color: Colors.red,
+                          size: 20.0,
+                        )
+                      : Icon(
+                          Icons.favorite_border,
+                          size: 20.0,
+                        ))
         ],
       ),
     );
@@ -109,7 +112,7 @@ class _FavoritePageState extends State<FavoritePage> {
                       );
                     }
                   },
-                  child: _buildSongItem(data, favoriteModel.isCollect(data)),
+                  child: _buildSongItem(data),
                 );
               },
             )));

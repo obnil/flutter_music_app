@@ -14,6 +14,7 @@ class SongListCarousel extends StatefulWidget {
 
 class _ForYouCarouselState extends State<SongListCarousel> {
   Widget _buildSongItem(Song data) {
+    FavoriteModel favoriteModel = Provider.of(context);
     return data.songid == widget.model.currentSong.songid
         ? Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -132,22 +133,24 @@ class _ForYouCarouselState extends State<SongListCarousel> {
                         ),
                       ]),
                 ),
-                data.url == null
-                    ? Icon(
-                        Icons.favorite_border,
-                        color: Color(0xFFE0E0E0),
-                        size: 20.0,
-                      )
-                    : widget.favoriteModel.isCollect(data)
+                IconButton(
+                    onPressed: () => favoriteModel.collect(data),
+                    icon: data.url == null
                         ? Icon(
-                            Icons.favorite,
-                            color: Colors.red,
-                            size: 20.0,
-                          )
-                        : Icon(
                             Icons.favorite_border,
+                            color: Color(0xFFE0E0E0),
                             size: 20.0,
                           )
+                        : favoriteModel.isCollect(data)
+                            ? Icon(
+                                Icons.favorite,
+                                color: Colors.red,
+                                size: 20.0,
+                              )
+                            : Icon(
+                                Icons.favorite_border,
+                                size: 20.0,
+                              ))
               ],
             ),
           );
