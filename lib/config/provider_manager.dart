@@ -17,8 +17,8 @@ List<SingleChildCloneableWidget> independentServices = [
   ChangeNotifierProvider<LocaleModel>(
     create: (context) => LocaleModel(),
   ),
-  ChangeNotifierProvider<GlobalFavouriteStateModel>(
-    create: (context) => GlobalFavouriteStateModel(),
+  ChangeNotifierProvider<FavoriteModel>(
+    create: (context) => FavoriteModel(),
   ),
   ChangeNotifierProvider<SongModel>(
     create: (context) => SongModel(),

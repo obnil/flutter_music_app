@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/anims/player_anim.dart';
+import 'package:flutter_music_app/model/favorite_model.dart';
 import 'package:flutter_music_app/ui/widget/app_bar.dart';
 import 'package:flutter_music_app/model/song_model.dart';
 import 'package:flutter_music_app/ui/widget/player_carousel.dart';
@@ -46,6 +47,7 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     SongModel songModel = Provider.of(context);
+    FavoriteModel favouriteModel = Provider.of(context);
     if (songModel.isPlaying) {
       controllerPlayer.forward();
     } else {
@@ -101,12 +103,21 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin {
                                           ),
                                   ),
                                   IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(
-                                      Icons.favorite_border,
-                                      size: 25.0,
-                                      color: Colors.grey,
-                                    ),
+                                    onPressed: () => favouriteModel
+                                        .collect(songModel.currentSong),
+                                    icon: favouriteModel.isCollect(
+                                                songModel.currentSong) ==
+                                            true
+                                        ? Icon(
+                                            Icons.favorite,
+                                            size: 25.0,
+                                            color: Colors.red,
+                                          )
+                                        : Icon(
+                                            Icons.favorite_border,
+                                            size: 25.0,
+                                            color: Colors.grey,
+                                          ),
                                   ),
                                   IconButton(
                                     onPressed: () {},
@@ -135,7 +146,7 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin {
                             ),
                           ],
                         )
-                      : SongListCarousel(songModel),
+                      : SongListCarousel(songModel, favouriteModel),
                 ],
               ),
             ),

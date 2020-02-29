@@ -3,7 +3,11 @@ import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/generated/i18n.dart';
+import 'package:flutter_music_app/model/favorite_model.dart';
+import 'package:flutter_music_app/provider/provider_widget.dart';
+import 'package:flutter_music_app/ui/page/tab/favorite_page.dart';
 import 'package:flutter_music_app/ui/page/tab/home_page.dart';
+import 'package:provider/provider.dart';
 
 class TabNavigator extends StatefulWidget {
   @override
@@ -14,7 +18,12 @@ class _TabNavigatorState extends State<TabNavigator> {
   var _pageController = PageController();
   int _selectedIndex = 0;
 
-  List<Widget> pages = <Widget>[HomePage(), HomePage(), HomePage(), HomePage()];
+  List<Widget> pages = <Widget>[
+    HomePage(),
+    HomePage(),
+    FavoritePage(),
+    HomePage()
+  ];
 
   @override
   void dispose() {
@@ -24,18 +33,26 @@ class _TabNavigatorState extends State<TabNavigator> {
 
   @override
   Widget build(BuildContext context) {
+    FavoriteModel favoriteModel = Provider.of(context);
     return Scaffold(
-      body: PageView.builder(
-        itemBuilder: (ctx, index) => pages[index],
-        itemCount: pages.length,
-        controller: _pageController,
-        physics: NeverScrollableScrollPhysics(),
-        onPageChanged: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-      ),
+      body: ProviderWidget<FavoriteListModel>(
+          onModelReady: (favoriteListModel) async {
+            await favoriteListModel.initData();
+          },
+          model: FavoriteListModel(favoriteModel: favoriteModel),
+          builder: (context, model, child) {
+            return PageView.builder(
+              itemBuilder: (ctx, index) => pages[index],
+              itemCount: pages.length,
+              controller: _pageController,
+              physics: NeverScrollableScrollPhysics(),
+              onPageChanged: (index) {
+                setState(() {
+                  _selectedIndex = index;
+                });
+              },
+            );
+          }),
       bottomNavigationBar: Container(
         padding: EdgeInsets.all(10.0),
         decoration: BoxDecoration(

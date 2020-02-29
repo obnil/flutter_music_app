@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_music_app/model/favorite_model.dart';
 import 'package:flutter_music_app/model/song_model.dart';
 import 'package:provider/provider.dart';
 
 class SongListCarousel extends StatefulWidget {
   final SongModel model;
+  final FavoriteModel favoriteModel;
 
-  SongListCarousel(this.model);
+  SongListCarousel(this.model, this.favoriteModel);
   @override
   _ForYouCarouselState createState() => _ForYouCarouselState();
 }
@@ -14,8 +16,7 @@ class _ForYouCarouselState extends State<SongListCarousel> {
   Widget _buildSongItem(Song data) {
     return data.songid == widget.model.currentSong.songid
         ? Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 20.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
               child: Container(
@@ -137,10 +138,16 @@ class _ForYouCarouselState extends State<SongListCarousel> {
                         color: Color(0xFFE0E0E0),
                         size: 20.0,
                       )
-                    : Icon(
-                        Icons.favorite_border,
-                        size: 20.0,
-                      )
+                    : widget.favoriteModel.isCollect(data)
+                        ? Icon(
+                            Icons.favorite,
+                            color: Colors.red,
+                            size: 20.0,
+                          )
+                        : Icon(
+                            Icons.favorite_border,
+                            size: 20.0,
+                          )
               ],
             ),
           );

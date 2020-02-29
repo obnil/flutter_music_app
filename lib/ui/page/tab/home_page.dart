@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage>
                               controller: _inputController,
                               onChanged: (value) {},
                               onSubmitted: (value) {
-                                if (value.isNotEmpty) {
+                                if (value.isNotEmpty == true) {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
