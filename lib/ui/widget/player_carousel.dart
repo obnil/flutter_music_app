@@ -189,78 +189,81 @@ class PlayerState extends State<Player> {
           child: _timer(context),
         ),
       ),
-      new Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          Visibility(
-            visible: _songData.showList,
-            child: IconButton(
-              onPressed: () => _songData.setShowList(!_songData.showList),
-              icon: Icon(
-                Icons.list,
-                size: 25.0,
-                color: Theme.of(context).brightness == Brightness.dark
-                    ? Theme.of(context).accentColor
-                    : Color(0xFF787878),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: new Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Visibility(
+              visible: _songData.showList,
+              child: IconButton(
+                onPressed: () => _songData.setShowList(!_songData.showList),
+                icon: Icon(
+                  Icons.list,
+                  size: 25.0,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Theme.of(context).accentColor
+                      : Color(0xFF787878),
+                ),
               ),
             ),
-          ),
-          IconButton(
-            onPressed: () => previous(),
-            icon: Icon(
-              //Icons.skip_previous,
-              Icons.fast_rewind,
-              size: 25.0,
-              color: Theme.of(context).brightness == Brightness.dark
-                  ? Theme.of(context).accentColor
-                  : Color(0xFF787878),
-            ),
-          ),
-          ClipOval(
-              child: Container(
-            color: Theme.of(context).accentColor.withAlpha(30),
-            width: 80.0,
-            height: 80.0,
-            child: IconButton(
-              onPressed: () async {
-                String status = await AudioManager.instance.playOrPause();
-                print("await -- $status");
-              },
-              icon: Icon(
-                _songData.isPlaying ? Icons.pause : Icons.play_arrow,
-                size: 30.0,
-                color: Theme.of(context).accentColor,
-              ),
-            ),
-          )),
-          IconButton(
-            onPressed: () => next(),
-            icon: Icon(
-              //Icons.skip_next,
-              Icons.fast_forward,
-              size: 25.0,
-              color: Theme.of(context).brightness == Brightness.dark
-                  ? Theme.of(context).accentColor
-                  : Color(0xFF787878),
-            ),
-          ),
-          Visibility(
-            visible: _songData.showList,
-            child: IconButton(
-              onPressed: () => {},
+            IconButton(
+              onPressed: () => previous(),
               icon: Icon(
                 //Icons.skip_previous,
-                Icons.volume_down,
+                Icons.fast_rewind,
                 size: 25.0,
                 color: Theme.of(context).brightness == Brightness.dark
                     ? Theme.of(context).accentColor
                     : Color(0xFF787878),
               ),
             ),
-          ),
-        ],
+            ClipOval(
+                child: Container(
+              color: Theme.of(context).accentColor.withAlpha(30),
+              width: 80.0,
+              height: 80.0,
+              child: IconButton(
+                onPressed: () async {
+                  String status = await AudioManager.instance.playOrPause();
+                  print("await -- $status");
+                },
+                icon: Icon(
+                  _songData.isPlaying ? Icons.pause : Icons.play_arrow,
+                  size: 30.0,
+                  color: Theme.of(context).accentColor,
+                ),
+              ),
+            )),
+            IconButton(
+              onPressed: () => next(),
+              icon: Icon(
+                //Icons.skip_next,
+                Icons.fast_forward,
+                size: 25.0,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Theme.of(context).accentColor
+                    : Color(0xFF787878),
+              ),
+            ),
+            Visibility(
+              visible: _songData.showList,
+              child: IconButton(
+                onPressed: () => {},
+                icon: Icon(
+                  //Icons.skip_previous,
+                  Icons.volume_down,
+                  size: 25.0,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Theme.of(context).accentColor
+                      : Color(0xFF787878),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     ];
   }

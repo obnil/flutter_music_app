@@ -73,10 +73,12 @@ class _ForYouCarouselState extends State<SongListCarousel> {
                             ),
                           ]),
                     ),
-                    Icon(
-                      Icons.pause,
-                      size: 20.0,
-                    )
+                    IconButton(
+                        onPressed: () => favoriteModel.collect(data),
+                        icon: Icon(
+                          Icons.pause,
+                          size: 20.0,
+                        ))
                   ],
                 ),
               ),
