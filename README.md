@@ -54,7 +54,7 @@ http://icon.wuruihong.com/
 
 ### Screenshots(Android)
 
-<img src="image-20200301225614146.png" height="300em" /><img src="image-20200301225706637.png" height="300em" /><img src="image-20200301225726100.png" height="300em" /><img src="image-20200301225840952.png" height="300em" />
+<img src="screenshots/image-20200301225614146.png" height="300em" /><img src="screenshots/image-20200301225706637.png" height="300em" /><img src="screenshots/image-20200301225726100.png" height="300em" /><img src="screenshots/image-20200301225840952.png" height="300em" />
 
 
 
