@@ -20,7 +20,7 @@ class AppBarCarousel extends StatelessWidget {
           ),
           IconButton(
             icon: Icon(
-              Icons.share,
+              Icons.more_vert,
               size: 25.0,
               color: Colors.grey,
             ),

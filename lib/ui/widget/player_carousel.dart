@@ -254,7 +254,7 @@ class PlayerState extends State<Player> {
                 onPressed: () => {},
                 icon: Icon(
                   //Icons.skip_previous,
-                  Icons.volume_down,
+                  Icons.cloud_download,
                   size: 25.0,
                   color: Theme.of(context).brightness == Brightness.dark
                       ? Theme.of(context).accentColor

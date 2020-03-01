@@ -122,7 +122,7 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin {
                                   IconButton(
                                     onPressed: () {},
                                     icon: Icon(
-                                      Icons.volume_down,
+                                      Icons.cloud_download,
                                       size: 25.0,
                                       color: Colors.grey,
                                     ),

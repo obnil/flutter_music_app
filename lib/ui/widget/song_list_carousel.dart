@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_music_app/config/resource_manager.dart';
 import 'package:flutter_music_app/model/favorite_model.dart';
 import 'package:flutter_music_app/model/song_model.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +14,21 @@ class SongListCarousel extends StatefulWidget {
 }
 
 class _ForYouCarouselState extends State<SongListCarousel> {
+  ScrollController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = new ScrollController();
+  }
+
+  @override
+  void dispose() {
+    //为了避免内存泄露，需要调用_controller.dispose
+    _controller.dispose();
+    super.dispose();
+  }
+
   Widget _buildSongItem(Song data) {
     FavoriteModel favoriteModel = Provider.of(context);
     return data.songid == widget.model.currentSong.songid
@@ -161,23 +177,33 @@ class _ForYouCarouselState extends State<SongListCarousel> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: widget.model.songs.length,
-        itemBuilder: (BuildContext context, int index) {
-          Song data = widget.model.songs[index];
-          return GestureDetector(
-            onTap: () {
-              if (null != data.url) {
-                SongModel songModel = Provider.of(context);
-                songModel.setSongs(new List<Song>.from(widget.model.songs));
-                songModel.setCurrentIndex(index);
-                songModel.setPlayNow(true);
-              }
+      child: Stack(
+        children: <Widget>[
+          ListView.builder(
+            scrollDirection: Axis.vertical,
+            itemCount: widget.model.songs.length,
+            itemBuilder: (BuildContext context, int index) {
+              Song data = widget.model.songs[index];
+              return GestureDetector(
+                onTap: () {
+                  if (null != data.url) {
+                    SongModel songModel = Provider.of(context);
+                    songModel.setSongs(new List<Song>.from(widget.model.songs));
+                    songModel.setCurrentIndex(index);
+                    songModel.setPlayNow(true);
+                  }
+                },
+                child: _buildSongItem(data),
+              );
             },
-            child: _buildSongItem(data),
-          );
-        },
+          ),
+          Center(
+              child: Image(
+            image: NetworkImage(
+                'http://themicronaut.github.io/images/dancing-man.gif'),
+            color: Theme.of(context).accentColor,
+          )),
+        ],
       ),
     );
   }

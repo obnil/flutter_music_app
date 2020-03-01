@@ -37,19 +37,19 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
             padding: EdgeInsets.all(50),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  'Start Search',
-                  style: TextStyle(fontSize: 20),
+                  'Add Your',
+                  style: TextStyle(fontSize: 25),
+                ),
+                Text(
+                  'Music',
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 50),
                 Image.asset(
                   ImageHelper.wrapAssets(SplashPage.image),
-                ),
-                SizedBox(height: 20),
-                Text(
-                  'Find the music you are looking for. Use search queries to look up music you need on the app.',
-                  style: TextStyle(fontSize: 12),
                 ),
               ],
             ),
@@ -65,7 +65,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                   margin: EdgeInsets.only(right: 20, bottom: 20),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(40),
+                    borderRadius: BorderRadius.circular(20),
                     color: Colors.black.withAlpha(100),
                   ),
                   child: AnimatedCountdown(
@@ -99,7 +99,7 @@ class AnimatedCountdown extends AnimatedWidget {
   Widget build(BuildContext context) {
     var value = animation.value + 1;
     return Text(
-      (value == 0 ? '' : '$value | ') + S.of(context).splashSkip,
+      (value == 0 ? '' : '$value ') + S.of(context).splashSkip,
       style: TextStyle(color: Colors.white),
     );
   }
