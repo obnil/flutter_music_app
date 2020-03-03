@@ -4,7 +4,8 @@ First Open Source Flutter based dribbblel Design Music Player.
 
 #### logo
 
-<img src="screenshots/icon-1024.png" height="200em" align='left'/>
+<img src="screenshots/icon-1024.png" height="200em"/>
+
 
 #### free design
 
@@ -18,7 +19,7 @@ https://material.io/resources/icons/?search=d&style=baseline
 
 http://icon.wuruihong.com/
 
-##Features(Android & iOS)
+## Features(Android & iOS)
 
   * [x] search online songs (Require Network Permission)
   * [x] Beautiful UI with multiple themes includes light theme and dark theme
@@ -40,7 +41,7 @@ http://icon.wuruihong.com/
 
 
 
-##Screenshots(iOS)
+## Screenshots(iOS)
 
 - #### Light theme
 
@@ -61,15 +62,15 @@ http://icon.wuruihong.com/
 ### Add this to ios Info.plist allow https and background
 
 ```yaml
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>audio</string>
-	</array>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-    	<key>NSAllowsArbitraryLoads</key>
-    	<true/>
-	</dict>
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>audio</string>
+    </array>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+    <key>NSAllowsArbitraryLoads</key>
+    <true/>
+    </dict>
 ```
 
 
