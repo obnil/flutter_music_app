@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/config/resource_manager.dart';
 import 'package:flutter_music_app/model/favorite_model.dart';
@@ -199,7 +200,7 @@ class _ForYouCarouselState extends State<SongListCarousel> {
           ),
           Center(
               child: Image(
-            image: NetworkImage(
+            image: CachedNetworkImageProvider(
                 'http://themicronaut.github.io/images/dancing-man.gif'),
             color: Theme.of(context).accentColor,
           )),

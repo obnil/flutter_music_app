@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/config/resource_manager.dart';
@@ -34,7 +35,7 @@ class RotateRecord extends AnimatedWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  image: NetworkImage(songModel.songs != null
+                  image: CachedNetworkImageProvider(songModel.songs != null
                       ? songModel.currentSong.pic
                       : ImageHelper.randomUrl()),
                 ),

@@ -16,7 +16,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
   @override
   void initState() {
     _countdownController =
-        AnimationController(vsync: this, duration: Duration(seconds: 1));
+        AnimationController(vsync: this, duration: Duration(seconds: 2));
     _countdownController.forward();
     super.initState();
   }
@@ -34,7 +34,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
         onWillPop: () => Future.value(false),
         child: Stack(fit: StackFit.expand, children: <Widget>[
           Container(
-            padding: EdgeInsets.all(50),
+            padding: EdgeInsets.all(40),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,8 +48,10 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 50),
-                Image.asset(
-                  ImageHelper.wrapAssets(SplashPage.image),
+                Center(
+                  child: Image.asset(
+                    ImageHelper.wrapAssets(SplashPage.image),
+                  ),
                 ),
               ],
             ),
@@ -62,15 +64,15 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                   nextPage(context);
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                  margin: EdgeInsets.only(right: 20, bottom: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  margin: EdgeInsets.only(right: 40, bottom: 20),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.black.withAlpha(100),
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: Colors.black12, width: 1),
                   ),
                   child: AnimatedCountdown(
                     context: context,
-                    animation: StepTween(begin: 1, end: 0)
+                    animation: StepTween(begin: 2, end: 0)
                         .animate(_countdownController),
                   ),
                 ),
@@ -97,10 +99,10 @@ class AnimatedCountdown extends AnimatedWidget {
 
   @override
   Widget build(BuildContext context) {
-    var value = animation.value + 1;
+    //var value = animation.value + 1;
     return Text(
-      (value == 0 ? '' : '$value ') + S.of(context).splashSkip,
-      style: TextStyle(color: Colors.white),
+      //(value == 0 ? '' : '$value ') +
+      S.of(context).splashSkip,
     );
   }
 }

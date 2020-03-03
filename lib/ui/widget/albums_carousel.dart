@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/generated/i18n.dart';
 import 'package:flutter_music_app/model/albums_model.dart';
@@ -73,7 +74,7 @@ class _AlbumsCarouselState extends State<AlbumsCarousel> {
                         child: Image(
                           height: 120.0,
                           width: 120.0,
-                          image: NetworkImage(data.pic),
+                          image: CachedNetworkImageProvider(data.pic),
                           fit: BoxFit.cover,
                         ),
                       ),

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/model/favorite_model.dart';
 import 'package:flutter_music_app/model/song_model.dart';
@@ -19,7 +20,9 @@ class _FavoritePageState extends State<FavoritePage> {
           ClipRRect(
             borderRadius: BorderRadius.circular(12.0),
             child: Container(
-                width: 50, height: 50, child: Image.network(data.pic)),
+                width: 50,
+                height: 50,
+                child: Image(image: CachedNetworkImageProvider(data.pic))),
           ),
           SizedBox(
             width: 20.0,
