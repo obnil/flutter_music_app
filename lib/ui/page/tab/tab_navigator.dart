@@ -3,6 +3,7 @@ import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/generated/i18n.dart';
+import 'package:flutter_music_app/model/download_model.dart';
 import 'package:flutter_music_app/model/favorite_model.dart';
 import 'package:flutter_music_app/provider/provider_widget.dart';
 import 'package:flutter_music_app/ui/page/tab/favorite_page.dart';
@@ -36,13 +37,16 @@ class _TabNavigatorState extends State<TabNavigator> {
   @override
   Widget build(BuildContext context) {
     FavoriteModel favoriteModel = Provider.of(context);
+    DownloadModel downloadModel = Provider.of(context);
     return Scaffold(
-      body: ProviderWidget<FavoriteListModel>(
-          onModelReady: (favoriteListModel) async {
+      body: ProviderWidget2<FavoriteListModel, DownloadListModel>(
+          onModelReady: (favoriteListModel, downloadListModel) async {
             await favoriteListModel.initData();
+            await downloadListModel.initData();
           },
-          model: FavoriteListModel(favoriteModel: favoriteModel),
-          builder: (context, model, child) {
+          model1: FavoriteListModel(favoriteModel: favoriteModel),
+          model2: DownloadListModel(downloadModel: downloadModel),
+          builder: (context, model1, model2, child) {
             return PageView.builder(
               itemBuilder: (ctx, index) => pages[index],
               itemCount: pages.length,

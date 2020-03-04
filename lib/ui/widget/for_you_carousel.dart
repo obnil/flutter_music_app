@@ -81,7 +81,7 @@ class _ForYouCarouselState extends State<ForYouCarousel> {
                   : favoriteModel.isCollect(data)
                       ? Icon(
                           Icons.favorite,
-                          color: Colors.red,
+                          color: Theme.of(context).accentColor,
                           size: 20.0,
                         )
                       : Icon(

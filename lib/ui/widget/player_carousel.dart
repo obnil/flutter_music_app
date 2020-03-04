@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_music_app/model/download_model.dart';
 import 'package:flutter_music_app/model/song_model.dart';
 import 'package:audio_manager/audio_manager.dart';
 
 class Player extends StatefulWidget {
   /// 播放列表
   final SongModel songData;
+  final DownloadModel downloadData;
 
   //是否立即播放
   final bool nowPlay;
@@ -21,6 +23,7 @@ class Player extends StatefulWidget {
 
   Player(
       {@required this.songData,
+      @required this.downloadData,
       this.nowPlay,
       this.key,
       this.volume: 1.0,
@@ -36,12 +39,14 @@ class PlayerState extends State<Player> {
   Duration _position;
   num _slideValue;
   SongModel _songData;
+  DownloadModel _downloadData;
 
   @override
   void initState() {
     super.initState();
     if (!mounted) return;
     _songData = widget.songData;
+    _downloadData = widget.downloadData;
     if (_songData.isPlaying || widget.nowPlay) {
       play(_songData.currentSong);
     }
@@ -52,11 +57,21 @@ class PlayerState extends State<Player> {
     });
   }
 
+  String getSongUrl(Song s) {
+    return 'http://music.163.com/song/media/outer/url?id=${s.songid}.mp3';
+  }
+
   void play(Song s) {
+    String url;
+    if (_downloadData.isDownload(s)) {
+      url = _downloadData.getDirectoryPath + '/${s.songid}.mp3';
+    } else {
+      url = getSongUrl(s);
+    }
+    print('url:' + url);
+
     AudioManager.instance
-        .start('http://music.163.com/song/media/outer/url?id=${s.songid}.mp3',
-            s.title,
-            desc: s.author, cover: s.pic)
+        .start(url, s.title, desc: s.author, cover: s.pic)
         .then((err) {
       print(err);
     });
@@ -251,15 +266,24 @@ class PlayerState extends State<Player> {
             Visibility(
               visible: _songData.showList,
               child: IconButton(
-                onPressed: () => {},
-                icon: Icon(
-                  //Icons.skip_previous,
-                  Icons.cloud_download,
-                  size: 25.0,
-                  color: Theme.of(context).brightness == Brightness.dark
-                      ? Theme.of(context).accentColor
-                      : Color(0xFF787878),
-                ),
+                onPressed: () => _downloadData.download(_songData.currentSong),
+                icon: _downloadData.isDownload(_songData.currentSong)
+                    ? Icon(
+                        //Icons.skip_previous,
+                        Icons.cloud_done,
+                        size: 25.0,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Theme.of(context).accentColor
+                            : Color(0xFF787878),
+                      )
+                    : Icon(
+                        //Icons.skip_previous,
+                        Icons.cloud_download,
+                        size: 25.0,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Theme.of(context).accentColor
+                            : Color(0xFF787878),
+                      ),
               ),
             ),
           ],

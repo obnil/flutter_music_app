@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_music_app/config/resource_manager.dart';
 import 'package:flutter_music_app/model/favorite_model.dart';
 import 'package:flutter_music_app/model/song_model.dart';
 import 'package:provider/provider.dart';
@@ -163,7 +162,7 @@ class _ForYouCarouselState extends State<SongListCarousel> {
                         : favoriteModel.isCollect(data)
                             ? Icon(
                                 Icons.favorite,
-                                color: Colors.red,
+                                color: Theme.of(context).accentColor,
                                 size: 20.0,
                               )
                             : Icon(

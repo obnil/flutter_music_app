@@ -87,7 +87,7 @@ class _AlbumCarouselState extends State<AlbumCarousel> {
                   : favoriteModel.isCollect(data)
                       ? Icon(
                           Icons.favorite,
-                          color: Colors.red,
+                          color: Theme.of(context).accentColor,
                           size: 20.0,
                         )
                       : Icon(

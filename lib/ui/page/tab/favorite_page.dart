@@ -10,7 +10,10 @@ class FavoritePage extends StatefulWidget {
   _FavoritePageState createState() => _FavoritePageState();
 }
 
-class _FavoritePageState extends State<FavoritePage> {
+class _FavoritePageState extends State<FavoritePage>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   Widget _buildSongItem(Song data) {
     FavoriteModel favoriteModel = Provider.of(context);
     return Padding(
@@ -76,7 +79,7 @@ class _FavoritePageState extends State<FavoritePage> {
                   : favoriteModel.isCollect(data)
                       ? Icon(
                           Icons.favorite,
-                          color: Colors.red,
+                          color: Theme.of(context).accentColor,
                           size: 20.0,
                         )
                       : Icon(
@@ -90,6 +93,7 @@ class _FavoritePageState extends State<FavoritePage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     FavoriteModel favoriteModel = Provider.of(context);
     return Scaffold(
         body: Padding(

@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/anims/player_anim.dart';
+import 'package:flutter_music_app/model/download_model.dart';
 import 'package:flutter_music_app/model/favorite_model.dart';
 import 'package:flutter_music_app/ui/widget/app_bar.dart';
 import 'package:flutter_music_app/model/song_model.dart';
@@ -44,9 +45,14 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  String getSongUrl(Song s) {
+    return 'http://music.163.com/song/media/outer/url?id=${s.songid}.mp3';
+  }
+
   @override
   Widget build(BuildContext context) {
     SongModel songModel = Provider.of(context);
+    DownloadModel downloadModel = Provider.of(context);
     FavoriteModel favouriteModel = Provider.of(context);
     if (songModel.isPlaying) {
       controllerPlayer.forward();
@@ -111,7 +117,8 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin {
                                         ? Icon(
                                             Icons.favorite,
                                             size: 25.0,
-                                            color: Colors.red,
+                                            color:
+                                                Theme.of(context).accentColor,
                                           )
                                         : Icon(
                                             Icons.favorite_border,
@@ -120,12 +127,21 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin {
                                           ),
                                   ),
                                   IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(
-                                      Icons.cloud_download,
-                                      size: 25.0,
-                                      color: Colors.grey,
-                                    ),
+                                    onPressed: () => downloadModel
+                                        .download(songModel.currentSong),
+                                    icon: downloadModel
+                                            .isDownload(songModel.currentSong)
+                                        ? Icon(
+                                            Icons.cloud_done,
+                                            size: 25.0,
+                                            color:
+                                                Theme.of(context).accentColor,
+                                          )
+                                        : Icon(
+                                            Icons.cloud_download,
+                                            size: 25.0,
+                                            color: Colors.grey,
+                                          ),
                                   ),
                                 ]),
                             SizedBox(
@@ -151,6 +167,7 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin {
             ),
             Player(
               songData: songModel,
+              downloadData: downloadModel,
               nowPlay: widget.nowPlay,
             ),
           ],
