@@ -175,33 +175,23 @@ class _ForYouCarouselState extends State<SongListCarousel> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Stack(
-        children: <Widget>[
-          ListView.builder(
-            scrollDirection: Axis.vertical,
-            itemCount: widget.model.songs.length,
-            itemBuilder: (BuildContext context, int index) {
-              Song data = widget.model.songs[index];
-              return GestureDetector(
-                onTap: () {
-                  if (null != data.url) {
-                    SongModel songModel = Provider.of(context);
-                    songModel.setSongs(new List<Song>.from(widget.model.songs));
-                    songModel.setCurrentIndex(index);
-                    songModel.setPlayNow(true);
-                  }
-                },
-                child: _buildSongItem(data),
-              );
+      child: ListView.builder(
+        scrollDirection: Axis.vertical,
+        itemCount: widget.model.songs.length,
+        itemBuilder: (BuildContext context, int index) {
+          Song data = widget.model.songs[index];
+          return GestureDetector(
+            onTap: () {
+              if (null != data.url) {
+                SongModel songModel = Provider.of(context);
+                songModel.setSongs(new List<Song>.from(widget.model.songs));
+                songModel.setCurrentIndex(index);
+                songModel.setPlayNow(true);
+              }
             },
-          ),
-          Center(
-              child: Image(
-            image: CachedNetworkImageProvider(
-                'http://themicronaut.github.io/images/dancing-man.gif'),
-            color: Theme.of(context).accentColor,
-          )),
-        ],
+            child: _buildSongItem(data),
+          );
+        },
       ),
     );
   }

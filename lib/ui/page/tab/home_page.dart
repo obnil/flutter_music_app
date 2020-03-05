@@ -83,18 +83,18 @@ class _HomePageState extends State<HomePage>
                     onPressed: alubumsModel.initData);
               }
               return Column(children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Container(
-                          margin: EdgeInsets.symmetric(horizontal: 20.0),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).accentColor.withAlpha(10),
-                            borderRadius: BorderRadius.circular(30.0),
-                          ),
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 5.0),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Container(
+                            margin: EdgeInsets.symmetric(horizontal: 20.0),
+                            decoration: BoxDecoration(
+                              color:
+                                  Theme.of(context).accentColor.withAlpha(50),
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
                             child: TextField(
                               style: TextStyle(
                                 fontSize: 15.0,
@@ -125,15 +125,15 @@ class _HomePageState extends State<HomePage>
                                   hintText: songModel.songs != null
                                       ? songModel.currentSong.title
                                       : S.of(context).searchSuggest),
-                            ),
-                          )),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 20.0),
-                      child: RotateRecord(
-                          animation: _commonTween.animate(controllerRecord)),
-                    ),
-                  ],
+                            )),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 20.0),
+                        child: RotateRecord(
+                            animation: _commonTween.animate(controllerRecord)),
+                      ),
+                    ],
+                  ),
                 ),
                 Expanded(
                   child: ListView(children: <Widget>[
