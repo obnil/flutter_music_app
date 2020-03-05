@@ -15,8 +15,7 @@ class _AlbumsPageState extends State<AlbumsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Padding(
-      padding: const EdgeInsets.only(top: 40.0),
+        body: SafeArea(
       child: Column(
         children: <Widget>[
           AppBarCarousel(),

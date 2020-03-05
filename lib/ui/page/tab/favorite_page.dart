@@ -96,32 +96,31 @@ class _FavoritePageState extends State<FavoritePage>
     super.build(context);
     FavoriteModel favoriteModel = Provider.of(context);
     return Scaffold(
-        body: Padding(
-            padding: const EdgeInsets.only(top: 40.0),
+        body: SafeArea(
             child: ListView.builder(
-              itemCount: favoriteModel.favoriteSong.length,
-              itemBuilder: (BuildContext context, int index) {
-                Song data = favoriteModel.favoriteSong[index];
-                return GestureDetector(
-                  onTap: () {
-                    if (null != data.url) {
-                      SongModel songModel = Provider.of(context);
-                      songModel.setSongs(
-                          new List<Song>.from(favoriteModel.favoriteSong));
-                      songModel.setCurrentIndex(index);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => PlayPage(
-                            nowPlay: true,
-                          ),
-                        ),
-                      );
-                    }
-                  },
-                  child: _buildSongItem(data),
-                );
-              },
-            )));
+      itemCount: favoriteModel.favoriteSong.length,
+      itemBuilder: (BuildContext context, int index) {
+        Song data = favoriteModel.favoriteSong[index];
+        return GestureDetector(
+          onTap: () {
+            if (null != data.url) {
+              SongModel songModel = Provider.of(context);
+              songModel
+                  .setSongs(new List<Song>.from(favoriteModel.favoriteSong));
+              songModel.setCurrentIndex(index);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => PlayPage(
+                    nowPlay: true,
+                  ),
+                ),
+              );
+            }
+          },
+          child: _buildSongItem(data),
+        );
+      },
+    )));
   }
 }

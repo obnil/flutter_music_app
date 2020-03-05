@@ -205,7 +205,7 @@ class PlayerState extends State<Player> {
         ),
       ),
       Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
         child: new Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -218,9 +218,7 @@ class PlayerState extends State<Player> {
                 icon: Icon(
                   Icons.list,
                   size: 25.0,
-                  color: Theme.of(context).brightness == Brightness.dark
-                      ? Theme.of(context).accentColor
-                      : Color(0xFF787878),
+                  color: Colors.grey,
                 ),
               ),
             ),
@@ -238,8 +236,8 @@ class PlayerState extends State<Player> {
             ClipOval(
                 child: Container(
               color: Theme.of(context).accentColor.withAlpha(30),
-              width: 80.0,
-              height: 80.0,
+              width: 70.0,
+              height: 70.0,
               child: IconButton(
                 onPressed: () async {
                   String status = await AudioManager.instance.playOrPause();
@@ -272,17 +270,13 @@ class PlayerState extends State<Player> {
                         //Icons.skip_previous,
                         Icons.cloud_done,
                         size: 25.0,
-                        color: Theme.of(context).brightness == Brightness.dark
-                            ? Theme.of(context).accentColor
-                            : Color(0xFF787878),
+                        color: Theme.of(context).accentColor,
                       )
                     : Icon(
                         //Icons.skip_previous,
                         Icons.cloud_download,
                         size: 25.0,
-                        color: Theme.of(context).brightness == Brightness.dark
-                            ? Theme.of(context).accentColor
-                            : Color(0xFF787878),
+                        color: Colors.grey,
                       ),
               ),
             ),

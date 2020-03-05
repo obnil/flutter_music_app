@@ -60,8 +60,7 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin {
       controllerPlayer.stop(canceled: false);
     }
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 40.0),
+      body: SafeArea(
         child: Column(
           children: <Widget>[
             Expanded(

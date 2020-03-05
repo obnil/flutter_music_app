@@ -90,32 +90,31 @@ class _MusicPageState extends State<MusicPage>
     super.build(context);
     DownloadModel downloadModel = Provider.of(context);
     return Scaffold(
-        body: Padding(
-            padding: const EdgeInsets.only(top: 40.0),
+        body: SafeArea(
             child: ListView.builder(
-              itemCount: downloadModel.downloadSong.length,
-              itemBuilder: (BuildContext context, int index) {
-                Song data = downloadModel.downloadSong[index];
-                return GestureDetector(
-                  onTap: () {
-                    if (null != data.url) {
-                      SongModel songModel = Provider.of(context);
-                      songModel.setSongs(
-                          new List<Song>.from(downloadModel.downloadSong));
-                      songModel.setCurrentIndex(index);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => PlayPage(
-                            nowPlay: true,
-                          ),
-                        ),
-                      );
-                    }
-                  },
-                  child: _buildSongItem(data),
-                );
-              },
-            )));
+      itemCount: downloadModel.downloadSong.length,
+      itemBuilder: (BuildContext context, int index) {
+        Song data = downloadModel.downloadSong[index];
+        return GestureDetector(
+          onTap: () {
+            if (null != data.url) {
+              SongModel songModel = Provider.of(context);
+              songModel
+                  .setSongs(new List<Song>.from(downloadModel.downloadSong));
+              songModel.setCurrentIndex(index);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => PlayPage(
+                    nowPlay: true,
+                  ),
+                ),
+              );
+            }
+          },
+          child: _buildSongItem(data),
+        );
+      },
+    )));
   }
 }

@@ -61,7 +61,7 @@ class _ForYouCarouselState extends State<SongListCarousel> {
                                   ? TextStyle(
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w600,
-                                      color: Color(0xFFE0E0E0),
+                                      color: Colors.grey,
                                     )
                                   : TextStyle(
                                       fontSize: 12.0,
@@ -78,11 +78,10 @@ class _ForYouCarouselState extends State<SongListCarousel> {
                               style: data.url == null
                                   ? TextStyle(
                                       fontSize: 10.0,
-                                      color: Color(0xFFE0E0E0),
+                                      color: Colors.grey,
                                     )
                                   : TextStyle(
                                       fontSize: 10.0,
-                                      color: Colors.grey,
                                     ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -123,7 +122,7 @@ class _ForYouCarouselState extends State<SongListCarousel> {
                               ? TextStyle(
                                   fontSize: 12.0,
                                   fontWeight: FontWeight.w600,
-                                  color: Color(0xFFE0E0E0),
+                                  color: Colors.grey,
                                 )
                               : TextStyle(
                                   fontSize: 12.0,
@@ -140,11 +139,10 @@ class _ForYouCarouselState extends State<SongListCarousel> {
                           style: data.url == null
                               ? TextStyle(
                                   fontSize: 10.0,
-                                  color: Color(0xFFE0E0E0),
+                                  color: Colors.grey,
                                 )
                               : TextStyle(
                                   fontSize: 10.0,
-                                  color: Colors.grey,
                                 ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,

@@ -22,8 +22,7 @@ class _MinePageState extends State<MinePage>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-        body: Padding(
-      padding: const EdgeInsets.only(top: 40.0),
+        body: SafeArea(
       child: CustomScrollView(
         slivers: <Widget>[
           UserListWidget(),
