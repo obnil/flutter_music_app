@@ -15,11 +15,13 @@ void main() async {
   Provider.debugCheckInvalidValueType = null;
   WidgetsFlutterBinding.ensureInitialized();
   await StorageManager.init();
-  runApp(MyApp());
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   // Android状态栏透明 splash为白色,所以调整状态栏文字为黑色
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarBrightness: Brightness.light));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

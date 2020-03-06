@@ -1,5 +1,5 @@
 PODS:
-  - audio_manager (0.0.1):
+  - audioplayers (0.0.1):
     - Flutter
   - device_info (0.0.1):
     - Flutter
@@ -22,7 +22,7 @@ PODS:
     - FMDB (~> 2.7.2)
 
 DEPENDENCIES:
-  - audio_manager (from `.symlinks/plugins/audio_manager/ios`)
+  - audioplayers (from `.symlinks/plugins/audioplayers/ios`)
   - device_info (from `.symlinks/plugins/device_info/ios`)
   - Flutter (from `Flutter`)
   - package_info (from `.symlinks/plugins/package_info/ios`)
@@ -37,8 +37,8 @@ SPEC REPOS:
     - FMDB
 
 EXTERNAL SOURCES:
-  audio_manager:
-    :path: ".symlinks/plugins/audio_manager/ios"
+  audioplayers:
+    :path: ".symlinks/plugins/audioplayers/ios"
   device_info:
     :path: ".symlinks/plugins/device_info/ios"
   Flutter:
@@ -57,7 +57,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite/ios"
 
 SPEC CHECKSUMS:
-  audio_manager: 59466b2ea5552ebdcba8106796f09b9357ef12e0
+  audioplayers: 84f968cea3f2deab00ec4f8ff53358b3c0b3992c
   device_info: cbf09d2ec12aa7110e0b09fabe54b5bd6c8efe74
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a

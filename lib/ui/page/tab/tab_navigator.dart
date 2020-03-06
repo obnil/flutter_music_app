@@ -1,4 +1,3 @@
-import 'package:audio_manager/audio_manager.dart';
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +30,6 @@ class _TabNavigatorState extends State<TabNavigator> {
   @override
   void dispose() {
     super.dispose();
-    AudioManager.instance.stop();
   }
 
   @override

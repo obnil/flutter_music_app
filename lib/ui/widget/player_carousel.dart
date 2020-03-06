@@ -1,7 +1,9 @@
+import 'dart:async';
+
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/model/download_model.dart';
 import 'package:flutter_music_app/model/song_model.dart';
-import 'package:audio_manager/audio_manager.dart';
 
 class Player extends StatefulWidget {
   /// 播放列表
@@ -37,23 +39,127 @@ class Player extends StatefulWidget {
 class PlayerState extends State<Player> {
   Duration _duration;
   Duration _position;
+  Duration _playPosition;
   num _slideValue;
   SongModel _songData;
   DownloadModel _downloadData;
+  bool _isChanging;
+
+  AudioPlayer _audioPlayer;
+  AudioPlayerState _audioPlayerState;
+  StreamSubscription _durationSubscription;
+  StreamSubscription _positionSubscription;
+  StreamSubscription _playerCompleteSubscription;
+  StreamSubscription _playerErrorSubscription;
+  StreamSubscription _playerStateSubscription;
+
+  @override
+  void dispose() {
+    _durationSubscription?.cancel();
+    _positionSubscription?.cancel();
+    _playerCompleteSubscription?.cancel();
+    _playerErrorSubscription?.cancel();
+    _playerStateSubscription?.cancel();
+    super.dispose();
+  }
 
   @override
   void initState() {
     super.initState();
-    if (!mounted) return;
     _songData = widget.songData;
     _downloadData = widget.downloadData;
+    _initAudioPlayer(_songData);
     if (_songData.isPlaying || widget.nowPlay) {
       play(_songData.currentSong);
     }
-    setState(() {
-      _duration = _songData.duration;
-      _position = _songData.position;
-      _slideValue = _songData.slideValue;
+  }
+
+  void _initAudioPlayer(SongModel songData) {
+    _audioPlayer = songData.audioPlayer;
+    _position = _songData.position;
+    _duration = _songData.duration;
+    _slideValue = _songData.slideValue;
+    _durationSubscription = _audioPlayer.onDurationChanged.listen((duration) {
+      if (!mounted) return;
+      setState(() {
+        _duration = duration;
+        _slideValue = (_position != null &&
+                _duration != null &&
+                _position.inSeconds > 0 &&
+                _position.inSeconds < _duration.inSeconds)
+            ? _position.inSeconds / _duration.inSeconds
+            : 0.0;
+        _songData.setDuration(_duration);
+        _songData.setSlideValue(_slideValue);
+      });
+
+      // TODO implemented for iOS, waiting for android impl
+      if (Theme.of(context).platform == TargetPlatform.iOS) {
+        // (Optional) listen for notification updates in the background
+        _audioPlayer.startHeadlessService();
+
+        // set at least title to see the notification bar on ios.
+        _audioPlayer.setNotification(
+            title: _songData.currentSong.title,
+            artist: _songData.currentSong.author,
+            //albumTitle: 'Name or blank',
+            imageUrl: _songData.currentSong.pic,
+            forwardSkipInterval: const Duration(seconds: 30), // default is 30s
+            backwardSkipInterval: const Duration(seconds: 30), // default is 30s
+            duration: duration,
+            elapsedTime: Duration(seconds: 0));
+      }
+    });
+
+    _positionSubscription =
+        _audioPlayer.onAudioPositionChanged.listen((position) {
+      if (!mounted) return;
+      if (_isChanging == true) return;
+      setState(() {
+        _position = position;
+        _slideValue = (_position != null &&
+                _duration != null &&
+                _position.inSeconds > 0 &&
+                _position.inSeconds < _duration.inSeconds)
+            ? _position.inSeconds / _duration.inSeconds
+            : 0.0;
+        _songData.setPosition(_position);
+        _songData.setSlideValue(_slideValue);
+      });
+    });
+
+    _playerCompleteSubscription =
+        _audioPlayer.onPlayerCompletion.listen((event) {
+      // _onComplete();
+      // setState(() {
+      //   _position = _duration;
+      // });
+      next();
+    });
+
+    _playerErrorSubscription = _audioPlayer.onPlayerError.listen((msg) {
+      if (!mounted) return;
+      print('audioPlayer error : $msg');
+      setState(() {
+        _duration = Duration(seconds: 0);
+        _position = Duration(seconds: 0);
+      });
+    });
+
+    _audioPlayer.onPlayerStateChanged.listen((state) {
+      if (!mounted) return;
+      setState(() {
+        _audioPlayerState = state;
+        _songData.setPlaying(_audioPlayerState == AudioPlayerState.PLAYING);
+      });
+    });
+
+    _audioPlayer.onNotificationPlayerStateChanged.listen((state) {
+      if (!mounted) return;
+      setState(() {
+        _audioPlayerState = state;
+        _songData.setPlaying(_audioPlayerState == AudioPlayerState.PLAYING);
+      });
     });
   }
 
@@ -61,64 +167,35 @@ class PlayerState extends State<Player> {
     return 'http://music.163.com/song/media/outer/url?id=${s.songid}.mp3';
   }
 
-  void play(Song s) {
+  void play(Song s) async {
     String url;
     if (_downloadData.isDownload(s)) {
       url = _downloadData.getDirectoryPath + '/${s.songid}.mp3';
     } else {
       url = getSongUrl(s);
     }
-    print('url:' + url);
-
-    AudioManager.instance
-        .start(url, s.title, desc: s.author, cover: s.pic)
-        .then((err) {
-      print(err);
-    });
-
-    AudioManager.instance.onEvents((events, args) {
-      //print("events $events, args $args");
-      switch (events) {
-        case AudioManagerEvents.ready:
-          print("ready to play");
-          AudioManager.instance.seekTo(Duration(seconds: 0));
-          break;
-        case AudioManagerEvents.buffering:
-          print("buffering $args");
-          break;
-        case AudioManagerEvents.playstatus:
-          print("isPlaying ${AudioManager.instance.isPlaying}");
-          _songData.setPlaying(AudioManager.instance.isPlaying);
-          break;
-        case AudioManagerEvents.timeupdate:
-          setState(() {
-            _duration = AudioManager.instance.duration;
-            _position = AudioManager.instance.position;
-            _slideValue = _position.inSeconds / _duration.inSeconds;
-            _songData.setDuration(_duration);
-            _songData.setPosition(_position);
-            _songData.setSlideValue(_slideValue);
-          });
-          //AudioManager.instance.updateLrc(args["position"].toString());
-          // print(AudioManager.instance.info);
-          break;
-        case AudioManagerEvents.error:
-          //_error = args;
-          // setState(() {});
-          break;
-        case AudioManagerEvents.next:
-          next();
-          break;
-        case AudioManagerEvents.previous:
-          previous();
-          break;
-        case AudioManagerEvents.ended:
-          next();
-          break;
-        default:
-          break;
+    if (url == _songData.url) {
+      int result = await _audioPlayer.setUrl(url);
+      if (result == 1) {
+        _songData.setPlaying(true);
       }
-    });
+    } else {
+      int result = await _audioPlayer.play(url);
+      if (result == 1) {
+        _songData.setPlaying(true);
+      }
+      _songData.setUrl(url);
+    }
+  }
+
+  void pause() async {
+    final result = await _audioPlayer.pause();
+    if (result == 1) setState(() => _songData.setPlaying(false));
+  }
+
+  void resume() async {
+    final result = await _audioPlayer.resume();
+    if (result == 1) setState(() => _songData.setPlaying(true));
   }
 
   void next() {
@@ -141,7 +218,6 @@ class PlayerState extends State<Player> {
     if (d == null) return "--:--";
     int minute = d.inMinutes;
     int second = (d.inSeconds > 60) ? (d.inSeconds % 60) : d.inSeconds;
-    //print(d.inMinutes.toString() + "======" + d.inSeconds.toString());
     String format = "$minute" + ":" + ((second < 10) ? "0$second" : "$second");
     return format;
   }
@@ -186,10 +262,17 @@ class PlayerState extends State<Player> {
           onChanged: (value) {
             setState(() {
               _slideValue = value;
+              _isChanging = true;
+            });
+          },
+          onChangeEnd: (value) {
+            setState(() {
+              _slideValue = value;
+              _isChanging = false;
             });
             Duration seconds =
                 Duration(seconds: (_duration.inSeconds * value).round());
-            AudioManager.instance.seekTo(seconds);
+            _audioPlayer.seek(seconds);
           },
           value: _slideValue ?? 0,
           activeColor: Theme.of(context).accentColor,
@@ -239,9 +322,8 @@ class PlayerState extends State<Player> {
               width: 70.0,
               height: 70.0,
               child: IconButton(
-                onPressed: () async {
-                  String status = await AudioManager.instance.playOrPause();
-                  print("await -- $status");
+                onPressed: () {
+                  _songData.isPlaying ? pause() : resume();
                 },
                 icon: Icon(
                   _songData.isPlaying ? Icons.pause : Icons.play_arrow,
@@ -285,4 +367,8 @@ class PlayerState extends State<Player> {
       ),
     ];
   }
+
+  // void _onComplete() {
+  //   setState(() => _songData.setPlayState(PlayState.stopped));
+  // }
 }

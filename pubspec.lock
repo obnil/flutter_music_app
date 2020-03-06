@@ -22,15 +22,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.4.0"
-  audio_manager:
+  audioplayers:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: fef5099d98f6b1da98435f475c9c44e3613752d0
-      url: "https://gitee.com/obnil/audio_manager.git"
-    source: git
-    version: "0.3.1+1"
+      name: audioplayers
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.14.0"
   boolean_selector:
     dependency: transitive
     description:

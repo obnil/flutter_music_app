@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/provider/view_state_refresh_list_model.dart';
 import 'package:flutter_music_app/service/base_repository.dart';
@@ -15,7 +16,18 @@ class SongListModel extends ViewStateRefreshListModel<Song> {
 }
 
 class SongModel with ChangeNotifier {
+  String _url;
+  String get url => _url;
+  setUrl(String url) {
+    _url = url;
+    notifyListeners();
+  }
+
+  AudioPlayer _audioPlayer = AudioPlayer();
+  AudioPlayer get audioPlayer => _audioPlayer;
+
   List<Song> _songs;
+
   bool _isPlaying = false;
   bool get isPlaying => _isPlaying;
   setPlaying(bool isPlaying) {
@@ -37,24 +49,10 @@ class SongModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Duration _duration;
-  Duration get duration => _duration;
-  setDuration(Duration duration) {
-    _duration = duration;
-    notifyListeners();
-  }
-
-  Duration _position;
   num _slideValue;
   num get slideValue => _slideValue;
   setSlideValue(num slideValue) {
     _slideValue = slideValue;
-  }
-
-  Duration get position => _position;
-  setPosition(Duration position) {
-    _position = position;
-    notifyListeners();
   }
 
   int _currentSongIndex = 0;
@@ -93,7 +91,7 @@ class SongModel with ChangeNotifier {
       if (_currentSongIndex < length) {
         _currentSongIndex++;
       }
-      if (_currentSongIndex >= length) {
+      if (_currentSongIndex == length) {
         _currentSongIndex = 0;
       }
     } else {
@@ -109,7 +107,7 @@ class SongModel with ChangeNotifier {
       if (_currentSongIndex > 0) {
         _currentSongIndex--;
       }
-      if (_currentSongIndex < 0) {
+      if (_currentSongIndex == 0) {
         _currentSongIndex = length - 1;
       }
     } else {
@@ -118,6 +116,20 @@ class SongModel with ChangeNotifier {
     }
     notifyListeners();
     return _songs[_currentSongIndex];
+  }
+
+  Duration _position;
+  Duration get position => _position;
+  void setPosition(Duration position) {
+    _position = position;
+    notifyListeners();
+  }
+
+  Duration _duration;
+  Duration get duration => _duration;
+  void setDuration(Duration duration) {
+    _duration = duration;
+    notifyListeners();
   }
 }
 
