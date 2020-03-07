@@ -2,15 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/generated/i18n.dart';
 import 'package:flutter_music_app/model/favorite_model.dart';
-import 'package:flutter_music_app/model/for_you_model.dart';
 import 'package:flutter_music_app/model/song_model.dart';
 import 'package:flutter_music_app/ui/page/player_page.dart';
 import 'package:provider/provider.dart';
 
 class ForYouCarousel extends StatefulWidget {
-  final ForYouModel forYouModel;
+  final List<Song> forYou;
 
-  ForYouCarousel(this.forYouModel);
+  ForYouCarousel(this.forYou);
   @override
   _ForYouCarouselState createState() => _ForYouCarouselState();
 }
@@ -124,15 +123,14 @@ class _ForYouCarouselState extends State<ForYouCarousel> {
         shrinkWrap: true, //解决无限高度问题
         physics: new NeverScrollableScrollPhysics(),
         scrollDirection: Axis.vertical,
-        itemCount: widget.forYouModel.list.length,
+        itemCount: widget.forYou.length,
         itemBuilder: (BuildContext context, int index) {
-          Song data = widget.forYouModel.list[index];
+          Song data = widget.forYou[index];
           return GestureDetector(
             onTap: () {
               if (null != data.url) {
                 SongModel songModel = Provider.of(context);
-                songModel
-                    .setSongs(new List<Song>.from(widget.forYouModel.list));
+                songModel.setSongs(new List<Song>.from(widget.forYou));
                 songModel.setCurrentIndex(index);
                 Navigator.push(
                   context,

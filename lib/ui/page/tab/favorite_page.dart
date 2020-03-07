@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_music_app/generated/i18n.dart';
 import 'package:flutter_music_app/model/favorite_model.dart';
 import 'package:flutter_music_app/model/song_model.dart';
 import 'package:flutter_music_app/ui/page/player_page.dart';
@@ -97,30 +98,48 @@ class _FavoritePageState extends State<FavoritePage>
     FavoriteModel favoriteModel = Provider.of(context);
     return Scaffold(
         body: SafeArea(
-            child: ListView.builder(
-      itemCount: favoriteModel.favoriteSong.length,
-      itemBuilder: (BuildContext context, int index) {
-        Song data = favoriteModel.favoriteSong[index];
-        return GestureDetector(
-          onTap: () {
-            if (null != data.url) {
-              SongModel songModel = Provider.of(context);
-              songModel
-                  .setSongs(new List<Song>.from(favoriteModel.favoriteSong));
-              songModel.setCurrentIndex(index);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => PlayPage(
-                    nowPlay: true,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Text(S.of(context).favourites,
+                style: TextStyle(
+                    fontSize: 22.0,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.2)),
+          ),
+          Expanded(
+            child: favoriteModel.favoriteSong.length == 0
+                ? Center(child: Text('none'))
+                : ListView.builder(
+                    itemCount: favoriteModel.favoriteSong.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      Song data = favoriteModel.favoriteSong[index];
+                      return GestureDetector(
+                        onTap: () {
+                          if (null != data.url) {
+                            SongModel songModel = Provider.of(context);
+                            songModel.setSongs(new List<Song>.from(
+                                favoriteModel.favoriteSong));
+                            songModel.setCurrentIndex(index);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => PlayPage(
+                                  nowPlay: true,
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                        child: _buildSongItem(data),
+                      );
+                    },
                   ),
-                ),
-              );
-            }
-          },
-          child: _buildSongItem(data),
-        );
-      },
-    )));
+          ),
+        ],
+      ),
+    ));
   }
 }

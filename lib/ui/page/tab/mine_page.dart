@@ -23,9 +23,24 @@ class _MinePageState extends State<MinePage>
     super.build(context);
     return Scaffold(
         body: SafeArea(
-      child: CustomScrollView(
-        slivers: <Widget>[
-          UserListWidget(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Text(S.of(context).tabUser,
+                style: TextStyle(
+                    fontSize: 22.0,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.2)),
+          ),
+          Expanded(
+            child: CustomScrollView(
+              slivers: <Widget>[
+                UserListWidget(),
+              ],
+            ),
+          ),
         ],
       ),
     ));

@@ -1,14 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/generated/i18n.dart';
-import 'package:flutter_music_app/model/albums_model.dart';
 import 'package:flutter_music_app/model/song_model.dart';
 import 'package:flutter_music_app/ui/page/albums_page.dart';
 
 class AlbumsCarousel extends StatefulWidget {
-  final AlbumsModel alubumsModel;
+  final List<Song> alubums;
 
-  AlbumsCarousel(this.alubumsModel);
+  AlbumsCarousel(this.alubums);
   @override
   _AlbumsCarouselState createState() => _AlbumsCarouselState();
 }
@@ -48,9 +47,9 @@ class _AlbumsCarouselState extends State<AlbumsCarousel> {
             child: ListView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
-              itemCount: widget.alubumsModel.list.length,
+              itemCount: widget.alubums.length,
               itemBuilder: (BuildContext context, int index) {
-                Song data = widget.alubumsModel.list[index];
+                Song data = widget.alubums[index];
                 return GestureDetector(
                   onTap: () => {
                     Navigator.push(
@@ -64,7 +63,7 @@ class _AlbumsCarouselState extends State<AlbumsCarousel> {
                   },
                   child: Container(
                     width: 140,
-                    margin: index == widget.alubumsModel.list.length - 1
+                    margin: index == widget.alubums.length - 1
                         ? EdgeInsets.only(right: 20.0)
                         : EdgeInsets.only(right: 0.0),
                     child: Padding(
