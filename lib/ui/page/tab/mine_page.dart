@@ -53,7 +53,7 @@ class UserListWidget extends StatelessWidget {
     var iconColor = Theme.of(context).accentColor;
     var localModel = Provider.of<LocaleModel>(context);
     return ListTileTheme(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 30),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20),
       child: SliverList(
         delegate: SliverChildListDelegate([
           ListTile(
