@@ -39,11 +39,9 @@ class Player extends StatefulWidget {
 class PlayerState extends State<Player> {
   Duration _duration;
   Duration _position;
-  Duration _playPosition;
   num _slideValue;
   SongModel _songData;
   DownloadModel _downloadData;
-  bool _isChanging;
 
   AudioPlayer _audioPlayer;
   AudioPlayerState _audioPlayerState;
@@ -114,7 +112,6 @@ class PlayerState extends State<Player> {
     _positionSubscription =
         _audioPlayer.onAudioPositionChanged.listen((position) {
       if (!mounted) return;
-      if (_isChanging == true) return;
       setState(() {
         _position = position;
         _slideValue = (_position != null &&
@@ -130,7 +127,7 @@ class PlayerState extends State<Player> {
 
     _playerCompleteSubscription =
         _audioPlayer.onPlayerCompletion.listen((event) {
-      // _onComplete();
+      // // _onComplete();
       // setState(() {
       //   _position = _duration;
       // });
@@ -262,13 +259,11 @@ class PlayerState extends State<Player> {
           onChanged: (value) {
             setState(() {
               _slideValue = value;
-              _isChanging = true;
             });
           },
           onChangeEnd: (value) {
             setState(() {
               _slideValue = value;
-              _isChanging = false;
             });
             Duration seconds =
                 Duration(seconds: (_duration.inSeconds * value).round());
@@ -346,17 +341,15 @@ class PlayerState extends State<Player> {
             Visibility(
               visible: _songData.showList,
               child: IconButton(
-                onPressed: () => _downloadData.download(_songData.currentSong),
-                icon: _downloadData.isDownload(_songData.currentSong)
+                onPressed: () => _songData.changeRepeat(),
+                icon: _songData.isRepeat == true
                     ? Icon(
-                        //Icons.skip_previous,
-                        Icons.cloud_done,
+                        Icons.repeat,
                         size: 25.0,
-                        color: Theme.of(context).accentColor,
+                        color: Colors.grey,
                       )
                     : Icon(
-                        //Icons.skip_previous,
-                        Icons.cloud_download,
+                        Icons.shuffle,
                         size: 25.0,
                         color: Colors.grey,
                       ),
