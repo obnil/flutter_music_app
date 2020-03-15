@@ -41,7 +41,7 @@ class _ForYouCarouselState extends State<ForYouCarousel> {
                         ? TextStyle(
                             fontSize: 12.0,
                             fontWeight: FontWeight.w600,
-                            color: Color(0xFFE0E0E0),
+                            color: Colors.grey,
                           )
                         : TextStyle(
                             fontSize: 12.0,
@@ -58,7 +58,7 @@ class _ForYouCarouselState extends State<ForYouCarousel> {
                     style: data.url == null
                         ? TextStyle(
                             fontSize: 10.0,
-                            color: Color(0xFFE0E0E0),
+                            color: Colors.grey,
                           )
                         : TextStyle(
                             fontSize: 10.0,
@@ -74,7 +74,7 @@ class _ForYouCarouselState extends State<ForYouCarousel> {
               icon: data.url == null
                   ? Icon(
                       Icons.favorite_border,
-                      color: Color(0xFFE0E0E0),
+                      color: Colors.grey,
                       size: 20.0,
                     )
                   : favoriteModel.isCollect(data)

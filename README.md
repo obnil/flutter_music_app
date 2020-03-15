@@ -35,7 +35,7 @@ http://icon.wuruihong.com/
   * [x] onComplete
   * [x] onDuration / onCurrentPosition
   * [x] Favorite
-  * [ ] Download
+  * [x] Download
 
 ### Show some ❤️ and star the repo to support the project
 
@@ -45,17 +45,19 @@ http://icon.wuruihong.com/
 
 - #### Light theme
 
-<img src="screenshots/image-20200301200224147.png" height="400em" /><img src="screenshots/image-20200301191646197.png" height="400em" /> <img src="screenshots/image-20200301191820651.png" height="400em" /> <img src="screenshots/image-20200301191923892.png" height="400em" /> <img src="screenshots/image-20200301192005124.png" height="400em" /><img src="screenshots/image-20200301192048613.png" height="400em" /><img src="screenshots/1583062935243.gif" height="400em"/>
+| ![image-20200301200224147](screenshots/image-20200301200224147.png) | ![Screenshot_12](screenshots/Screenshot_12.png) | ![Screenshot_13](screenshots/Screenshot_13.png) |
+| ------------------------------------------------------- | ----------------------------------- | ----------------------------------- |
+| ![Screenshot_15](screenshots/Screenshot_15.png)                     | ![Screenshot_14](screenshots/Screenshot_14.png) | ![Screenshot_16](screenshots/Screenshot_16.png) |
 
 - #### Dark theme
 
-<img src="screenshots/image-20200301192112449.png" height="400em" /><img src="screenshots/image-20200301192349918.png" height="400em" /><img src="screenshots/image-20200301192420317.png" height="400em" /><img src="screenshots/image-20200301192504091.png" height="400em" /><img src="screenshots/image-20200301192539226.png" height="400em" /><img src="screenshots/image-20200301193537813.png" height="400em" />
-
-
+| ![Screenshot_23](screenshots/Screenshot_23.png) | ![Screenshot_24](screenshots/Screenshot_24.png) | ![Screenshot_25](screenshots/Screenshot_25.png) |
+| ----------------------------------- | ----------------------------------- | ----------------------------------- |
+| ![Screenshot_27](screenshots/Screenshot_27.png) | ![Screenshot_26](screenshots/Screenshot_26.png) | ![Screenshot_28](screenshots/Screenshot_28.png) |
 
 ### Screenshots(Android)
 
-<img src="screenshots/image-20200301225614146.png" height="300em" /><img src="screenshots/image-20200301225706637.png" height="300em" /><img src="screenshots/image-20200301225726100.png" height="300em" /><img src="screenshots/image-20200301225840952.png" height="300em" />
+<img src="screenshots/image-20200301225614146.png" height="300em" /> <img src="screenshots/image-20200301225706637.png" height="300em" /> <img src="screenshots/image-20200301225726100.png" height="300em" /> <img src="screenshots/image-20200301225840952.png" height="300em" /> 
 
 
 
@@ -71,15 +73,6 @@ http://icon.wuruihong.com/
     <key>NSAllowsArbitraryLoads</key>
     <true/>
     </dict>
-```
-
-
-
-### Flute Music Player Plugin
-
-```yaml
- audio_manager:
-  git: https://gitee.com/obnil/audio_manager.git
 ```
 
 > If you found this project helpful or you learned something from the source code and want to thank me, consider buying me a cup of ☕️
