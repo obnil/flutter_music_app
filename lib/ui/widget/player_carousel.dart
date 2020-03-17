@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/model/download_model.dart';
@@ -45,23 +43,6 @@ class PlayerState extends State<Player> {
 
   AudioPlayer _audioPlayer;
   AudioPlayerState _audioPlayerState;
-  StreamSubscription _durationSubscription;
-  StreamSubscription _positionSubscription;
-  StreamSubscription _playerCompleteSubscription;
-  StreamSubscription _playerSeekSubscription;
-  StreamSubscription _playerErrorSubscription;
-  StreamSubscription _playerStateSubscription;
-
-  @override
-  void dispose() {
-    _durationSubscription?.cancel();
-    _positionSubscription?.cancel();
-    _playerCompleteSubscription?.cancel();
-    _playerErrorSubscription?.cancel();
-    _playerSeekSubscription?.cancel();
-    _playerStateSubscription?.cancel();
-    super.dispose();
-  }
 
   @override
   void initState() {
@@ -78,7 +59,7 @@ class PlayerState extends State<Player> {
     _audioPlayer = songData.audioPlayer;
     _position = _songData.position;
     _duration = _songData.duration;
-    _durationSubscription = _audioPlayer.onDurationChanged.listen((duration) {
+    _audioPlayer.onDurationChanged.listen((duration) {
       if (!mounted) return;
       setState(() {
         _duration = duration;
@@ -103,8 +84,7 @@ class PlayerState extends State<Player> {
       }
     });
 
-    _positionSubscription =
-        _audioPlayer.onAudioPositionChanged.listen((position) {
+    _audioPlayer.onAudioPositionChanged.listen((position) {
       if (!mounted) return;
       if (_isSeeking) return;
       setState(() {
@@ -113,8 +93,7 @@ class PlayerState extends State<Player> {
       });
     });
 
-    _playerCompleteSubscription =
-        _audioPlayer.onPlayerCompletion.listen((event) {
+    _audioPlayer.onPlayerCompletion.listen((event) {
       // // _onComplete();
       // setState(() {
       //   _position = _duration;
@@ -122,11 +101,11 @@ class PlayerState extends State<Player> {
       next();
     });
 
-    _playerSeekSubscription = _audioPlayer.onSeekComplete.listen((finished) {
+    _audioPlayer.onSeekComplete.listen((finished) {
       _isSeeking = false;
     });
 
-    _playerErrorSubscription = _audioPlayer.onPlayerError.listen((msg) {
+    _audioPlayer.onPlayerError.listen((msg) {
       if (!mounted) return;
       print('audioPlayer error : $msg');
       setState(() {
@@ -157,6 +136,7 @@ class PlayerState extends State<Player> {
   }
 
   void play(Song s) async {
+    print('333333');
     String url;
     if (_downloadData.isDownload(s)) {
       url = _downloadData.getDirectoryPath + '/${s.songid}.mp3';
@@ -192,6 +172,7 @@ class PlayerState extends State<Player> {
     while (data.url == null) {
       data = _songData.nextSong;
     }
+    print('222222');
     play(data);
   }
 

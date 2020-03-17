@@ -45,15 +45,15 @@ http://icon.wuruihong.com/
 
 - #### Light theme
 
-| ![image-20200301200224147](screenshots/image-20200301200224147.png) | ![Screenshot_12](screenshots/Screenshot_12.png) | ![Screenshot_13](screenshots/Screenshot_13.png) |
-| ------------------------------------------------------- | ----------------------------------- | ----------------------------------- |
-| ![Screenshot_15](screenshots/Screenshot_15.png)                     | ![Screenshot_14](screenshots/Screenshot_14.png) | ![Screenshot_16](screenshots/Screenshot_16.png) |
+| ![](screenshots/image-20200301200224147.png) | ![](screenshots/Screenshot_12.png) | ![](screenshots/Screenshot_13.png) |
+| -------------------------------------------- | ---------------------------------- | ---------------------------------- |
+| ![](screenshots/Screenshot_15.png)           | ![](screenshots/Screenshot_14.png) | ![](screenshots/Screenshot_16.png) |
 
 - #### Dark theme
 
-| ![Screenshot_23](screenshots/Screenshot_23.png) | ![Screenshot_24](screenshots/Screenshot_24.png) | ![Screenshot_25](screenshots/Screenshot_25.png) |
-| ----------------------------------- | ----------------------------------- | ----------------------------------- |
-| ![Screenshot_27](screenshots/Screenshot_27.png) | ![Screenshot_26](screenshots/Screenshot_26.png) | ![Screenshot_28](screenshots/Screenshot_28.png) |
+| ![](screenshots/Screenshot_23.png) | ![](screenshots/Screenshot_24.png) | ![](screenshots/Screenshot_25.png) |
+| ---------------------------------- | ---------------------------------- | ---------------------------------- |
+| ![](screenshots/Screenshot_27.png) | ![](screenshots/Screenshot_26.png) | ![](screenshots/Screenshot_28.png) |
 
 ### Screenshots(Android)
 
