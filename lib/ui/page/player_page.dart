@@ -156,7 +156,7 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin {
                                     MediaQuery.of(context).size.height * 0.01),
                             Text(
                               songModel.currentSong.title,
-                              style: TextStyle(fontSize: 25.0),
+                              style: TextStyle(fontSize: 20.0),
                             ),
                           ],
                         )

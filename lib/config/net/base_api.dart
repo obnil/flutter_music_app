@@ -24,7 +24,6 @@ class ApiInterceptor extends InterceptorsWrapper {
     debugPrint('---api-request--->url--> ${options.baseUrl}${options.path}' +
         ' queryParameters: ${options.queryParameters}' +
         ' data: ${options.data}');
-    //debugPrint('---api-request--->data--->${options.data}');
     return options;
   }
 

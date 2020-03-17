@@ -49,12 +49,6 @@ class SongModel with ChangeNotifier {
     notifyListeners();
   }
 
-  num _slideValue;
-  num get slideValue => _slideValue;
-  setSlideValue(num slideValue) {
-    _slideValue = slideValue;
-  }
-
   int _currentSongIndex = 0;
 
   List<Song> get songs => _songs;

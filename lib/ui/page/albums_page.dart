@@ -22,12 +22,14 @@ class _AlbumsPageState extends State<AlbumsPage> {
           Expanded(
             child: ListView(
               children: <Widget>[
-                ClipRRect(
-                    borderRadius: BorderRadius.circular(30.0),
+                Center(
                     child: Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        height: MediaQuery.of(context).size.width * 0.5,
-                        child: Image.network(widget.data.pic))),
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  height: MediaQuery.of(context).size.width * 0.5,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(30.0),
+                      child: Container(child: Image.network(widget.data.pic))),
+                )),
                 SizedBox(height: 20.0),
                 Center(
                   child: Text(

@@ -39,15 +39,16 @@ class Player extends StatefulWidget {
 class PlayerState extends State<Player> {
   Duration _duration;
   Duration _position;
-  num _slideValue;
   SongModel _songData;
   DownloadModel _downloadData;
+  bool _isSeeking = false;
 
   AudioPlayer _audioPlayer;
   AudioPlayerState _audioPlayerState;
   StreamSubscription _durationSubscription;
   StreamSubscription _positionSubscription;
   StreamSubscription _playerCompleteSubscription;
+  StreamSubscription _playerSeekSubscription;
   StreamSubscription _playerErrorSubscription;
   StreamSubscription _playerStateSubscription;
 
@@ -57,6 +58,7 @@ class PlayerState extends State<Player> {
     _positionSubscription?.cancel();
     _playerCompleteSubscription?.cancel();
     _playerErrorSubscription?.cancel();
+    _playerSeekSubscription?.cancel();
     _playerStateSubscription?.cancel();
     super.dispose();
   }
@@ -76,19 +78,11 @@ class PlayerState extends State<Player> {
     _audioPlayer = songData.audioPlayer;
     _position = _songData.position;
     _duration = _songData.duration;
-    _slideValue = _songData.slideValue;
     _durationSubscription = _audioPlayer.onDurationChanged.listen((duration) {
       if (!mounted) return;
       setState(() {
         _duration = duration;
-        _slideValue = (_position != null &&
-                _duration != null &&
-                _position.inSeconds > 0 &&
-                _position.inSeconds < _duration.inSeconds)
-            ? _position.inSeconds / _duration.inSeconds
-            : 0.0;
         _songData.setDuration(_duration);
-        _songData.setSlideValue(_slideValue);
       });
 
       // TODO implemented for iOS, waiting for android impl
@@ -112,16 +106,10 @@ class PlayerState extends State<Player> {
     _positionSubscription =
         _audioPlayer.onAudioPositionChanged.listen((position) {
       if (!mounted) return;
+      if (_isSeeking) return;
       setState(() {
         _position = position;
-        _slideValue = (_position != null &&
-                _duration != null &&
-                _position.inSeconds > 0 &&
-                _position.inSeconds < _duration.inSeconds)
-            ? _position.inSeconds / _duration.inSeconds
-            : 0.0;
         _songData.setPosition(_position);
-        _songData.setSlideValue(_slideValue);
       });
     });
 
@@ -132,6 +120,10 @@ class PlayerState extends State<Player> {
       //   _position = _duration;
       // });
       next();
+    });
+
+    _playerSeekSubscription = _audioPlayer.onSeekComplete.listen((finished) {
+      _isSeeking = false;
     });
 
     _playerErrorSubscription = _audioPlayer.onPlayerError.listen((msg) {
@@ -256,20 +248,28 @@ class PlayerState extends State<Player> {
       Visibility(
         visible: !_songData.showList,
         child: new Slider(
+          onChangeStart: (v) {
+            _isSeeking = true;
+          },
           onChanged: (value) {
             setState(() {
-              _slideValue = value;
+              _position =
+                  Duration(seconds: (_duration.inSeconds * value).round());
             });
           },
           onChangeEnd: (value) {
             setState(() {
-              _slideValue = value;
+              _position =
+                  Duration(seconds: (_duration.inSeconds * value).round());
             });
-            Duration seconds =
-                Duration(seconds: (_duration.inSeconds * value).round());
-            _audioPlayer.seek(seconds);
+            _audioPlayer.seek(_position);
           },
-          value: _slideValue ?? 0,
+          value: (_position != null &&
+                  _duration != null &&
+                  _position.inSeconds > 0 &&
+                  _position.inSeconds < _duration.inSeconds)
+              ? _position.inSeconds / _duration.inSeconds
+              : 0.0,
           activeColor: Theme.of(context).accentColor,
         ),
       ),
