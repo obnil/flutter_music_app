@@ -136,7 +136,6 @@ class PlayerState extends State<Player> {
   }
 
   void play(Song s) async {
-    print('333333');
     String url;
     if (_downloadData.isDownload(s)) {
       url = _downloadData.getDirectoryPath + '/${s.songid}.mp3';
@@ -172,7 +171,6 @@ class PlayerState extends State<Player> {
     while (data.url == null) {
       data = _songData.nextSong;
     }
-    print('222222');
     play(data);
   }
 
