@@ -57,13 +57,6 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-  fonts:
-    - family: iconfont
-      fonts:
-        - asset: assets/fonts/iconfont.ttf
-    - family: kuaile # 站酷 快乐字体  https://fonts.google.com/?selection.family=Noto+Sans+SC&subset=chinese-simplified
-      fonts:
-        - asset: assets/fonts/ZCOOLKuaiLe-Regular.ttf
   assets:
     - assets/images/
   # To add assets to your application, add an assets section, like this:
