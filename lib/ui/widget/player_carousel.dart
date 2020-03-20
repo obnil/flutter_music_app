@@ -64,7 +64,7 @@ class PlayerState extends State<Player> {
   void play(Song s) {
     String url;
     if (_downloadData.isDownload(s)) {
-      url = _downloadData.getDirectoryPath + '/${s.songid}.mp3';
+      url = 'file://' + _downloadData.getDirectoryPath + '/${s.songid}.mp3';
     } else {
       url = getSongUrl(s);
     }

@@ -45,10 +45,6 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  String getSongUrl(Song s) {
-    return 'http://music.163.com/song/media/outer/url?id=${s.songid}.mp3';
-  }
-
   @override
   Widget build(BuildContext context) {
     SongModel songModel = Provider.of(context);
