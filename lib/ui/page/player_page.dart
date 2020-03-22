@@ -160,7 +160,7 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin {
                             ),
                           ],
                         )
-                      : SongListCarousel(songModel, favouriteModel),
+                      : SongListCarousel(),
                 ],
               ),
             ),

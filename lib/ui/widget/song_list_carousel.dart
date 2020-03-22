@@ -4,33 +4,15 @@ import 'package:flutter_music_app/model/song_model.dart';
 import 'package:provider/provider.dart';
 
 class SongListCarousel extends StatefulWidget {
-  final SongModel model;
-  final FavoriteModel favoriteModel;
-
-  SongListCarousel(this.model, this.favoriteModel);
   @override
   _ForYouCarouselState createState() => _ForYouCarouselState();
 }
 
 class _ForYouCarouselState extends State<SongListCarousel> {
-  ScrollController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = new ScrollController();
-  }
-
-  @override
-  void dispose() {
-    //为了避免内存泄露，需要调用_controller.dispose
-    _controller.dispose();
-    super.dispose();
-  }
-
   Widget _buildSongItem(Song data) {
     FavoriteModel favoriteModel = Provider.of(context);
-    return data.songid == widget.model.currentSong.songid
+    SongModel songModel = Provider.of(context);
+    return data.songid == songModel.currentSong.songid
         ? Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: ClipRRect(
@@ -173,17 +155,16 @@ class _ForYouCarouselState extends State<SongListCarousel> {
 
   @override
   Widget build(BuildContext context) {
+    SongModel songModel = Provider.of(context);
     return Expanded(
       child: ListView.builder(
         scrollDirection: Axis.vertical,
-        itemCount: widget.model.songs.length,
+        itemCount: songModel.songs.length,
         itemBuilder: (BuildContext context, int index) {
-          Song data = widget.model.songs[index];
+          Song data = songModel.songs[index];
           return GestureDetector(
             onTap: () {
               if (null != data.url) {
-                SongModel songModel = Provider.of(context);
-                songModel.setSongs(new List<Song>.from(widget.model.songs));
                 songModel.setCurrentIndex(index);
                 songModel.setPlayNow(true);
               }

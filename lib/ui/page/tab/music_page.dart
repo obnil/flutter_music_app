@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/generated/i18n.dart';
 import 'package:flutter_music_app/model/download_model.dart';
 import 'package:flutter_music_app/model/song_model.dart';
 import 'package:flutter_music_app/ui/page/player_page.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
 class MusicPage extends StatefulWidget {
@@ -13,6 +16,21 @@ class MusicPage extends StatefulWidget {
 
 class _MusicPageState extends State<MusicPage>
     with AutomaticKeepAliveClientMixin {
+  @override
+  void initState() {
+    loadData();
+    super.initState();
+  }
+
+  loadData() async {
+    final dir = await getApplicationDocumentsDirectory();
+    List<FileSystemEntity> files = dir.listSync();
+    for (var file in files) {
+      print(file.path);
+    }
+    setState(() {});
+  }
+
   @override
   bool get wantKeepAlive => true;
   Widget _buildSongItem(Song data) {

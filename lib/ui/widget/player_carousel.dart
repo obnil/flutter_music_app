@@ -194,7 +194,6 @@ class PlayerState extends State<Player> {
   Widget build(BuildContext context) {
     if (_songData.playNow) {
       play(_songData.currentSong);
-      _songData.setPlayNow(false);
     }
     return Column(
       children: _controllers(context),
