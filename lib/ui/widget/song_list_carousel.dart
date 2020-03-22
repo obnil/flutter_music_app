@@ -167,6 +167,9 @@ class _ForYouCarouselState extends State<SongListCarousel> {
               if (null != data.url) {
                 songModel.setCurrentIndex(index);
                 songModel.setPlayNow(true);
+                Future.delayed(new Duration(milliseconds: 100), () {
+                  songModel.setPlayNow(false);
+                });
               }
             },
             child: _buildSongItem(data),
